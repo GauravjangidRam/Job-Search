@@ -48,14 +48,9 @@ RUN echo "=== Checking build assets ===" && \
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
 
-# Create SQLite database
-RUN mkdir -p database && touch database/database.sqlite && \
-    chown -R www-data:www-data database && \
-    chmod -R 775 database
-
-# Also make sure the entire app is writable where needed
-RUN chown -R www-data:www-data storage bootstrap/cache database
-RUN chmod -R 775 storage bootstrap/cache database
+# Set permissions
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 EXPOSE 80
 
