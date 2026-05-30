@@ -10,9 +10,12 @@ RUN apt-get update && apt-get install -y \
     libsqlite3-dev \
     zip \
     unzip \
-    nodejs \
-    npm \
     && docker-php-ext-install pdo pdo_sqlite mbstring exif pcntl bcmath gd \
+    && apt-get clean && rm -rf /var/lib/apt/lists/*
+
+# Install Node.js 20 (required for Vite)
+RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
+    && apt-get install -y nodejs \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
@@ -32,26 +35,39 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy application files
+# Copy package files first for better caching
+COPY package.json package-lock.json ./
+RUN npm ci
+
+# Copy composer files
+COPY composer.json composer.lock ./
+RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
+
+# Copy all application files
 COPY . .
 
-# Install PHP dependencies
-RUN composer install --no-dev --optimize-autoloader --no-interaction
+# Run composer scripts (post-autoload-dump etc)
+RUN composer dump-autoload --optimize
 
-# Install Node dependencies and build assets
-RUN npm ci && npm run build && rm -rf node_modules
+# Build frontend assets
+RUN npm run build && rm -rf node_modules
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
 # Create SQLite database file
-RUN mkdir -p database && touch database/database.sqlite
+RUN mkdir -p database && touch database/database.sqlite && chown www-data:www-data database/database.sqlite
 
-# Run migrations and cache config
-RUN php artisan config:clear
+# Set APP_ENV for artisan commands during build
+ENV APP_ENV=production
+ENV APP_KEY=base64:temporary-key-for-build-only
 
 EXPOSE 80
 
-# Start script
-CMD php artisan migrate --force && php artisan config:cache && php artisan route:cache && php artisan view:cache && apache2-foreground
+# Start script - migrate and cache on container start
+CMD php artisan migrate --force && \
+    php artisan config:cache && \
+    php artisan route:cache && \
+    php artisan view:cache && \
+    apache2-foreground
