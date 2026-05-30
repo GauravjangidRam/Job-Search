@@ -53,6 +53,8 @@ RUN mkdir -p database && touch database/database.sqlite && chown www-data:www-da
 
 EXPOSE 80
 
+ENV APP_ENV=production
+
 CMD php artisan migrate --force && \
     php artisan config:cache && \
     php artisan route:cache && \
