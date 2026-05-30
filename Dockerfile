@@ -21,13 +21,17 @@ RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Set Apache document root to Laravel's public folder
-ENV APACHE_DOCUMENT_ROOT=/var/www/html/public
-RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
-RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
-
-# Allow .htaccess overrides
-RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+# Configure Apache virtual host properly
+RUN echo '<VirtualHost *:80>\n\
+    DocumentRoot /var/www/html/public\n\
+    <Directory /var/www/html/public>\n\
+        AllowOverride All\n\
+        Require all granted\n\
+        Options -Indexes +FollowSymLinks\n\
+    </Directory>\n\
+    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
+    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
+</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
@@ -46,11 +50,14 @@ RUN composer install --no-dev --optimize-autoloader --no-interaction --no-script
 # Copy all application files
 COPY . .
 
-# Run composer scripts (post-autoload-dump etc)
+# Run composer scripts
 RUN composer dump-autoload --optimize
 
 # Build frontend assets
 RUN npm run build && rm -rf node_modules
+
+# Verify build output exists
+RUN ls -la public/build/assets/ && echo "Build assets OK"
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
@@ -59,13 +66,9 @@ RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 # Create SQLite database file
 RUN mkdir -p database && touch database/database.sqlite && chown www-data:www-data database/database.sqlite
 
-# Set APP_ENV for artisan commands during build
-ENV APP_ENV=production
-ENV APP_KEY=base64:temporary-key-for-build-only
-
 EXPOSE 80
 
-# Start script - migrate and cache on container start
+# Start script
 CMD php artisan migrate --force && \
     php artisan config:cache && \
     php artisan route:cache && \
