@@ -2,54 +2,51 @@ FROM php:8.4-apache
 
 # Install system dependencies
 RUN apt-get update && apt-get install -y \
-    git \
-    curl \
-    libpng-dev \
-    libonig-dev \
-    libxml2-dev \
-    libsqlite3-dev \
-    zip \
-    unzip \
+    git curl libpng-dev libonig-dev libxml2-dev libsqlite3-dev zip unzip \
     && docker-php-ext-install pdo pdo_sqlite mbstring exif pcntl bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Configure Apache virtual host
-RUN echo '<VirtualHost *:80>\n\
-    DocumentRoot /var/www/html/public\n\
-    <Directory /var/www/html/public>\n\
-        AllowOverride All\n\
-        Require all granted\n\
-        Options -Indexes +FollowSymLinks\n\
-    </Directory>\n\
-    ErrorLog ${APACHE_LOG_DIR}/error.log\n\
-    CustomLog ${APACHE_LOG_DIR}/access.log combined\n\
-</VirtualHost>' > /etc/apache2/sites-available/000-default.conf
+# Set ServerName to suppress warning
+RUN echo "ServerName localhost" >> /etc/apache2/apache2.conf
+
+# Configure Apache - set document root to public
+ENV APACHE_DOCUMENT_ROOT /var/www/html/public
+RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
+RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
+
+# Enable AllowOverride for public directory
+RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
+
+# Also add explicit directory config for our public folder
+RUN echo '<Directory /var/www/html/public>\n\
+    AllowOverride All\n\
+    Require all granted\n\
+</Directory>' >> /etc/apache2/apache2.conf
 
 # Install Composer
 COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 
-# Set working directory
 WORKDIR /var/www/html
 
-# Copy composer files first for caching
-COPY composer.json composer.lock ./
-RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
-
-# Copy all application files (including pre-built assets in public/build)
+# Copy everything
 COPY . .
 
-# Run composer dump
-RUN composer dump-autoload --optimize
+# Install PHP dependencies
+RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Verify CSS exists
-RUN ls public/build/manifest.json && echo "Manifest OK" && ls public/build/assets/app-*.css && echo "CSS OK"
+# Verify assets exist
+RUN echo "=== Checking build assets ===" && \
+    ls -la public/build/ && \
+    ls -la public/build/assets/ && \
+    cat public/build/manifest.json | head -5 && \
+    echo "=== Assets verified ==="
 
 # Set permissions
-RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
-RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
+RUN chown -R www-data:www-data storage bootstrap/cache
+RUN chmod -R 775 storage bootstrap/cache
 
 # Create SQLite database
 RUN mkdir -p database && touch database/database.sqlite && chown www-data:www-data database/database.sqlite
