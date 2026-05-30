@@ -13,15 +13,10 @@ RUN apt-get update && apt-get install -y \
     && docker-php-ext-install pdo pdo_sqlite mbstring exif pcntl bcmath gd \
     && apt-get clean && rm -rf /var/lib/apt/lists/*
 
-# Install Node.js 20 (required for Vite)
-RUN curl -fsSL https://deb.nodesource.com/setup_20.x | bash - \
-    && apt-get install -y nodejs \
-    && apt-get clean && rm -rf /var/lib/apt/lists/*
-
 # Enable Apache mod_rewrite
 RUN a2enmod rewrite
 
-# Configure Apache virtual host properly
+# Configure Apache virtual host
 RUN echo '<VirtualHost *:80>\n\
     DocumentRoot /var/www/html/public\n\
     <Directory /var/www/html/public>\n\
@@ -39,36 +34,28 @@ COPY --from=composer:latest /usr/bin/composer /usr/bin/composer
 # Set working directory
 WORKDIR /var/www/html
 
-# Copy package files first for better caching
-COPY package.json package-lock.json ./
-RUN npm ci
-
-# Copy composer files
+# Copy composer files first for caching
 COPY composer.json composer.lock ./
 RUN composer install --no-dev --optimize-autoloader --no-interaction --no-scripts
 
-# Copy all application files
+# Copy all application files (including pre-built assets in public/build)
 COPY . .
 
-# Run composer scripts
+# Run composer dump
 RUN composer dump-autoload --optimize
 
-# Build frontend assets
-RUN npm run build && rm -rf node_modules
-
-# Verify build output exists
-RUN ls -la public/build/assets/ && echo "Build assets OK"
+# Verify CSS exists
+RUN ls public/build/manifest.json && echo "Manifest OK" && ls public/build/assets/app-*.css && echo "CSS OK"
 
 # Set permissions
 RUN chown -R www-data:www-data /var/www/html/storage /var/www/html/bootstrap/cache
 RUN chmod -R 775 /var/www/html/storage /var/www/html/bootstrap/cache
 
-# Create SQLite database file
+# Create SQLite database
 RUN mkdir -p database && touch database/database.sqlite && chown www-data:www-data database/database.sqlite
 
 EXPOSE 80
 
-# Start script
 CMD php artisan migrate --force && \
     php artisan config:cache && \
     php artisan route:cache && \
