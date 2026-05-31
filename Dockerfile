@@ -17,10 +17,8 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Enable AllowOverride for public directory
+# Enable AllowOverride
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
-
-# Also add explicit directory config for our public folder
 RUN echo '<Directory /var/www/html/public>\n\
     AllowOverride All\n\
     Require all granted\n\
@@ -37,29 +35,19 @@ COPY . .
 # Install PHP dependencies
 RUN composer install --no-dev --optimize-autoloader --no-interaction
 
-# Verify assets exist
-RUN echo "=== Checking build assets ===" && \
-    ls -la public/build/ && \
-    ls -la public/build/assets/ && \
-    cat public/build/manifest.json | head -5 && \
-    echo "=== Assets verified ==="
-
 # Set permissions
 RUN chown -R www-data:www-data storage bootstrap/cache
 RUN chmod -R 775 storage bootstrap/cache
 
-# Set permissions
-RUN chown -R www-data:www-data storage bootstrap/cache
-RUN chmod -R 775 storage bootstrap/cache
+# Remove any cached config (IMPORTANT - env vars are only available at runtime)
+RUN rm -f bootstrap/cache/config.php
 
 EXPOSE 80
 
-ENV APP_ENV=production
-ENV CACHE_STORE=file
-ENV SESSION_DRIVER=file
-
-CMD php artisan migrate --force && \
-    php artisan config:cache && \
+# DO NOT cache config during build - env vars aren't available yet
+# Config cache happens at runtime when env vars from Render are present
+CMD php artisan config:clear && \
+    php artisan migrate --force && \
     php artisan route:cache && \
     php artisan view:cache && \
     apache2-foreground
