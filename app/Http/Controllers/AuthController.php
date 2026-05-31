@@ -47,13 +47,15 @@ class AuthController extends Controller
             'password' => $request->validated('password'),
         ]);
 
-        $otp = $this->otpService->generate($user);
+        // TODO: Uncomment when email service is configured
+        // $otp = $this->otpService->generate($user);
+        // Mail::to($user->email)->send(new OtpMail($otp));
+        // $request->session()->put('otp_user_id', $user->id);
+        // return redirect('/verify-otp');
 
-        Mail::to($user->email)->send(new OtpMail($otp));
-
-        $request->session()->put('otp_user_id', $user->id);
-
-        return redirect('/verify-otp');
+        // Bypass OTP - directly log in the user
+        Auth::login($user);
+        return redirect('/');
     }
 
     /**
@@ -89,13 +91,15 @@ class AuthController extends Controller
             ]);
         });
 
-        $otp = $this->otpService->generate($user);
+        // TODO: Uncomment when email service is configured
+        // $otp = $this->otpService->generate($user);
+        // Mail::to($user->email)->send(new OtpMail($otp));
+        // $request->session()->put('otp_user_id', $user->id);
+        // return redirect('/verify-otp');
 
-        Mail::to($user->email)->send(new OtpMail($otp));
-
-        $request->session()->put('otp_user_id', $user->id);
-
-        return redirect('/verify-otp');
+        // Bypass OTP - directly log in the user
+        Auth::login($user);
+        return redirect('/employer/dashboard');
     }
 
     /**
