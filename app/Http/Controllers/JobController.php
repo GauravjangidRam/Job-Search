@@ -56,6 +56,15 @@ class JobController extends Controller
             });
         }
 
+        // Filter by location (city name): partial match
+        if ($request->filled('location')) {
+            $location = $request->location;
+            $query->where(function ($q) use ($location) {
+                $q->where('location', 'LIKE', "%{$location}%")
+                  ->orWhere('location_type', 'LIKE', "%{$location}%");
+            });
+        }
+
         // Order by newest first
         $query->orderBy('created_at', 'desc');
 

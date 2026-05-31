@@ -64,7 +64,7 @@
                 <button
                     type="button"
                     @click="setPopularTerm('{{ addslashes($term) }}')"
-                    class="px-3 py-1.5 text-sm bg-accent text-accent-dark rounded-full hover:bg-primary hover:text-white transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                    class="px-3 py-1.5 text-sm bg-secondary text-foreground border border-border rounded-full hover:bg-primary hover:text-white hover:border-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
                 >
                     {{ $term }}
                 </button>
