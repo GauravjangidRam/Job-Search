@@ -268,17 +268,15 @@ class AuthController extends Controller
 
         $user = Auth::user();
 
+        // TODO: Uncomment when email service is configured
         // If user hasn't verified their email, send them to OTP verification
-        if (! $user->email_verified_at) {
-            Auth::logout();
-
-            $otp = $this->otpService->generate($user);
-            Mail::to($user->email)->send(new OtpMail($otp));
-
-            $request->session()->put('otp_user_id', $user->id);
-
-            return redirect('/verify-otp');
-        }
+        // if (! $user->email_verified_at) {
+        //     Auth::logout();
+        //     $otp = $this->otpService->generate($user);
+        //     Mail::to($user->email)->send(new OtpMail($otp));
+        //     $request->session()->put('otp_user_id', $user->id);
+        //     return redirect('/verify-otp');
+        // }
 
         $request->session()->regenerate();
 
