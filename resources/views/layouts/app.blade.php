@@ -6,6 +6,9 @@
 
         <title>{{ config('app.name', 'Job Hub') }}</title>
 
+        <link rel="icon" type="image/svg+xml" href="/favicon.svg">
+        <link rel="icon" type="image/x-icon" href="/favicon.svg">
+
         <!-- Inter Font from CDN with font-display: swap -->
         <link rel="preconnect" href="https://fonts.googleapis.com">
         <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
