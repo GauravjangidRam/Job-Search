@@ -265,7 +265,8 @@ class AuthController extends Controller
         }
 
         RateLimiter::clear($rateLimitKey);
-
+        
+        $request->session()->regenerate();
         $user = Auth::user();
 
         // TODO: Uncomment when email service is configured
@@ -278,8 +279,12 @@ class AuthController extends Controller
         //     return redirect('/verify-otp');
         // }
 
-        $request->session()->regenerate();
 
+        if ($user->isAdmin()) {
+            return redirect()->intended('/admin/dashboard');
+        } elseif ($user->isEmployer()) {
+            return redirect()->intended('/employer/dashboard');
+        }
         // Redirect to the intended URL stored by the auth middleware,
         // falling back to /jobs when none was stored.
         return redirect()->intended('/jobs');
