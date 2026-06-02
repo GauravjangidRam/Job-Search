@@ -33,8 +33,7 @@
                         <div class="flex items-end gap-5">
                             <div class="relative flex-shrink-0">
                                 @if(!empty($user->avatar_url))
-                                    <img
-                                        src="{{ asset('storage/' . ltrim($user->avatar_url, '/')) }}"
+                                    <img src="{{ $user->avatar_url }}"
                                         alt="{{ $user->name }}'s avatar"
                                         class="h-24 w-24 rounded-full object-cover border-4 border-card bg-background shadow-sm"
                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"
