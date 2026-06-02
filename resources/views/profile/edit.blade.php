@@ -101,11 +101,15 @@
                     </div>
 
                     {{-- Current Avatar Preview --}}
-                    @if(!empty($user->avatar_path))
+                    @php
+                        $currentAvatar = $user->avatar_url ?? 
+                                        (!empty($user->avatar_path) ? asset('storage/' . ltrim($user->avatar_path, '/')) : null);
+                    @endphp
+                    @if($currentAvatar)
                         <div class="mb-4">
                             <p class="block text-sm font-medium mb-2">Current Avatar</p>
                             <img
-                                src="{{ asset('storage/' . ltrim($user->avatar_path, '/')) }}"
+                                src="{{ $currentAvatar }}"
                                 alt="{{ $user->name }}'s avatar"
                                 class="h-16 w-16 object-cover rounded-full border border-border bg-background"
                             >
