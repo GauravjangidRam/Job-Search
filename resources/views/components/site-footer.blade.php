@@ -11,7 +11,6 @@
                     <li><a href="{{ route('resume.index') }}" class="text-sm text-muted hover:text-primary transition-colors">Resume Tips</a></li>
                 </ul>
             </div>
-
             {{-- For Employers --}}
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">For Employers</h3>
@@ -31,7 +30,6 @@
                     <li><a href="{{ route('insights.index') }}" class="text-sm text-muted hover:text-primary transition-colors">Hiring Trends</a></li>
                 </ul>
             </div>
-
             {{-- Connect --}}
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">Connect</h3>
@@ -49,7 +47,6 @@
                 <p class="text-xs text-muted">Find your next opportunity with Job Hub.</p>
             </div>
         </div>
-
         {{-- Bottom Bar --}}
         <div class="pt-8 border-t border-border flex flex-col sm:flex-row items-center justify-between gap-4">
             <a href="{{ route('home') }}" class="text-lg font-bold text-primary">Job Hub</a>

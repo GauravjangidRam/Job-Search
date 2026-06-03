@@ -9,7 +9,6 @@
             <h1 class="text-3xl font-bold text-foreground">Browse Jobs</h1>
             <p class="mt-2 text-muted">Find your next opportunity from {{ $jobs->total() }} available positions</p>
         </div>
-
         {{-- Filters & Search Section --}}
         <div x-data="{ showFilters: true }">
             {{-- Toggle Filter Panel Button --}}
@@ -29,7 +28,6 @@
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
                 </button>
-
                 @if(($filters['job_type'] ?? '') !== '' || ($filters['location_type'] ?? '') !== '' || ($filters['salary_min'] ?? '') !== '' || ($filters['salary_max'] ?? '') !== '' || ($filters['search'] ?? '') !== '' || ($filters['company_name'] ?? '') !== '')
                     <a
                         href="{{ route('jobs.index') }}"
@@ -42,7 +40,6 @@
                     </a>
                 @endif
             </div>
-
             {{-- Filter Panel --}}
             <form
                 method="GET"
@@ -74,7 +71,6 @@
                                 <option value="Internship" @selected(($filters['job_type'] ?? '') === 'Internship')>Internship</option>
                             </select>
                         </div>
-
                         {{-- Location Type Filter --}}
                         <div>
                             <label for="location_type" class="block text-sm font-medium text-foreground mb-1">Location Type</label>
@@ -89,7 +85,6 @@
                                 <option value="Hybrid" @selected(($filters['location_type'] ?? '') === 'Hybrid')>Hybrid</option>
                             </select>
                         </div>
-
                         {{-- Company Name Filter --}}
                         <div>
                             <label for="company_name" class="block text-sm font-medium text-foreground mb-1">Company</label>
@@ -102,7 +97,6 @@
                                 class="w-full rounded-card border border-border bg-background text-foreground px-3 py-2 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                             >
                         </div>
-
                         {{-- Salary Min --}}
                         <div>
                             <label for="salary_min" class="block text-sm font-medium text-foreground mb-1">Min Salary</label>
@@ -115,7 +109,6 @@
                                 class="w-full rounded-card border border-border bg-background text-foreground px-3 py-2 text-sm placeholder:text-muted focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary"
                             >
                         </div>
-
                         {{-- Salary Max --}}
                         <div>
                             <label for="salary_max" class="block text-sm font-medium text-foreground mb-1">Max Salary</label>
