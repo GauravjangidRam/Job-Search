@@ -26,26 +26,30 @@
             <div class="flex-1 h-px bg-border"></div>
         </div>
 
-        <form method="POST" action="/register" class="space-y-5">
+        <form method="POST" action="/register" class="space-y-5" x-data="{ loading: false }" @submit="loading = true">
             @csrf
 
             <div>
                 <label for="name" class="text-sm text-foreground">Full name</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" required autocomplete="name" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Jane Smith">
+                <input type="text" id="name" name="name" value="{{ old('name') }}" required autocomplete="name" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Jane Smith" :disabled="loading">
             </div>
 
             <div>
                 <label for="email" class="text-sm text-foreground">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="name@company.com">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="name@company.com" :disabled="loading">
             </div>
 
             <div>
                 <label for="password" class="text-sm text-foreground">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="new-password" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Min 8 characters">
+                <input type="password" id="password" name="password" required autocomplete="new-password" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Min 8 characters" :disabled="loading">
             </div>
 
-            <button type="submit" class="w-full py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors mt-2">
-                Create account
+            <button type="submit" :disabled="loading" class="w-full py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">
+                <svg x-show="loading" class="animate-spin h-4 w-4 text-white" xmlns="http://www.w3.org/2000/svg" fill="none" viewBox="0 0 24 24">
+                    <circle class="opacity-25" cx="12" cy="12" r="10" stroke="currentColor" stroke-width="4"></circle>
+                    <path class="opacity-75" fill="currentColor" d="M4 12a8 8 0 018-8V0C5.373 0 0 5.373 0 12h4zm2 5.291A7.962 7.962 0 014 12H0c0 3.042 1.135 5.824 3 7.938l3-2.647z"></path>
+                </svg>
+                <span x-text="loading ? 'Creating account...' : 'Create account'">Create account</span>
             </button>
         </form>
 
