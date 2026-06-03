@@ -2,7 +2,6 @@
 
 @section('content')
     <x-home.navigation-bar />
-
     <div class="max-w-[800px] mx-auto pt-16">
         <div class="py-12 px-6 md:px-8">
             {{-- Job context header --}}
@@ -11,21 +10,18 @@
                 <h1 class="text-2xl md:text-3xl font-bold text-foreground mt-3 mb-1">Apply for {{ $job->title }}</h1>
                 <p class="text-muted">{{ $job->company_name }}@if(!empty($job->location)) &middot; {{ $job->location }}@endif</p>
             </div>
-
             {{-- Flash: success --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
                     {{ session('success') }}
                 </div>
             @endif
-
             {{-- Flash: error --}}
             @if(session('error'))
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 font-medium" role="alert">
                     {{ session('error') }}
                 </div>
             @endif
-
             {{-- Validation Error Summary --}}
             @if($errors->any())
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800" role="alert">
@@ -37,7 +33,6 @@
                     </ul>
                 </div>
             @endif
-
             @if($hasApplied)
                 {{-- Already applied: prominent message, form hidden (Requirement 4.5) --}}
                 <div class="bg-card border border-border rounded-xl shadow-sm p-10 text-center">
@@ -102,7 +97,6 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
                         {{-- Applicant Phone --}}
                         <div class="mb-6">
                             <label for="applicant_phone" class="block text-sm font-medium mb-1">Phone</label>
@@ -118,7 +112,6 @@
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
                         </div>
-
                         {{-- Resume Upload --}}
                         <div class="mb-6">
                             <label for="resume" class="block text-sm font-medium mb-1">Resume <span class="text-red-600">*</span></label>
