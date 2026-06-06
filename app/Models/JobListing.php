@@ -4,8 +4,6 @@ namespace App\Models;
 
 use Illuminate\Database\Eloquent\Builder;
 use Illuminate\Database\Eloquent\Model;
-use Hashids\Hashids;
-
 use Illuminate\Database\Eloquent\Relations\BelongsTo;
 use Illuminate\Database\Eloquent\Relations\HasMany;
 
@@ -70,18 +68,5 @@ class JobListing extends Model
     public function scopeActive(Builder $query): Builder
     {
         return $query->where('status', 'active');
-    }
-
-    public function getHashedIdAttribute(): string
-    {
-        $hashids = new Hashids(config('hashids.key'), 8);
-        return $hashids->encode($this->id);
-    }
-
-    public static function findByHash(string $hash): ?self
-    {
-        $hashids = new Hashids(config('hashids.key'), 8);
-        $decoded = $hashids->decode($hash);
-        return isset($decoded[0]) ? self::find($decoded[0]) : null;
     }
 }

@@ -16,7 +16,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Job routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{hash}', [JobController::class, 'show'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.show');
+Route::get('/jobs/{id}', [JobController::class, 'show'])->where('id', '[0-9]+')->name('jobs.show');
 
 // Guest routes (register & login)
 Route::middleware('guest')->group(function () {
@@ -50,8 +50,8 @@ Route::get('/resume', [ResumeController::class, 'index'])->name('resume.index');
 // Authenticated routes (any authenticated user)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
-    Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
-    Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
+    Route::get('/jobs/{id}/apply', [JobController::class, 'apply'])->where('id', '[0-9]+')->name('jobs.apply');
+    Route::post('/jobs/{id}/apply', [JobController::class, 'submitApplication'])->where('id', '[0-9]+')->name('jobs.submitApplication');
     Route::post('/bookmarks/{job}/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
 });
 

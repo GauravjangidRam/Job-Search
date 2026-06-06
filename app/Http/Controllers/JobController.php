@@ -70,11 +70,10 @@ class JobController extends Controller
         ]);
     }
 
-    // ✅ $hash string lega, model se decode karega
-    public function show(string $hash): View
+    // ✅ Accept numeric ID directly
+    public function show(int $id): View
     {
-        $job = JobListing::findByHash($hash);
-        abort_if(!$job, 404);
+        $job = JobListing::findOrFail($id);
         return view('jobs.show', ['job' => $job]);
     }
 
@@ -83,7 +82,7 @@ class JobController extends Controller
         $user = Auth::user();
 
         $hasApplied = JobApplication::where('user_id', $user?->id)
-            ->where('job_listing_id', $job->id) // ✅ $job->id use karo
+            ->where('job_listing_id', $job->id)
             ->exists();
 
         return view('jobs.apply', [
@@ -101,11 +100,11 @@ class JobController extends Controller
         $userId = Auth::id();
 
         $existingApplication = JobApplication::where('user_id', $userId)
-            ->where('job_listing_id', $job->id) // ✅ $job->id use karo
+            ->where('job_listing_id', $job->id)
             ->first();
 
         if ($existingApplication !== null) {
-            return redirect()->route('jobs.apply', $job->hashed_id)
+            return redirect()->route('jobs.apply', $job->id)
                 ->with('error', 'You have already applied to this job.');
         }
 
@@ -113,7 +112,7 @@ class JobController extends Controller
 
         $application = JobApplication::create([
             'user_id'          => $userId,
-            'job_listing_id'   => $job->id, // ✅ $job->id use karo
+            'job_listing_id'   => $job->id,
             'applicant_name'   => $request->validated('applicant_name'),
             'applicant_email'  => $request->validated('applicant_email'),
             'applicant_phone'  => $request->validated('applicant_phone'),
@@ -125,7 +124,7 @@ class JobController extends Controller
 
         app(ApplicationNotificationService::class)->notifyEmployer($application);
 
-        return redirect()->route('jobs.apply', $job->hashed_id)
+        return redirect()->route('jobs.apply', $job->id)
             ->with('success', 'Your application has been submitted successfully!');
     }
 }

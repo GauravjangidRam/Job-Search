@@ -157,7 +157,7 @@
                     </div>
                     <div class="mt-3 pt-3 border-t border-border">
     
-                      <a  :href="'/jobs/' + job.hashed_id"
+                      <a  :href="'/jobs/' + job.id"
                         class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-light transition-colors"
                     >
                         View Job
