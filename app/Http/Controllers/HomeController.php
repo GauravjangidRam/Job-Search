@@ -14,7 +14,7 @@ class HomeController extends Controller
 {
     public function index(): View
     {
-        $featuredJobs = JobListing::where('status', 'active')->orderBy('created_at', 'desc')->limit(6)->get();
+        $featuredJobs = JobListing::where('status', 'active')->orderBy('created_at', 'desc')->limit(6)->get()->append('hashed_id');
         $heroJob = $featuredJobs->first();
 
         return view('home', [

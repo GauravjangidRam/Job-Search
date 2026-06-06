@@ -155,6 +155,14 @@
                             <span class="text-xs bg-secondary text-muted px-2 py-0.5 rounded-full" x-text="skill"></span>
                         </template>
                     </div>
+                    <div class="mt-3 pt-3 border-t border-border">
+    
+                      <a  :href="'/jobs/' + job.hashed_id"
+                        class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-light transition-colors"
+                    >
+                        View Job
+                    </a>
+                </div>
                 </div>
             </template>
         </div>

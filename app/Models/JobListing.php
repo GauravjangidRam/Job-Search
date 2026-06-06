@@ -74,13 +74,13 @@ class JobListing extends Model
 
     public function getHashedIdAttribute(): string
     {
-        $hashids = new Hashids(config('app.key'), 8);
+        $hashids = new Hashids(config('hashids.key'), 8);
         return $hashids->encode($this->id);
     }
 
     public static function findByHash(string $hash): ?self
     {
-        $hashids = new Hashids(config('app.key'), 8);
+        $hashids = new Hashids(config('hashids.key'), 8);
         $decoded = $hashids->decode($hash);
         return isset($decoded[0]) ? self::find($decoded[0]) : null;
     }
