@@ -115,7 +115,7 @@
 
                 {{-- Apply Now Button --}}
                 <div class="p-6 md:p-8">
-                    <a href="{{ route('jobs.apply', $job->id) }}" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                    <a href="{{ route('jobs.apply', $job) }}" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         <i data-lucide="send" class="w-5 h-5 mr-2"></i>
                         Apply Now
                     </a>

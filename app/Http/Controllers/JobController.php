@@ -70,10 +70,11 @@ class JobController extends Controller
         ]);
     }
 
-    // ✅ Accept numeric ID directly
-    public function show(int $id): View
+    // Accept hash parameter and decode to find job
+    public function show(string $hash): View
     {
-        $job = JobListing::findOrFail($id);
+        $job = JobListing::findByHash($hash);
+        abort_if(!$job, 404);
         return view('jobs.show', ['job' => $job]);
     }
 
@@ -104,7 +105,7 @@ class JobController extends Controller
             ->first();
 
         if ($existingApplication !== null) {
-            return redirect()->route('jobs.apply', $job->id)
+            return redirect()->route('jobs.apply', $job)
                 ->with('error', 'You have already applied to this job.');
         }
 
@@ -124,7 +125,7 @@ class JobController extends Controller
 
         app(ApplicationNotificationService::class)->notifyEmployer($application);
 
-        return redirect()->route('jobs.apply', $job->id)
+        return redirect()->route('jobs.apply', $job)
             ->with('success', 'Your application has been submitted successfully!');
     }
 }
