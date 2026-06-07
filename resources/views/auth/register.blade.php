@@ -31,17 +31,24 @@
 
             <div>
                 <label for="name" class="text-sm text-foreground">Full name</label>
-                <input type="text" id="name" name="name" value="{{ old('name') }}" required autocomplete="name" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Jane Smith" :disabled="loading">
+                <input type="text" name="name" value="{{ old('name') }}" 
+                required autocomplete="name"
+                :class="loading ? 'opacity-50 pointer-events-none' : ''"
+                class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" 
+                placeholder="Gaurav jangid">
             </div>
 
             <div>
                 <label for="email" class="text-sm text-foreground">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="name@company.com" :disabled="loading">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="name@company.com">
             </div>
 
             <div>
                 <label for="password" class="text-sm text-foreground">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="new-password" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Min 8 characters" :disabled="loading">
+                <input type="password" name="password" required autocomplete="new-password"
+                :class="loading ? 'opacity-50 pointer-events-none' : ''"
+                class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" 
+                placeholder="Min 8 characters">
             </div>
 
             <button type="submit" :disabled="loading" class="w-full py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">

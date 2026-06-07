@@ -48,10 +48,10 @@ class AuthController extends Controller
         ]);
 
         // TODO: Uncomment when email service is configured
-        // $otp = $this->otpService->generate($user);
-        // Mail::to($user->email)->send(new OtpMail($otp));
-        // $request->session()->put('otp_user_id', $user->id);
-        // return redirect('/verify-otp');
+        $otp = $this->otpService->generate($user);
+        Mail::to($user->email)->send(new OtpMail($otp));
+        $request->session()->put('otp_user_id', $user->id);
+        return redirect('/verify-otp');
 
         // Bypass OTP - directly log in the user
         Auth::login($user);
