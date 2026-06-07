@@ -52,7 +52,7 @@ Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
     Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
-    Route::post('/bookmarks/{job}/toggle', [BookmarkController::class, 'toggle'])->name('bookmarks.toggle');
+    Route::post('/bookmarks/{hash}/toggle', [BookmarkController::class, 'toggle'])->where('hash', '[a-zA-Z0-9]+')->name('bookmarks.toggle');
 });
 
 // Seeker routes (auth + role:seeker)
