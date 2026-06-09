@@ -53,12 +53,10 @@
                             @endforeach
                         @endif
                     </div>
-
                     {{-- Salary --}}
                     <p class="text-sm font-semibold text-foreground mb-3">
                         ${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}
                     </p>
-
                     {{-- Footer --}}
                     <div class="mt-auto flex items-center justify-between pt-3 border-t border-border">
                         <span class="text-xs text-muted">
@@ -76,7 +74,6 @@
                 </article>
             @endforeach
         </div>
-
         <div class="mt-6 text-center sm:hidden">
             <a href="{{ route('jobs.index') }}" class="text-sm text-primary hover:underline font-medium">
                 View all jobs &rarr;

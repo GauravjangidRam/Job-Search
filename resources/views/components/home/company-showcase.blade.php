@@ -11,7 +11,6 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>
-
     @if($companies->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach ($companies as $company)
@@ -40,11 +39,9 @@
                             <p class="text-xs text-muted">{{ $company->industry ?? 'Technology' }}</p>
                         </div>
                     </div>
-
                     @if($company->description)
                         <p class="text-xs text-muted line-clamp-2 mb-3">{{ Str::limit($company->description, 100) }}</p>
                     @endif
-
                     <div class="flex items-center justify-between pt-3 border-t border-border">
                         <div class="flex items-center gap-3 text-xs text-muted">
                             @if($company->employee_count)
@@ -69,7 +66,6 @@
                 </a>
             @endforeach
         </div>
-
         <div class="mt-6 text-center sm:hidden">
             <a href="{{ route('companies.index') }}" class="text-sm text-primary hover:underline font-medium">
                 View all companies &rarr;
