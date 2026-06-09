@@ -21,7 +21,6 @@ class OtpService
         $user->otp_expires_at = now()->addMinutes(10);
         $user->otp_attempts = 0;
         $user->save();
-
         return $otp;
     }
 

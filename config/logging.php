@@ -6,7 +6,6 @@ use Monolog\Handler\SyslogUdpHandler;
 use Monolog\Processor\PsrLogMessageProcessor;
 
 return [
-
     /*
     |--------------------------------------------------------------------------
     | Default Log Channel
@@ -17,7 +16,6 @@ return [
     | the channels present in the list of "channels" configured below.
     |
     */
-
     'default' => env('LOG_CHANNEL', 'stack'),
 
     /*
@@ -35,7 +33,6 @@ return [
         'channel' => env('LOG_DEPRECATIONS_CHANNEL', 'null'),
         'trace' => env('LOG_DEPRECATIONS_TRACE', false),
     ],
-
     /*
     |--------------------------------------------------------------------------
     | Log Channels

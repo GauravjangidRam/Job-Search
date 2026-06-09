@@ -8,16 +8,13 @@
                 <h1 class="text-2xl font-bold text-foreground">Verify Your Email</h1>
                 <p class="mt-2 text-sm text-muted">Enter the 6-digit code sent to your email</p>
             </div>
-
             @if (session('status'))
                 <div class="mb-4 rounded-md bg-green-50 dark:bg-green-900/20 border border-green-200 dark:border-green-800 p-4">
                     <p class="text-sm text-green-700 dark:text-green-300">{{ session('status') }}</p>
                 </div>
             @endif
-
             <form method="POST" action="{{ url('/verify-otp') }}">
                 @csrf
-
                 <div class="mb-4">
                     <label for="otp" class="block text-sm font-medium text-foreground mb-1">One-Time Password</label>
                     <input
@@ -45,7 +42,6 @@
                     Verify OTP
                 </button>
             </form>
-
             <div class="mt-6 text-center">
                 <p class="text-sm text-muted mb-2">Didn't receive the code?</p>
                 <form method="POST" action="{{ url('/resend-otp') }}">
