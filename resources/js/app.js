@@ -40,6 +40,28 @@ Alpine.data('heroSearch', () => ({
     }
 }));
 
+// Top Navigation Search
+Alpine.data('topSearch', () => ({
+    open: false,
+    query: '',
+    toggle() {
+        this.open = !this.open;
+        if (this.open) {
+            this.$nextTick(() => {
+                try { this.$refs.input && this.$refs.input.focus(); } catch (e) { /* ignore */ }
+            });
+        }
+    },
+    close() { this.open = false; },
+    submit() {
+        const trimmed = (this.query || '').trim();
+        if (!trimmed) return;
+        const params = new URLSearchParams();
+        params.set('search', trimmed);
+        window.location.href = `/jobs?${params.toString()}`;
+    }
+}));
+
 // Job Discovery Filters
 Alpine.data('jobFilters', (jobs = []) => ({
     jobs: jobs,
