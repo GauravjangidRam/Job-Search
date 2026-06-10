@@ -16,7 +16,6 @@ return new class extends Migration
             $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
             $table->foreignId('job_listing_id')->constrained('job_listings')->cascadeOnDelete();
             $table->timestamps();
-
             $table->unique(['user_id', 'job_listing_id']);
         });
     }
@@ -24,8 +23,7 @@ return new class extends Migration
     /**
      * Reverse the migrations.
      */
-    public function down(): void
-    {
+    public function down(): void {
         Schema::dropIfExists('job_applications');
     }
 };
