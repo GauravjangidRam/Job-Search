@@ -31,7 +31,6 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->view('errors.503', [], 503);
             }
         });
-
         $exceptions->renderable(function (\PDOException $e, Request $request) {
             $connectionErrorCodes = [2002, 1045, 1044, 1049, 2003, 2005, 2006, 2013];
 

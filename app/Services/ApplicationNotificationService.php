@@ -26,7 +26,6 @@ class ApplicationNotificationService
         if ($jobListing === null) {
             return;
         }
-
         $company = $jobListing->company;
 
         if ($company === null) {
