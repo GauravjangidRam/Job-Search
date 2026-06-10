@@ -16,9 +16,17 @@
 
             <!-- Right Side Elements (hidden below 768px) -->
             <div class="hidden md:flex items-center space-x-4">
-                <button type="button" aria-label="Search" class="p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                    <i data-lucide="search" class="w-5 h-5"></i>
-                </button>
+                <div x-data="topSearch" class="relative">
+                    <button type="button" @click="toggle()" aria-label="Search" class="p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                        <i data-lucide="search" class="w-5 h-5"></i>
+                    </button>
+                    <div x-show="open" x-cloak @click.away="close()" class="absolute right-0 mt-2 w-80 bg-card border border-border rounded-md shadow-lg p-2">
+                        <div class="flex items-center gap-2">
+                            <input x-ref="input" x-model="query" @keydown.enter.prevent="submit()" type="text" placeholder="Search jobs or companies" class="w-full px-3 py-2 border rounded bg-transparent focus:outline-none" />
+                            <button type="button" @click="submit()" class="px-3 py-2 bg-primary text-white rounded">Go</button>
+                        </div>
+                    </div>
+                </div>
                 <button type="button" aria-label="Notifications" class="p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                     <i data-lucide="bell" class="w-5 h-5"></i>
                 </button>
