@@ -27,18 +27,15 @@ class JobListing extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Attribute casts.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'skills' => 'array',
-            'salary_min' => 'integer',
-            'salary_max' => 'integer',
-        ];
-    }
+    protected $casts = [
+        'skills' => 'array',
+        'salary_min' => 'integer',
+        'salary_max' => 'integer',
+    ];
 
     /**
      * Get the company that owns the job listing.

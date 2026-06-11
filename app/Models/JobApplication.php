@@ -21,16 +21,13 @@ class JobApplication extends Model
     ];
 
     /**
-     * Get the attributes that should be cast.
+     * Attribute casts.
      *
-     * @return array<string, string>
+     * @var array<string, string>
      */
-    protected function casts(): array
-    {
-        return [
-            'status_updated_at' => 'datetime',
-        ];
-    }
+    protected $casts = [
+        'status_updated_at' => 'datetime',
+    ];
 
     public function user(): BelongsTo
     {
@@ -40,5 +37,10 @@ class JobApplication extends Model
     public function jobListing(): BelongsTo
     {
         return $this->belongsTo(JobListing::class);
+    }
+
+    public function resumeAnalysis(): \Illuminate\Database\Eloquent\Relations\HasOne
+    {
+        return $this->hasOne(\App\Models\ResumeAnalysis::class);
     }
 }
