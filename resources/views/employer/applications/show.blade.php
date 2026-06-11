@@ -90,6 +90,20 @@
                             </svg>
                             Download Resume
                         </a>
+
+                        @if($application->resumeAnalysis)
+                            @php $a = $application->resumeAnalysis->analysis ?? []; @endphp
+                            <div class="mt-4 text-sm text-muted">
+                                <h3 class="font-semibold mb-2">Resume Analysis</h3>
+                                <ul class="list-disc list-inside">
+                                    <li><strong>File:</strong> {{ $a['file_name'] ?? '—' }}</li>
+                                    <li><strong>Size:</strong> {{ isset($a['size_bytes']) ? number_format($a['size_bytes']) . ' bytes' : '—' }}</li>
+                                    <li><strong>MIME:</strong> {{ $a['mime_type'] ?? '—' }}</li>
+                                    <li><strong>Note:</strong> {{ $a['note'] ?? '—' }}</li>
+                                </ul>
+                            </div>
+                        @endif
+
                     </div>
                 @endif
             </section>

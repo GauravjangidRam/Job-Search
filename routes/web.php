@@ -46,6 +46,8 @@ Route::get('/insights', [CareerInsightController::class, 'index'])->name('insigh
 
 // Resume
 Route::get('/resume', [ResumeController::class, 'index'])->name('resume.index');
+// Analyze resume (authenticated users only)
+Route::post('/resume/analyze', [ResumeController::class, 'analyze'])->name('resume.analyze')->middleware('auth');
 
 // Authenticated routes (any authenticated user)
 Route::middleware('auth')->group(function () {

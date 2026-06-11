@@ -7,6 +7,7 @@ use App\Models\JobApplication;
 use App\Models\JobListing;
 use App\Services\ApplicationNotificationService;
 use App\Services\FileUploadService;
+use App\Services\ResumeAnalysisService;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
@@ -96,7 +97,8 @@ class JobController extends Controller
     public function submitApplication(
         JobApplicationRequest $request,
         JobListing $job,
-        FileUploadService $fileUploadService
+        FileUploadService $fileUploadService,
+        ResumeAnalysisService $resumeAnalysisService
     ): RedirectResponse {
         $userId = Auth::id();
 
@@ -124,6 +126,12 @@ class JobController extends Controller
         ]);
 
         app(ApplicationNotificationService::class)->notifyEmployer($application);
+
+        try {
+            $resumeAnalysisService->analyze($application, $resumePath);
+        } catch (\Throwable $e) {
+            \Log::error('Resume analysis failed: ' . $e->getMessage());
+        }
 
         return redirect()->route('jobs.apply', $job->hashed_id)
             ->with('success', 'Your application has been submitted successfully!');
