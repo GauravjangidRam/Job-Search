@@ -39,9 +39,9 @@
             <div class="grid grid-cols-1 md:grid-cols-2 gap-5">
                 @php
                     $tips = [
-                        ['icon' => 'target', 'title' => 'Tailor to Each Job', 'desc' => 'Customize your resume for each application. Use keywords from the job description to pass ATS filters and show relevance.'],
-                        ['icon' => 'bar-chart-2', 'title' => 'Quantify Achievements', 'desc' => 'Use numbers: "Increased revenue by 35%" is stronger than "improved sales." Metrics make your impact tangible.'],
-                        ['icon' => 'scissors', 'title' => 'Keep It Concise', 'desc' => 'One to two pages max. Focus on recent, relevant experience. Remove anything that doesn\'t support your current goals.'],
+                        ['icon' => 'target', 'title' => 'Tailor Your Resume to Each Job', 'desc' => 'Customize your resume for each application. Use keywords from the job description to pass ATS filters and show relevance.'],
+                        ['icon' => 'bar-chart-2', 'title' => 'Quantify Your Achievements', 'desc' => 'Use numbers: "Increased revenue by 35%" is stronger than "improved sales." Metrics make your impact tangible.'],
+                        ['icon' => 'scissors', 'title' => 'Keep It Concise and Relevant', 'desc' => 'One to two pages max. Focus on recent, relevant experience. Remove anything that doesn\'t support your current goals.'],
                         ['icon' => 'zap', 'title' => 'Use Action Verbs', 'desc' => 'Start bullets with "Led," "Built," "Optimized," "Launched." Action verbs show initiative and ownership.'],
                         ['icon' => 'check-circle', 'title' => 'Proofread Everything', 'desc' => 'One typo can cost you the interview. Read aloud, use spell-check, and have someone else review it.'],
                         ['icon' => 'layout', 'title' => 'Clean Formatting', 'desc' => 'Use consistent fonts, clear headings, and enough white space. Avoid tables, images, or fancy graphics that confuse ATS.'],
@@ -107,7 +107,7 @@
 
         {{-- Template Suggestions --}}
         <section class="py-10 px-6 md:px-8">
-            <h2 class="text-2xl font-bold text-foreground mb-2">Choose the Right Template</h2>
+            <h2 class="text-2xl font-bold text-foreground mb-2">Template Suggestions</h2>
             <p class="text-muted text-sm mb-8">Pick a format that matches your industry and experience level</p>
 
             <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-4">
@@ -162,12 +162,13 @@
         <section class="py-10 px-6 md:px-8 mb-12">
             <div class="bg-gradient-to-r from-primary/10 via-primary/5 to-transparent border border-border rounded-xl p-8 md:p-10 text-center">
                 <i data-lucide="sparkles" class="w-10 h-10 text-primary mx-auto mb-4"></i>
-                <h2 class="text-xl md:text-2xl font-bold text-foreground mb-3">Ready to Apply?</h2>
-                <p class="text-muted text-sm max-w-md mx-auto mb-6">Your resume is your first impression. Make it count, then start applying to jobs that match your skills.</p>
-                <a href="{{ route('jobs.index') }}" class="inline-flex items-center gap-2 px-6 py-3 bg-primary text-white font-semibold rounded-lg hover:bg-primary-light transition-colors">
-                    <i data-lucide="search" class="w-4 h-4"></i>
-                    Browse Jobs
-                </a>
+                <h2 class="text-xl md:text-2xl font-bold text-foreground mb-2">Ready to Apply?</h2>
+                <p class="text-sm font-semibold text-foreground mb-3">Resume Builder Coming Soon</p>
+                <p class="text-muted text-sm max-w-md mx-auto mb-6">Your resume is your first impression. Our guided builder is almost ready to help you create a polished resume before you apply.</p>
+                <span class="inline-flex items-center gap-2 px-6 py-3 bg-secondary text-muted font-semibold rounded-lg cursor-not-allowed" aria-disabled="true">
+                    <i data-lucide="clock" class="w-4 h-4"></i>
+                    Coming Soon
+                </span>
             </div>
         </section>
     </div>

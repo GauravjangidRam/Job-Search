@@ -43,7 +43,7 @@ class ResumeControllerTest extends TestCase
         $response->assertSee('aria-disabled="true"', false);
     }
 
-    public function test_coming_soon_cta_does_not_contain_links(): void
+    public function test_cta_section_contains_expected_content(): void
     {
         $response = $this->get('/resume');
 
@@ -51,8 +51,8 @@ class ResumeControllerTest extends TestCase
         $content = $response->getContent();
 
         // Extract the coming soon section
-        $ctaStart = strpos($content, 'Resume Builder Coming Soon');
-        $this->assertNotFalse($ctaStart, 'Coming Soon section should exist');
+        $ctaStart = strpos($content, 'Ready to Apply?');
+        $this->assertNotFalse($ctaStart, 'CTA section should exist');   
 
         // Find the enclosing section
         $sectionStart = strrpos(substr($content, 0, $ctaStart), '<section');
