@@ -2,14 +2,12 @@
 
 @section('content')
     <x-home.navigation-bar />
-
     <div class="max-w-[1400px] mx-auto pt-16">
         <!-- Page Header -->
         <section aria-label="Career Insights Header" class="py-16 px-6 md:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Career Insights</h1>
             <p class="text-lg text-muted max-w-2xl mx-auto">Explore salary data, hiring trends, and in-demand skills to guide your career decisions.</p>
         </section>
-
         <!-- Salary Data Section -->
         <section aria-label="Salary Data" class="py-12 px-6 md:px-8">
             <h2 class="text-2xl font-bold text-foreground mb-8">Salary Data</h2>
@@ -39,7 +37,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
@@ -60,7 +57,6 @@
                         </tbody>
                     </table>
                 </noscript>
-
                 {{-- Screen reader accessible data --}}
                 <div class="sr-only">
                     <h3>Salary data table</h3>
@@ -73,11 +69,9 @@
                 </div>
             @endif
         </section>
-
         <!-- Hiring Trends Section -->
         <section aria-label="Hiring Trends" class="py-12 px-6 md:px-8">
             <h2 class="text-2xl font-bold text-foreground mb-8">Hiring Trends</h2>
-
             @if($insights['trend']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
@@ -112,7 +106,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
@@ -133,7 +126,6 @@
                         </tbody>
                     </table>
                 </noscript>
-
                 {{-- Screen reader accessible data --}}
                 <div class="sr-only">
                     <h3>Hiring trends data</h3>
@@ -146,11 +138,9 @@
                 </div>
             @endif
         </section>
-
         <!-- In-Demand Skills Section -->
         <section aria-label="In-Demand Skills" class="py-12 px-6 md:px-8 mb-16">
             <h2 class="text-2xl font-bold text-foreground mb-8">In-Demand Skills</h2>
-
             @if($insights['skill']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
@@ -175,7 +165,6 @@
                         @endforeach
                     </div>
                 </div>
-
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
