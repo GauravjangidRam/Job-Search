@@ -52,15 +52,15 @@ class ProfileController extends Controller
      * immutable. A newly uploaded avatar is stored via the FileUploadService
      * and its returned path is saved to the user's avatar_path.
      */
-   public function update(ProfileUpdateRequest $request, FileUploadService $fileUploadService): RedirectResponse{
+    public function update(ProfileUpdateRequest $request, FileUploadService $fileUploadService): RedirectResponse
+    {
         $user = Auth::user();
 
         $data = $request->safe()->only(['name', 'phone', 'bio']);
 
         if ($request->hasFile('avatar')) {
-            // Cloudinary URL milega — avatar_url mein save karo
-            $data['avatar_url'] = $fileUploadService->uploadAvatar(
-                $request->file('avatar'), 
+            $data['avatar_path'] = $fileUploadService->uploadAvatar(
+                $request->file('avatar'),
                 $user->id
             );
         }

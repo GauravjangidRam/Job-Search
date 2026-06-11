@@ -29,11 +29,13 @@
                                 ->map(fn ($part) => mb_strtoupper(mb_substr($part, 0, 1)))
                                 ->take(2)
                                 ->implode('');
+                            $avatar = $user->avatar_url
+                                ?? (!empty($user->avatar_path) ? asset('storage/' . ltrim($user->avatar_path, '/')) : null);
                         @endphp
                         <div class="flex items-end gap-5">
                             <div class="relative flex-shrink-0">
-                                @if(!empty($user->avatar_url))
-                                    <img src="{{ $user->avatar_url }}"
+                                @if($avatar)
+                                    <img src="{{ $avatar }}"
                                         alt="{{ $user->name }}'s avatar"
                                         class="h-24 w-24 rounded-full object-cover border-4 border-card bg-background shadow-sm"
                                         onerror="this.style.display='none'; this.nextElementSibling.style.display='flex';"

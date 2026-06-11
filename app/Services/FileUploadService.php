@@ -2,7 +2,6 @@
 
 namespace App\Services;
 
-use App\Services\CloudinaryService;
 use Illuminate\Http\UploadedFile;
 use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Str;
@@ -11,10 +10,7 @@ class FileUploadService
 {
     private const DISK = 'local';
     private const RESUME_DIRECTORY = 'resumes';
-
-    public function __construct(
-        private readonly CloudinaryService $cloudinary
-    ) {}
+    private const AVATAR_DIRECTORY = 'avatars';
     
     /**
      * Resume local disk pe store hoga (private, download ke liye)
@@ -25,15 +21,19 @@ class FileUploadService
         return Storage::disk(self::DISK)->putFileAs(self::RESUME_DIRECTORY, $file, $filename);
     }
 
-    /**
-     * Avatar Cloudinary pe store hoga — URL return karega
-     */
     public function uploadAvatar(UploadedFile $file, int $userId): string
     {
-        return $this->cloudinary->upload($file, 'jobhub/avatars');
+        $filename = $this->buildAvatarFilename($file, $userId);
+        return Storage::disk(self::DISK)->putFileAs(self::AVATAR_DIRECTORY, $file, $filename);
     }
 
     private function buildResumeFilename(UploadedFile $file, int $userId): string
+    {
+        $sanitizedOriginalName = $this->sanitizeOriginalName($file);
+        return sprintf('%d_%d_%s_%s', $userId, now()->getTimestamp(), Str::random(8), $sanitizedOriginalName);
+    }
+
+    private function buildAvatarFilename(UploadedFile $file, int $userId): string
     {
         $sanitizedOriginalName = $this->sanitizeOriginalName($file);
         return sprintf('%d_%d_%s_%s', $userId, now()->getTimestamp(), Str::random(8), $sanitizedOriginalName);
