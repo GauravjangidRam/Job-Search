@@ -10,6 +10,7 @@ class ResumeAnalysis extends Model
     protected $table = 'resume_analyses';
 
     protected $fillable = [
+        'user_id',
         'job_application_id',
         'resume_path',
         'analysis',
@@ -23,5 +24,10 @@ class ResumeAnalysis extends Model
     public function jobApplication(): BelongsTo
     {
         return $this->belongsTo(JobApplication::class);
+    }
+
+    public function user(): BelongsTo
+    {
+        return $this->belongsTo(User::class);
     }
 }

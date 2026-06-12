@@ -44,14 +44,11 @@ Route::get('/companies/{slug}', [CompanyController::class, 'show'])->name('compa
 // Career Insights
 Route::get('/insights', [CareerInsightController::class, 'index'])->name('insights.index');
 
-// Resume
-Route::get('/resume', [ResumeController::class, 'index'])->name('resume.index');
-// Analyze resume (authenticated users only)
-Route::post('/resume/analyze', [ResumeController::class, 'analyze'])->name('resume.analyze')->middleware('auth');
-
 // Authenticated routes (any authenticated user)
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
+    Route::get('/resume', [ResumeController::class, 'index'])->name('resume.index');
+    Route::post('/resume/analyze', [ResumeController::class, 'analyze'])->name('resume.analyze');
     Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
     Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
     Route::post('/bookmarks/{hash}/toggle', [BookmarkController::class, 'toggle'])->where('hash', '[a-zA-Z0-9]+')->name('bookmarks.toggle');

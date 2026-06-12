@@ -41,6 +41,11 @@ class User extends Authenticatable
         return $this->hasMany(JobApplication::class, 'user_id');
     }
 
+    public function resumeAnalyses(): HasMany
+    {
+        return $this->hasMany(ResumeAnalysis::class);
+    }
+
     /**
      * Get the bookmarks saved by the user (as a seeker).
      */

@@ -5,22 +5,33 @@ namespace App\Http\Controllers;
 use Illuminate\View\View;
 use Illuminate\Http\Request;
 use App\Services\FileUploadService;
+use App\Services\ResumeAnalysisService;
 use App\Models\ResumeAnalysis;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
-use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
 {
     public function index(): View
     {
-        return view('resume.index');
+        $latestAnalysis = ResumeAnalysis::query()
+            ->where('user_id', Auth::id())
+            ->latest()
+            ->first();
+
+        return view('resume.index', [
+            'latestAnalysis' => $latestAnalysis,
+        ]);
     }
 
     /**
      * Handle resume analysis upload (authenticated users only)
      */
-    public function analyze(Request $request, FileUploadService $fileUploadService): RedirectResponse
+    public function analyze(
+        Request $request,
+        FileUploadService $fileUploadService,
+        ResumeAnalysisService $resumeAnalysisService
+    ): RedirectResponse
     {
         $request->validate([
             'resume' => ['required', 'file', 'mimes:pdf,doc,docx', 'max:5120'],
@@ -29,32 +40,12 @@ class ResumeController extends Controller
         $userId = Auth::id();
         $resumePath = $fileUploadService->uploadResume($request->file('resume'), $userId);
 
-        try {
-            $size = Storage::disk('local')->size($resumePath);
-        } catch (\Throwable $e) {
-            $size = null;
-        }
+        $resumeAnalysisService->analyzeUserResume(
+            Auth::user(),
+            $resumePath,
+            $request->file('resume')->getClientOriginalName()
+        );
 
-        try {
-            $mime = Storage::disk('local')->mimeType($resumePath);
-        } catch (\Throwable $e) {
-            $mime = null;
-        }
-
-        $analysis = [
-            'file_name' => basename($resumePath),
-            'size_bytes' => $size,
-            'mime_type' => $mime,
-            'note' => 'Uploaded by user for quick analysis',
-        ];
-
-        ResumeAnalysis::create([
-            'job_application_id' => null,
-            'resume_path' => $resumePath,
-            'analysis' => $analysis,
-            'provider' => 'local-metadata',
-        ]);
-
-        return redirect()->route('resume.index')->with('success', 'Resume uploaded and analyzed successfully.');
+        return redirect()->route('resume.index')->with('success', 'Resume analyzed successfully. Your report is ready.');
     }
 }
