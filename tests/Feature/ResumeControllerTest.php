@@ -12,11 +12,9 @@ use Tests\TestCase;
 class ResumeControllerTest extends TestCase
 {
     use RefreshDatabase;
-
     public function test_guest_is_redirected_to_login_before_resume_page(): void
     {
         $response = $this->get('/resume');
-
         $response->assertRedirect(route('login'));
     }
 
@@ -54,7 +52,6 @@ class ResumeControllerTest extends TestCase
         $response = $this->actingAs($user)->post('/resume/analyze', [
             'resume' => $resume,
         ]);
-
         $response->assertSessionHasNoErrors();
         $response->assertRedirect(route('resume.index'));
         $response->assertSessionHas('success', 'Resume analyzed successfully. Your report is ready.');
@@ -69,7 +66,6 @@ class ResumeControllerTest extends TestCase
         $this->assertArrayHasKey('checks', $analysis->analysis);
         $this->assertArrayHasKey('suggestions', $analysis->analysis);
         Storage::disk('local')->assertExists($analysis->resume_path);
-
         $page = $this->actingAs($user)->get('/resume');
 
         $page->assertSee('Latest report');
@@ -87,7 +83,6 @@ class ResumeControllerTest extends TestCase
         $response = $this->actingAs($user)->post('/resume/analyze', [
             'resume' => UploadedFile::fake()->image('avatar.png'),
         ]);
-
         $response->assertSessionHasErrors('resume');
         $this->assertDatabaseCount('resume_analyses', 0);
     }

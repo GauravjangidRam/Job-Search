@@ -16,9 +16,7 @@ class CompanyControllerTest extends TestCase
         Company::create(['name' => 'Zebra Corp', 'slug' => 'zebra-corp']);
         Company::create(['name' => 'Alpha Inc', 'slug' => 'alpha-inc']);
         Company::create(['name' => 'Mango Ltd', 'slug' => 'mango-ltd']);
-
         $response = $this->get('/companies');
-
         $response->assertStatus(200);
         $response->assertViewIs('companies.index');
         $response->assertViewHas('companies');
@@ -33,7 +31,6 @@ class CompanyControllerTest extends TestCase
         for ($i = 1; $i <= 15; $i++) {
             Company::create(['name' => "Company {$i}", 'slug' => "company-{$i}"]);
         }
-
         $response = $this->get('/companies');
 
         $response->assertStatus(200);
