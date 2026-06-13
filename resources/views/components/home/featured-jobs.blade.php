@@ -42,7 +42,6 @@
                             <p class="text-xs text-muted">{{ $job->company_name }} &middot; {{ $job->location }}</p>
                         </div>
                     </div>
-
                     {{-- Tags --}}
                     <div class="flex flex-wrap gap-1.5 mb-3">
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->job_type }}</span>
@@ -70,7 +69,7 @@
                             View Job
                             <i data-lucide="arrow-right" class="w-3 h-3"></i>
                         </a>
-                    </div>
+                    </div> 
                 </article>
             @endforeach
         </div>
