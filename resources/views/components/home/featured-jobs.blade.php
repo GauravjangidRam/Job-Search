@@ -11,7 +11,6 @@
             <i data-lucide="arrow-right" class="w-4 h-4"></i>
         </a>
     </div>
-
     @if($featuredJobs->count() > 0)
         <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-5">
             @foreach ($featuredJobs as $job)
@@ -41,7 +40,7 @@
                             </h3>
                             <p class="text-xs text-muted">{{ $job->company_name }} &middot; {{ $job->location }}</p>
                         </div>
-                    </div>
+                    </div> 
                     {{-- Tags --}}
                     <div class="flex flex-wrap gap-1.5 mb-3">
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->job_type }}</span>
@@ -85,4 +84,4 @@
             <p class="text-muted text-xs">Job listings will appear here once employers start posting.</p>
         </div>
     @endif
-</section>
+</section> 
