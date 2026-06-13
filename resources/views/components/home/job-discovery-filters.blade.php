@@ -5,13 +5,12 @@
     class="space-y-8"
     aria-labelledby="job-discovery-heading"
     role="region"
->
+> 
     {{-- Section Heading --}}
     <div class="text-center mb-8">
         <h2 id="job-discovery-heading" class="text-3xl font-bold text-foreground">Discover Jobs</h2>
         <p class="text-muted mt-2">Filter opportunities by your preferences</p>
     </div>
-
     {{-- Filter Categories --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
         {{-- Job Type --}}

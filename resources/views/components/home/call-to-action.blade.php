@@ -1,7 +1,6 @@
 @php
     $isGuest = !auth()->check();
 @endphp
-
 <section aria-labelledby="cta-heading" class="bg-gradient-to-r from-primary to-primary/80 rounded-xl px-6 py-16 md:px-12 md:py-20 text-center">
     <h2 id="cta-heading" class="text-3xl md:text-4xl font-bold text-white mb-4">
         Ready to find your next opportunity?
@@ -30,4 +29,4 @@
             </a>
         @endif
     </div>
-</section>
+</section> 
