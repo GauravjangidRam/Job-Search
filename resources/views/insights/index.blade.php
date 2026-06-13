@@ -7,18 +7,17 @@
         <section aria-label="Career Insights Header" class="py-16 px-6 md:px-8 text-center">
             <h1 class="text-4xl md:text-5xl font-bold text-foreground mb-4">Career Insights</h1>
             <p class="text-lg text-muted max-w-2xl mx-auto">Explore salary data, hiring trends, and in-demand skills to guide your career decisions.</p>
-        </section>
+        </section> 
         <!-- Salary Data Section -->
         <section aria-label="Salary Data" class="py-12 px-6 md:px-8">
             <h2 class="text-2xl font-bold text-foreground mb-8">Salary Data</h2>
-
             @if($insights['salary']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
                 {{-- CSS Bar Chart --}}
                 <div class="bg-card border border-border rounded-card p-6" role="img" aria-label="Bar chart showing salary data by role">
                     <div class="space-y-4">
-                        @php
+                        @php 
                             $salaryData = $insights['salary']->take(10);
                             $maxSalary = $salaryData->max('value') ?: 1;
                         @endphp
@@ -36,7 +35,7 @@
                             </div>
                         @endforeach
                     </div>
-                </div>
+                </div> 
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">

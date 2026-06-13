@@ -11,7 +11,7 @@
         <section aria-label="Job Discovery Filters" class="py-20 px-6 md:px-8">
             <x-home.job-discovery-filters :featuredJobs="$featuredJobs" />
         </section>
-
+ 
         <section aria-label="Featured Jobs" class="py-20 px-6 md:px-8">
             <x-home.featured-jobs :featuredJobs="$featuredJobs" />
         </section>
