@@ -6,13 +6,11 @@
     <title>Your Job Hub Verification Code</title>
 </head>
 <body style="margin: 0; padding: 0; background-color: #f4f4f7; font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', Roboto, Helvetica, Arial, sans-serif;">
-
     <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="background-color: #f4f4f7; padding: 40px 0;">
         <tr>
             <td align="center">
                 <table role="presentation" width="600" cellspacing="0" cellpadding="0" style="max-width: 600px; width: 100%;">
-
-                    {{-- Header / Brand --}}
+                    {{-- Header / Brand --}} 
                     <tr>
                         <td align="center" style="padding: 0 0 24px 0;">
                             <table role="presentation" cellspacing="0" cellpadding="0">
@@ -36,7 +34,7 @@
                                 <tr>
                                     <td style="background-color: #ea580c; height: 6px; font-size: 0; line-height: 0;">&nbsp;</td>
                                 </tr>
-                            </table>
+                            </table> 
 
                             {{-- Body --}}
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
@@ -51,7 +49,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-
                                         {{-- Title --}}
                                         <h1 style="margin: 0 0 12px; font-size: 26px; font-weight: 700; color: #111827; text-align: center; letter-spacing: -0.5px;">
                                             Verify Your Email
