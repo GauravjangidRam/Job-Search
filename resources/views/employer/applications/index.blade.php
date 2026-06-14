@@ -8,7 +8,6 @@
             <div class="flex flex-col lg:flex-row gap-8">
                 {{-- Sidebar --}}
                 <x-employer.sidebar />
-
                 {{-- Main Content --}}
                 <div class="flex-1 min-w-0">
                     {{-- Header --}}
@@ -16,14 +15,12 @@
                         <h1 class="text-2xl font-bold text-foreground">Applications</h1>
                         <p class="text-muted text-sm mt-1">Review and manage applications for your job listings.</p>
                     </div>
-
                     {{-- Success Message --}}
                     @if(session('success'))
                         <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium text-sm" role="alert">
                             {{ session('success') }}
                         </div>
                     @endif
-
                     {{-- Filters --}}
                     <form method="GET" action="{{ route('employer.applications.index') }}" class="bg-card border border-border rounded-xl shadow-sm p-4 mb-6">
                         <div class="flex flex-wrap items-end gap-3">
