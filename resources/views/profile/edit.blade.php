@@ -1,13 +1,12 @@
 @extends('layouts.app')
 
 @section('content')
-    <x-home.navigation-bar />
+    <x-home.navigation-bar /> 
 
     <div class="max-w-[800px] mx-auto pt-16">
         <div class="py-12 px-6 md:px-8">
             <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-2">Edit Profile</h1>
             <p class="text-muted mb-8">Update your personal details and avatar.</p>
-
             {{-- Success Message --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
@@ -36,7 +35,6 @@
                 >
                     @csrf
                     @method('PUT')
-
                     {{-- Name --}}
                     <div class="mb-6">
                         <label for="name" class="block text-sm font-medium mb-1">Name <span class="text-red-600">*</span></label>
