@@ -106,7 +106,7 @@
             <a href="{{ route('insights.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Career Insights</a>
             <a href="{{ route('resume.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Resume</a>
             <div class="pt-3 border-t border-border">
-                @guest
+                @guest 
                     <a href="{{ route('employer.register') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
                         For Employers
                     </a>
@@ -145,4 +145,4 @@
             </div>
         </div>
     </div>
-</nav>
+</nav> 

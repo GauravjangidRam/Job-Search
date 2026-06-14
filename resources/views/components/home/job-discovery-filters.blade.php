@@ -5,7 +5,7 @@
     class="space-y-8"
     aria-labelledby="job-discovery-heading"
     role="region"
-> 
+>  
     {{-- Section Heading --}}
     <div class="text-center mb-8">
         <h2 id="job-discovery-heading" class="text-3xl font-bold text-foreground">Discover Jobs</h2>
@@ -31,7 +31,6 @@
                 </template>
             </div>
         </div>
-
         {{-- Location --}}
         <div>
             <h3 class="text-sm font-semibold text-foreground mb-3">Location</h3>
