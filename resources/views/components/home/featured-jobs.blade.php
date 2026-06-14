@@ -2,7 +2,7 @@
 
 <section aria-labelledby="featured-jobs-heading">
     <div class="flex items-center justify-between mb-8">
-        <div>
+        <div> 
             <h2 id="featured-jobs-heading" class="text-2xl md:text-3xl font-bold text-foreground">Latest Job Openings</h2>
             <p class="text-muted text-sm mt-1">Fresh opportunities added recently</p>
         </div>
@@ -41,7 +41,7 @@
                             <p class="text-xs text-muted">{{ $job->company_name }} &middot; {{ $job->location }}</p>
                         </div>
                     </div> 
-                    {{-- Tags --}}
+                    {{-- Tags --}} 
                     <div class="flex flex-wrap gap-1.5 mb-3">
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->job_type }}</span>
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->location_type }}</span>
