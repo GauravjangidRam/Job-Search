@@ -11,7 +11,7 @@ return Application::configure(basePath: dirname(__DIR__))
         web: __DIR__.'/../routes/web.php',
         commands: __DIR__.'/../routes/console.php',
         health: '/up',
-    )
+    ) 
     ->withMiddleware(function (Middleware $middleware): void {
         $middleware->trustProxies(at: '*');
         $middleware->alias([
@@ -38,4 +38,4 @@ return Application::configure(basePath: dirname(__DIR__))
                 return response()->view('errors.503', [], 503);
             }
         });
-    })->create();
+    })->create(); 
