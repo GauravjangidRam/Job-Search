@@ -10,14 +10,13 @@
         }
     }
     $initials = mb_substr($initials, 0, 2);
-
     // Deterministic background color from company name
     $colorHex = str_pad(dechex(crc32($name) & 0xFFFFFF), 6, '0', STR_PAD_LEFT);
 
     // Build the UI Avatars placeholder URL
     $placeholderUrl = 'https://ui-avatars.com/api/?name=' . urlencode($initials) . '&background=' . $colorHex . '&color=fff&size=' . $size;
 @endphp
-
+ 
 @if($logo_url)
     <img
         src="{{ $logo_url }}"
