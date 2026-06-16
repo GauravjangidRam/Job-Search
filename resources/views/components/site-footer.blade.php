@@ -21,7 +21,7 @@
                 </ul>
             </div>
 
-            {{-- Resources --}}
+            {{-- Resources --}} 
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">Resources</h3>
                 <ul class="space-y-2.5">
@@ -53,4 +53,4 @@
             <p class="text-xs text-muted">&copy; {{ date('Y') }} Job Hub. All rights reserved.</p>
         </div>
     </div>
-</footer>
+</footer> 
