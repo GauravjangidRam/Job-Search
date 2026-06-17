@@ -6,6 +6,7 @@ use App\Models\JobApplication;
 use App\Models\ResumeAnalysis;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use ZipArchive;
 
@@ -48,7 +49,7 @@ class ResumeAnalysisService
         $signals = $this->analyzeContentSignals($content);
         $score = $this->calculateScore($size, $extension, $signals);
 
-        return [
+        $report = [
             'file_name' => $displayName,
             'size_bytes' => $size,
             'mime_type' => $mime,
@@ -60,6 +61,45 @@ class ResumeAnalysisService
             'checks' => $this->buildChecks($size, $mime, $extension, $signals),
             'suggestions' => $this->buildSuggestions($signals, $extension, $size),
         ];
+
+        // If a Gemini API key is configured, augment the report with a model-generated
+        // ATS assessment, summary, strengths, and prioritized suggestions.
+        try {
+            $geminiKey = env('GEMINI_API_KEY');
+            if (!empty($geminiKey) && !empty($content)) {
+                $external = $this->fetchGeminiAnalysis($content, $geminiKey);
+
+                if (!empty($external['summary'])) {
+                    $report['summary'] = $external['summary'];
+                }
+
+                if (!empty($external['suggestions']) && is_array($external['suggestions'])) {
+                    // merge AI + local suggestions, dedupe, keep top 5
+                    $merged = array_values(array_unique(array_merge($external['suggestions'], $report['suggestions'])));
+                    $report['suggestions'] = array_slice($merged, 0, 5);
+                }
+
+                if (isset($external['ats_score']) && is_numeric($external['ats_score'])) {
+                    // Kept alongside the deterministic local `score` rather than overwriting it,
+                    // so you can compare the rule-based score against the model's judgement.
+                    $report['ai_ats_score'] = max(0, min(100, (int) $external['ats_score']));
+                }
+
+                if (!empty($external['strengths'])) {
+                    $report['strengths'] = $external['strengths'];
+                }
+
+                if (!empty($external['missing_keywords'])) {
+                    $report['missing_keywords'] = $external['missing_keywords'];
+                }
+
+                $report['external_analysis'] = $external;
+            }
+        } catch (\Throwable $e) {
+            // ignore external failures and keep local report
+        }
+
+        return $report;
     }
 
     private function readSize(string $resumePath): ?int
@@ -364,6 +404,110 @@ class ResumeAnalysisService
         }
 
         return array_slice(array_unique($suggestions), 0, 5);
+    }
+
+    /**
+     * Ask Gemini to act as an experienced resume/ATS reviewer and return a
+     * compact, strictly-structured JSON verdict. Using responseSchema (instead
+     * of free text) means no fragile regex parsing on our side, and a tight
+     * maxOutputTokens keeps each call cheap and fast.
+     */
+    private function fetchGeminiAnalysis(string $content, string $apiKey): array
+    {
+        // gemini-2.0-flash / flash-lite were retired June 2026; gemini-2.5-flash is
+        // the current low-cost, low-latency default. Override via GEMINI_MODEL in .env.
+        $model = env('GEMINI_MODEL', 'gemini-2.5-flash');
+        $baseUrl = env('GEMINI_API_URL', 'https://generativelanguage.googleapis.com/v1beta');
+        $url = rtrim($baseUrl, '/') . '/models/' . $model . ':generateContent';
+
+        // Persona + rules. Kept short on purpose: every extra sentence here is
+        // extra input tokens on every single resume analyzed.
+        $persona = 'You are a senior technical recruiter and ATS (Applicant Tracking System) '
+            . 'specialist with 12+ years of experience screening resumes for tech and corporate roles. '
+            . 'Judge the resume strictly on structure, keyword relevance, measurable achievements, and '
+            . 'contact completeness. Be concise: short, direct sentences, no filler, no markdown.';
+
+        // Cap input length so a long resume (or someone pasting a whole portfolio) never
+        // balloons the request — a 1-2 page resume comfortably fits in 6000 characters.
+        $promptText = $persona . "\n\nResume text:\n" . Str::limit($content, 6000, '');
+
+        $responseSchema = [
+            'type' => 'object',
+            'properties' => [
+                'ats_score' => [
+                    'type' => 'integer',
+                    'description' => 'Overall ATS-compatibility and content-quality score, 0-100.',
+                ],
+                'summary' => [
+                    'type' => 'string',
+                    'description' => 'One to two sentence overall verdict.',
+                ],
+                'strengths' => [
+                    'type' => 'array',
+                    'items' => ['type' => 'string'],
+                    'maxItems' => 3,
+                ],
+                'suggestions' => [
+                    'type' => 'array',
+                    'description' => 'Prioritized, actionable improvements, most important first.',
+                    'items' => ['type' => 'string'],
+                    'maxItems' => 5,
+                ],
+                'missing_keywords' => [
+                    'type' => 'array',
+                    'description' => 'Relevant role/tool/skill keywords the resume is missing.',
+                    'items' => ['type' => 'string'],
+                    'maxItems' => 8,
+                ],
+            ],
+            'required' => ['ats_score', 'summary', 'suggestions'],
+        ];
+
+        $body = [
+            'contents' => [
+                ['role' => 'user', 'parts' => [['text' => $promptText]]],
+            ],
+            'generationConfig' => [
+                'maxOutputTokens' => 500,
+                'temperature' => 0.4,
+                'responseMimeType' => 'application/json',
+                'responseSchema' => $responseSchema,
+            ],
+        ];
+
+        try {
+            $resp = Http::withOptions(['verify' => true])
+                ->withHeaders(['Content-Type' => 'application/json'])
+                ->timeout(20)
+                ->post($url . '?key=' . $apiKey, $body);
+
+            if (! $resp->successful()) {
+                return ['error' => 'Gemini request failed', 'status' => $resp->status(), 'raw' => $resp->body()];
+            }
+
+            $json = $resp->json();
+            $text = $json['candidates'][0]['content']['parts'][0]['text'] ?? null;
+
+            if (! $text) {
+                return ['error' => 'Empty response from Gemini', 'response_json' => $json];
+            }
+
+            $parsed = json_decode($text, true);
+
+            if (! is_array($parsed)) {
+                return ['error' => 'Could not parse Gemini JSON response', 'raw' => $text];
+            }
+
+            return [
+                'ats_score' => $parsed['ats_score'] ?? null,
+                'summary' => $parsed['summary'] ?? null,
+                'strengths' => array_values(array_filter($parsed['strengths'] ?? [])),
+                'suggestions' => array_slice(array_values(array_filter($parsed['suggestions'] ?? [])), 0, 5),
+                'missing_keywords' => array_slice(array_values(array_filter($parsed['missing_keywords'] ?? [])), 0, 8),
+            ];
+        } catch (\Throwable $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     private function normalizeText(string $text): string
