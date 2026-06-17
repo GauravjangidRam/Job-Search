@@ -16,13 +16,12 @@ class OtpService
     public function generate(User $user): string
     {
         $otp = str_pad((string) random_int(0, 999999), 6, '0', STR_PAD_LEFT);
-
         $user->otp = Hash::make($otp);
         $user->otp_expires_at = now()->addMinutes(10);
         $user->otp_attempts = 0;
         $user->save();
         return $otp;
-    }
+    } 
 
     /**
      * Verify the submitted OTP against the stored hash.

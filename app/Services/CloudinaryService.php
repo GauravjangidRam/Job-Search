@@ -26,12 +26,11 @@ class CloudinaryService
             $file->getRealPath(),
             ['folder' => $folder]
         );
-
         return $result['secure_url'];
     }
 
     public function delete(string $publicId): void
     {
         $this->cloudinary->uploadApi()->destroy($publicId);
-    }
+    } 
 }
