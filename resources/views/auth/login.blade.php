@@ -21,12 +21,12 @@
             @csrf
             <div>
                 <label for="email" class="text-sm text-foreground">Email</label>
-                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm @error('email') border-red-500 @enderror" placeholder="name@company.com" :disabled="loading">
+                <input type="email" id="email" name="email" value="{{ old('email') }}" required autocomplete="email" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm @error('email') border-red-500 @enderror" placeholder="name@company.com">
                 @error('email')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
             <div>
                 <label for="password" class="text-sm text-foreground">Password</label>
-                <input type="password" id="password" name="password" required autocomplete="current-password" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm @error('password') border-red-500 @enderror" placeholder="••••••••" :disabled="loading">
+                <input type="password" id="password" name="password" required autocomplete="current-password" class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm @error('password') border-red-500 @enderror" placeholder="••••••••">
                 @error('password')<p class="text-red-600 text-xs mt-1">{{ $message }}</p>@enderror
             </div>
             <button type="submit" :disabled="loading" class="w-full py-3 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors mt-2 disabled:opacity-70 disabled:cursor-not-allowed flex items-center justify-center gap-2">

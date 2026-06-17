@@ -290,19 +290,14 @@ class ResumeAnalysisService
 
     private function extractPdfText(string $absolutePath): string
     {
-        $raw = @file_get_contents($absolutePath);
-
-        if (! is_string($raw) || $raw === '') {
+        try {
+            $parser = new \Smalot\PdfParser\Parser();
+            $pdf    = $parser->parseFile($absolutePath);
+            $text = $pdf->getText();
+            return $this->normalizeText($text);
+        } catch (\Throwable $e) {
             return '';
         }
-
-        preg_match_all('/\(([^()]*)\)\s*Tj|\[([^\]]*)\]\s*TJ/s', $raw, $matches);
-        $chunks = array_filter(array_merge($matches[1] ?? [], $matches[2] ?? []));
-        $text = implode(' ', $chunks);
-        $text = preg_replace('/\\\\[nrtbf()\\\\]/', ' ', $text) ?? $text;
-        $text = preg_replace('/<([0-9A-Fa-f]{2})>/', ' ', $text) ?? $text;
-
-        return $this->normalizeText($text);
     }
 
     private function analyzeContentSignals(string $content): array
@@ -484,7 +479,6 @@ class ResumeAnalysisService
             if (! $resp->successful()) {
                 return ['error' => 'Gemini request failed', 'status' => $resp->status(), 'raw' => $resp->body()];
             }
-
             $json = $resp->json();
             $text = $json['candidates'][0]['content']['parts'][0]['text'] ?? null;
 
