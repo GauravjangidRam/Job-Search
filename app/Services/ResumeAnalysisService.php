@@ -397,7 +397,6 @@ class ResumeAnalysisService
 
         try {
             $prompt = "You are a resume assistant. Given the resume text below, provide:\n1) a short (1-2 sentence) summary,\n2) up to 5 prioritized improvement suggestions (one per line),\n3) comma-separated keywords to add.\n\nResume:\n" . $content;
-
             $body = [
                 'prompt' => ['text' => $prompt],
                 'maxOutputTokens' => 512,
@@ -457,7 +456,7 @@ class ResumeAnalysisService
 
             if (preg_match('/keywords?:\s*(.+)/i', $text, $mk)) {
                 $keywords = array_map('trim', explode(',', $mk[1]));
-            }
+            } 
 
             return [
                 'summary' => $summary,
