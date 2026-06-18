@@ -164,7 +164,7 @@
                     @endif
                 </div>
             </div>
-        </section>
+        </section> 
 
         {{-- Quick Stats --}}
         <section class="px-6 md:px-8 mb-12">
@@ -200,7 +200,7 @@
                         ['icon' => 'layout', 'title' => 'Clean Formatting', 'desc' => 'Use consistent fonts, clear headings, and enough white space. Avoid tables, images, or fancy graphics that confuse ATS.'],
                     ];
                 @endphp
-
+ 
                 @foreach($tips as $tip)
                     <div class="bg-card border border-border rounded-xl p-5 flex gap-4">
                         <div class="flex-shrink-0 w-10 h-10 rounded-lg bg-primary/10 flex items-center justify-center">
