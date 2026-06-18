@@ -7,7 +7,6 @@
         <div class="py-10 px-6 md:px-8">
             <div class="flex flex-col lg:flex-row gap-8">
                 <x-admin.sidebar />
-
                 <div class="flex-1 min-w-0">
                     <div class="flex items-center justify-between mb-6">
                         <div>
@@ -21,7 +20,6 @@
                             </span>
                         @endif
                     </div>
-
                     @if(session('success'))
                         <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium text-sm" role="alert">
                             {{ session('success') }}
