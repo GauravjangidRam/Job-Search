@@ -93,14 +93,14 @@
                             <div>
                                 <div class="flex flex-wrap items-center gap-2">
                                     <p class="text-xs font-semibold uppercase tracking-wide text-primary">Latest report</p>
-                                    <span class="rounded-md bg-secondary px-2 py-1 text-xs font-semibold text-muted">Local AI report</span>
+                                    <span class="rounded-md bg-secondary px-2 py-1 text-xs font-semibold text-muted">{{ isset($report['ai_ats_score']) ? 'AI Report' : 'Local Report' }}</span>
                                 </div>
                                 <h2 class="text-xl font-bold text-foreground mt-2">{{ $report['file_name'] ?? 'Uploaded resume' }}</h2>
                                 <p class="text-sm text-muted mt-2">{{ $report['summary'] ?? 'Your resume report is ready.' }}</p>
                             </div>
                             <div class="shrink-0 rounded-lg border border-border bg-secondary px-5 py-4 text-center">
-                                <p class="text-3xl font-bold text-primary">{{ $score }}</p>
-                                <p class="text-xs font-semibold text-muted">Readiness score</p>
+                                <p class="text-3xl font-bold text-primary">{{ $report['ai_ats_score'] ?? $score }}</p>
+                                <p class="text-xs font-semibold text-muted">ATS Score</p>
                             </div>
                         </div>
 
@@ -126,7 +126,7 @@
                         </div>
 
                         <h3 class="text-sm font-semibold text-foreground mb-3">Suggested improvements</h3>
-                        <div class="space-y-3">
+                        <div class="space-y-3 mb-6">
                             @foreach($suggestions as $suggestion)
                                 <div class="flex gap-3">
                                     <i data-lucide="arrow-up-right" class="w-4 h-4 text-primary shrink-0 mt-0.5"></i>
@@ -134,6 +134,27 @@
                                 </div>
                             @endforeach
                         </div>
+
+                        @if(!empty($report['strengths']))
+                            <h3 class="text-sm font-semibold text-foreground mb-3">Key Strengths</h3>
+                            <div class="space-y-3 mb-6">
+                                @foreach($report['strengths'] as $strength)
+                                    <div class="flex gap-3">
+                                        <i data-lucide="check-circle" class="w-4 h-4 text-green-600 shrink-0 mt-0.5"></i>
+                                        <p class="text-sm text-muted">{{ $strength }}</p>
+                                    </div>
+                                @endforeach
+                            </div>
+                        @endif
+
+                        @if(!empty($report['missing_keywords']))
+                            <h3 class="text-sm font-semibold text-foreground mb-3">Missing Keywords</h3>
+                            <div class="flex flex-wrap gap-2 mb-6">
+                                @foreach($report['missing_keywords'] as $keyword)
+                                    <span class="inline-flex items-center rounded-md bg-red-50 px-2 py-1 text-xs font-medium text-red-700 ring-1 ring-inset ring-red-600/10">{{ $keyword }}</span>
+                                @endforeach
+                            </div>
+                        @endif
                     @else
                         <div class="flex min-h-[320px] flex-col items-center justify-center text-center">
                             <i data-lucide="file-search" class="w-12 h-12 text-primary mb-4"></i>

@@ -6,6 +6,7 @@ use App\Models\JobApplication;
 use App\Models\ResumeAnalysis;
 use App\Models\User;
 use Illuminate\Support\Facades\Storage;
+use Illuminate\Support\Facades\Http;
 use Illuminate\Support\Str;
 use ZipArchive;
 
@@ -48,7 +49,7 @@ class ResumeAnalysisService
         $signals = $this->analyzeContentSignals($content);
         $score = $this->calculateScore($size, $extension, $signals);
 
-        return [
+        $report = [
             'file_name' => $displayName,
             'size_bytes' => $size,
             'mime_type' => $mime,
@@ -60,6 +61,28 @@ class ResumeAnalysisService
             'checks' => $this->buildChecks($size, $mime, $extension, $signals),
             'suggestions' => $this->buildSuggestions($signals, $extension, $size),
         ];
+
+        // If a Gemini API key is configured, attempt to augment the report with a model-generated summary and suggestions.
+        try {
+            $geminiKey = env('GEMINI_API_KEY');
+            dd($geminiKey);
+            if (!empty($geminiKey) && !empty($content)) {
+                $external = $this->fetchGeminiAnalysis($content, $geminiKey);
+                if (!empty($external['summary'])) {
+                    $report['summary'] = $external['summary'];
+                }
+                if (!empty($external['suggestions']) && is_array($external['suggestions'])) {
+                    // merge and dedupe, keep top 5
+                    $merged = array_values(array_unique(array_merge($external['suggestions'], $report['suggestions'])));
+                    $report['suggestions'] = array_slice($merged, 0, 5);
+                }
+                $report['external_analysis'] = $external;
+            }
+        } catch (\Throwable $e) {
+            // ignore external failures and keep local report
+        }
+
+        return $report;
     }
 
     private function readSize(string $resumePath): ?int
@@ -364,6 +387,88 @@ class ResumeAnalysisService
         }
 
         return array_slice(array_unique($suggestions), 0, 5);
+    }
+
+    private function fetchGeminiAnalysis(string $content, string $apiKey): array
+    {
+        $model = env('GEMINI_MODEL', 'models/text-bison-001');
+        $baseUrl = env('GEMINI_API_URL', "https://generativelanguage.googleapis.com/v1beta2/");
+        $url = rtrim($baseUrl, '/') . '/' . $model . ':generate';
+
+        try {
+            $prompt = "You are a resume assistant. Given the resume text below, provide:\n1) a short (1-2 sentence) summary,\n2) up to 5 prioritized improvement suggestions (one per line),\n3) comma-separated keywords to add.\n\nResume:\n" . $content;
+
+            $body = [
+                'prompt' => ['text' => $prompt],
+                'maxOutputTokens' => 512,
+            ];
+
+            $resp = Http::withOptions(['verify' => true])
+                ->withHeaders(['Content-Type' => 'application/json'])
+                ->post($url . '?key=' . $apiKey, $body);
+
+            if (! $resp->successful()) {
+                return ['raw' => $resp->body(), 'status' => $resp->status()];
+            }
+
+            $json = $resp->json();
+            dd($json);
+            $text = '';
+
+            if (isset($json['candidates'][0]['output'])) {
+                $text = $json['candidates'][0]['output'];
+            } elseif (isset($json['candidates'][0]['content'])) {
+                $text = $json['candidates'][0]['content'];
+            } elseif (isset($json['outputs'][0]['content'][0]['text'])) {
+                $text = $json['outputs'][0]['content'][0]['text'];
+            } elseif (isset($json['prediction'])) {
+                $text = $json['prediction'];
+            } else {
+                $text = json_encode($json);
+            }
+
+            $summary = null;
+            $suggestions = [];
+            $keywords = [];
+
+            if (preg_match('/summary[:\-]\s*(.+)/i', $text, $m)) {
+                $summary = trim($m[1]);
+            } else {
+                $lines = preg_split("/\r?\n/", $text);
+                $summary = trim($lines[0] ?? '');
+            }
+
+            // gather suggestions from numbered or bullet lists
+            if (preg_match_all('/(?:^|\n)\s*(?:\d+\.|-|\*)\s*(.+)/', $text, $m2)) {
+                foreach ($m2[1] as $p) {
+                    $p = trim($p);
+                    if ($p !== '') $suggestions[] = $p;
+                }
+            } else {
+                // try lines after a marker
+                if (preg_match('/suggestions?:[\-\s]*([\s\S]+)/i', $text, $m3)) {
+                    $parts = preg_split('/[\r\n]+/', trim($m3[1]));
+                    foreach ($parts as $p) {
+                        $p = trim(preg_replace('/^\d+[\)\.\-]?\s*/', '', $p));
+                        if ($p !== '') $suggestions[] = $p;
+                    }
+                }
+            }
+
+            if (preg_match('/keywords?:\s*(.+)/i', $text, $mk)) {
+                $keywords = array_map('trim', explode(',', $mk[1]));
+            }
+
+            return [
+                'summary' => $summary,
+                'suggestions' => array_slice(array_values(array_unique($suggestions)), 0, 5),
+                'keywords' => array_values(array_filter($keywords)),
+                'raw' => $text,
+                'response_json' => $json,
+            ];
+        } catch (\Throwable $e) {
+            return ['error' => $e->getMessage()];
+        }
     }
 
     private function normalizeText(string $text): string
