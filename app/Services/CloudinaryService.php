@@ -18,8 +18,8 @@ class CloudinaryService
                 'api_secret' => config('cloudinary.api_secret'),
             ],
         ]);
-    }
-
+    } 
+    
     public function upload(UploadedFile $file, string $folder = 'jobhub'): string
     {
         $result = $this->cloudinary->uploadApi()->upload(
