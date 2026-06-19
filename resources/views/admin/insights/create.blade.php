@@ -18,7 +18,6 @@
                     Back to Insights
                 </a>
             </div>
-
             {{-- Form --}}
             <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8">
                 <form method="POST" action="{{ route('admin.insights.store') }}" class="space-y-6">
@@ -42,7 +41,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Label --}}
                     <div>
                         <label for="label" class="block text-sm font-medium text-foreground mb-1">Label</label>
