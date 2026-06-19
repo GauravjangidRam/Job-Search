@@ -17,7 +17,7 @@
                         class="inline-flex items-center justify-center px-5 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-light focus:outline-2 focus:outline-offset-2 focus:outline-primary transition-colors"
                     >
                         Create Insight
-                    </a>
+                    </a> 
                     <a
                         href="{{ route('admin.dashboard') }}"
                         class="inline-flex items-center justify-center px-5 py-2.5 border border-border text-foreground font-semibold rounded-lg hover:bg-secondary focus:outline-2 focus:outline-offset-2 focus:outline-primary transition-colors"
@@ -26,7 +26,6 @@
                     </a>
                 </div>
             </div>
-
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
