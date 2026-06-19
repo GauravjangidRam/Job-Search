@@ -165,7 +165,7 @@
                             @if(auth()->user()->isSeeker())
                                 <form
                                     method="POST"
-                                    action="{{ route('bookmarks.toggle', $job) }}"
+                                    action="{{ route('bookmarks.toggle', $job->hashed_id) }}"
                                     class="absolute top-4 right-4 z-10"
                                 >
                                     @csrf

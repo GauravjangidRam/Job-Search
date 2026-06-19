@@ -27,9 +27,14 @@
                         </div>
                     </div>
                 </div>
-                <button type="button" aria-label="Notifications" class="p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                    <i data-lucide="bell" class="w-5 h-5"></i>
-                </button>
+                @auth
+                    <a href="{{ route('notifications.index') }}" aria-label="Notifications" class="relative p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                        <i data-lucide="bell" class="w-5 h-5"></i>
+                        @if(auth()->user()->unreadNotifications->count() > 0)
+                            <span class="absolute top-1 right-1.5 block w-2 h-2 bg-red-500 rounded-full ring-2 ring-card"></span>
+                        @endif
+                    </a>
+                @endauth
 
                 @guest
                     <a href="{{ route('employer.register') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">

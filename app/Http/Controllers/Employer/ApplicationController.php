@@ -88,6 +88,10 @@ class ApplicationController extends Controller
         $application->status_updated_at = now();
         $application->save();
 
+        if ($application->user) {
+            $application->user->notify(new \App\Notifications\ApplicationStatusUpdatedNotification($application));
+        }
+
         return redirect()
             ->back()
             ->with('success', 'Application status updated.');

@@ -39,6 +39,7 @@ class ApplicationNotificationService
         }
 
         try {
+            $employer->notify(new \App\Notifications\ApplicationReceivedNotification($application));
             Mail::to($employer->email)->send(new ApplicationReceivedMail($application));
         } catch (\Throwable $e) {
             Log::error('Failed to send application received notification to employer.', [

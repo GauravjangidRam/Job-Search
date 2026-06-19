@@ -8,6 +8,7 @@ use App\Http\Controllers\CompanyController;
 use App\Http\Controllers\Employer;
 use App\Http\Controllers\HomeController;
 use App\Http\Controllers\JobController;
+use App\Http\Controllers\NotificationController;
 use App\Http\Controllers\ProfileController;
 use App\Http\Controllers\ResumeController;
 use Illuminate\Support\Facades\Route;
@@ -52,6 +53,11 @@ Route::middleware('auth')->group(function () {
     Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
     Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
     Route::post('/bookmarks/{hash}/toggle', [BookmarkController::class, 'toggle'])->where('hash', '[a-zA-Z0-9]+')->name('bookmarks.toggle');
+    
+    // Notifications
+    Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
+    Route::post('/notifications/read-all', [NotificationController::class, 'markAllAsRead'])->name('notifications.markAllAsRead');
+    Route::post('/notifications/{id}/read', [NotificationController::class, 'markAsRead'])->name('notifications.markAsRead');
 });
 
 // Seeker routes (auth + role:seeker)

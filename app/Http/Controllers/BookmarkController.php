@@ -17,8 +17,11 @@ class BookmarkController extends Controller
      * removed (un-bookmarked); otherwise a new bookmark is created. Redirects back
      * with a flash message indicating the resulting state.
      */
-    public function toggle(JobListing $job): RedirectResponse
+    public function toggle(string $hash): RedirectResponse
     {
+        $job = JobListing::findByHash($hash);
+        abort_if(!$job, 404);
+
         $userId = Auth::id();
 
         $bookmark = Bookmark::query()
