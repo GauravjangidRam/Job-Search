@@ -11,7 +11,6 @@
                 <div class="flex-1 min-w-0">
                     <h1 class="text-2xl font-bold text-foreground mb-1">Admin Dashboard</h1>
                     <p class="text-muted text-sm mb-8">Platform overview and activity</p>
-
                     {{-- Stats Grid --}}
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                         <div class="bg-card border border-border rounded-xl p-5">
@@ -20,7 +19,7 @@
                             </div>
                             <p class="text-2xl font-bold text-foreground">{{ $totalUsers }}</p>
                             <p class="text-xs text-muted mt-1">Total Users</p>
-                        </div>
+                        </div> 
                         <div class="bg-card border border-border rounded-xl p-5">
                             <div class="w-8 h-8 rounded-lg bg-emerald-100 flex items-center justify-center mb-2">
                                 <i data-lucide="building-2" class="w-4 h-4 text-emerald-600"></i>
@@ -43,7 +42,6 @@
                             <p class="text-xs text-muted mt-1">Applications</p>
                         </div>
                     </div>
-
                     <div class="grid grid-cols-1 xl:grid-cols-3 gap-6">
                         {{-- Users by Role --}}
                         <section class="bg-card border border-border rounded-xl p-6">
@@ -57,7 +55,6 @@
                                 @endforeach
                             </div>
                         </section>
-
                         {{-- Listings by Status --}}
                         <section class="bg-card border border-border rounded-xl p-6">
                             <h2 class="text-sm font-semibold text-foreground mb-4">Jobs by Status</h2>
