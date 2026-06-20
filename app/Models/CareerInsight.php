@@ -12,7 +12,7 @@ class CareerInsight extends Model
         'value',
         'sort_order',
     ];
-
+ 
     /**
      * Get the attributes that should be cast.
      *
