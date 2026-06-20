@@ -29,7 +29,6 @@ class HomeController extends Controller
             'stats'              => $this->getStats(),
         ]);
     }
-
     /**
      * Get platform statistics for the homepage.
      */
@@ -60,7 +59,6 @@ class HomeController extends Controller
                 }
             }
         }
-
         arsort($skillCounts);
         $topSkills = array_slice(array_keys($skillCounts), 0, 5);
 
@@ -68,7 +66,6 @@ class HomeController extends Controller
         if (count($topSkills) < 3) {
             $topSkills = ['Software Engineer', 'Product Designer', 'Data Scientist', 'Frontend Developer', 'Marketing Manager'];
         }
-
         return $topSkills;
     }
 
