@@ -29,7 +29,7 @@ class GoogleAuthController extends Controller
             return redirect()->route('login')
                 ->with('error', 'Google authentication failed. Please try again.');
         }
-
+ 
         // Check if user already exists with this Google ID
         $user = User::where('google_id', $googleUser->getId())->first();
 
@@ -53,7 +53,7 @@ class GoogleAuthController extends Controller
                     'password' => bcrypt(Str::random(24)),
                     'role' => 'seeker',
                 ]);
-            }
+            } 
         }
 
         Auth::login($user, true);
