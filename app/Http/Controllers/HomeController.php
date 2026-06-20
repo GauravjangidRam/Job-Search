@@ -79,7 +79,7 @@ class HomeController extends Controller
                 icon: 'sparkles',
                 title: 'Personalized Recommendations',
                 description: 'AI analyzes your skills and experience to surface roles that match your unique career profile.',
-            ),
+            ), 
             new FeatureData(
                 icon: 'target',
                 title: 'Match Scores',
@@ -97,7 +97,7 @@ class HomeController extends Controller
      * @return array<FooterColumnData>
      */
     private function getFooterLinks(): array
-    {
+    { 
         return [
             new FooterColumnData(
                 heading: 'For Job Seekers',
