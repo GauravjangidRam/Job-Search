@@ -8,7 +8,6 @@
     <div class="max-w-[1100px] mx-auto pt-16 px-6 md:px-8 py-12">
         {{-- Back Link --}}
         <a href="{{ route('companies.index') }}" class="text-sm text-primary hover:underline mb-6 inline-block">&larr; Back to companies</a>
-
         {{-- Company Header Card --}}
         <section class="bg-card border border-border rounded-xl shadow-sm overflow-hidden mb-8">
             <div class="h-28 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent"></div>
@@ -62,7 +61,6 @@
                             @endif
                         </div>
                     </div>
-
                     @if($company->website_url)
                         <a
                             href="{{ $company->website_url }}"
