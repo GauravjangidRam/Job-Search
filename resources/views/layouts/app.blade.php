@@ -3,7 +3,8 @@
     <head>
         <meta charset="utf-8">
         <meta name="viewport" content="width=device-width, initial-scale=1">
-        <title>{{ config('app.name', 'Job Hub') }}</title>
+        <title>@hasSection('title')@yield('title') | @endif{{ config('app.name', 'Job Hub') }}</title>
+        @yield('meta')
         <link rel="icon" type="image/svg+xml" href="/favicon.svg">
         <link rel="icon" type="image/x-icon" href="/favicon.svg">
         <!-- Inter Font from CDN with font-display: swap -->

@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Career Insights & Salary Data')
+
 @section('content')
     <x-home.navigation-bar />
     <div class="max-w-[1400px] mx-auto pt-16">
@@ -14,28 +16,8 @@
             @if($insights['salary']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
-                {{-- CSS Bar Chart --}}
-                <div class="bg-card border border-border rounded-card p-6" role="img" aria-label="Bar chart showing salary data by role">
-                    <div class="space-y-4">
-                        @php 
-                            $salaryData = $insights['salary']->take(10);
-                            $maxSalary = $salaryData->max('value') ?: 1;
-                        @endphp
-                        @foreach($salaryData as $insight)
-                            @php
-                                $percentage = ($insight->value / $maxSalary) * 100;
-                            @endphp
-                            <div class="flex items-center gap-4">
-                                <span class="text-sm text-foreground font-medium w-40 shrink-0 truncate" title="{{ $insight->label }}">{{ $insight->label }}</span>
-                                <div class="flex-1 bg-gray-100 rounded-full h-8 relative overflow-hidden">
-                                    <div class="bg-primary h-full rounded-full flex items-center justify-end pr-3 transition-all duration-300" style="width: {{ $percentage }}%">
-                                        <span class="text-xs font-semibold text-white whitespace-nowrap">${{ number_format((float) $insight->value, 0, '.', ',') }}</span>
-                                    </div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div> 
+                <div id="salary-chart" class="min-h-[350px]"></div>
+                
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
@@ -47,10 +29,10 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($salaryData as $insight)
+                            @foreach($insights['salary']->take(10) as $insight)
                                 <tr class="border-b border-border last:border-b-0">
                                     <td class="p-3 text-sm text-foreground">{{ $insight->label }}</td>
-                                    <td class="p-3 text-sm text-foreground text-right">${{ number_format((float) $insight->value, 0, '.', ',') }}</td>
+                                    <td class="p-3 text-sm text-foreground text-right">₹{{ number_format((float) $insight->value, 0, '.', ',') }}</td>
                                 </tr>
                             @endforeach
                         </tbody>
@@ -60,51 +42,23 @@
                 <div class="sr-only">
                     <h3>Salary data table</h3>
                     <dl>
-                        @foreach($salaryData as $insight)
+                        @foreach($insights['salary']->take(10) as $insight)
                             <dt>{{ $insight->label }}</dt>
-                            <dd>${{ number_format((float) $insight->value, 0, '.', ',') }}</dd>
+                            <dd>₹{{ number_format((float) $insight->value, 0, '.', ',') }}</dd>
                         @endforeach
                     </dl>
                 </div>
             @endif
         </section>
+
         <!-- Hiring Trends Section -->
         <section aria-label="Hiring Trends" class="py-12 px-6 md:px-8">
             <h2 class="text-2xl font-bold text-foreground mb-8">Hiring Trends</h2>
             @if($insights['trend']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
-                {{-- CSS Line Chart --}}
-                @php
-                    $trendData = $insights['trend']->take(12);
-                    $maxTrend = $trendData->max('value') ?: 1;
-                    $minTrend = $trendData->min('value') ?: 0;
-                    $range = $maxTrend - $minTrend ?: 1;
-                @endphp
-                <div class="bg-card border border-border rounded-card p-6" role="img" aria-label="Line chart showing hiring trends over time">
-                    {{-- Chart area with connected points --}}
-                    <div class="relative h-64 flex items-end gap-1 justify-between">
-                        @foreach($trendData as $index => $insight)
-                            @php
-                                $heightPercent = (($insight->value - $minTrend) / $range) * 80 + 10;
-                            @endphp
-                            <div class="flex-1 flex flex-col items-center justify-end h-full relative">
-                                {{-- Value label --}}
-                                <span class="text-xs font-medium text-foreground mb-1">{{ number_format((float) $insight->value, 0) }}</span>
-                                {{-- Data point bar --}}
-                                <div class="w-full max-w-[40px] bg-primary/20 border-t-4 border-primary rounded-t transition-all duration-300" style="height: {{ $heightPercent }}%"></div>
-                            </div>
-                        @endforeach
-                    </div>
-                    {{-- X-axis labels --}}
-                    <div class="flex justify-between mt-3 border-t border-border pt-3">
-                        @foreach($trendData as $insight)
-                            <div class="flex-1 text-center">
-                                <span class="text-xs text-muted truncate block">{{ $insight->label }}</span>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+                <div id="trends-chart" class="min-h-[350px]"></div>
+
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
@@ -116,7 +70,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($trendData as $insight)
+                            @foreach($insights['trend']->take(12) as $insight)
                                 <tr class="border-b border-border last:border-b-0">
                                     <td class="p-3 text-sm text-foreground">{{ $insight->label }}</td>
                                     <td class="p-3 text-sm text-foreground text-right">{{ number_format((float) $insight->value, 0) }}</td>
@@ -129,7 +83,7 @@
                 <div class="sr-only">
                     <h3>Hiring trends data</h3>
                     <dl>
-                        @foreach($trendData as $insight)
+                        @foreach($insights['trend']->take(12) as $insight)
                             <dt>{{ $insight->label }}</dt>
                             <dd>{{ number_format((float) $insight->value, 0) }} job postings</dd>
                         @endforeach
@@ -137,33 +91,15 @@
                 </div>
             @endif
         </section>
+
         <!-- In-Demand Skills Section -->
         <section aria-label="In-Demand Skills" class="py-12 px-6 md:px-8 mb-16">
             <h2 class="text-2xl font-bold text-foreground mb-8">In-Demand Skills</h2>
             @if($insights['skill']->isEmpty())
                 <x-empty-state message="No data is currently available for this section." />
             @else
-                <div class="bg-card border border-border rounded-card p-6">
-                    <div class="space-y-5">
-                        @php
-                            $skillData = $insights['skill']->take(10);
-                        @endphp
-                        @foreach($skillData as $insight)
-                            @php
-                                $percentage = min(100, max(0, (float) $insight->value));
-                            @endphp
-                            <div>
-                                <div class="flex justify-between items-center mb-2">
-                                    <span class="text-sm font-medium text-foreground">{{ $insight->label }}</span>
-                                    <span class="text-sm font-semibold text-foreground">{{ number_format($percentage, 0) }}%</span>
-                                </div>
-                                <div class="w-full bg-gray-100 rounded-full h-3 overflow-hidden" role="progressbar" aria-valuenow="{{ $percentage }}" aria-valuemin="0" aria-valuemax="100" aria-label="{{ $insight->label }} demand: {{ number_format($percentage, 0) }}%">
-                                    <div class="bg-primary h-full rounded-full transition-all duration-300" style="width: {{ $percentage }}%"></div>
-                                </div>
-                            </div>
-                        @endforeach
-                    </div>
-                </div>
+                <div id="skills-chart" class="min-h-[350px]"></div>
+
                 {{-- Accessible Fallback Table --}}
                 <noscript>
                     <table class="w-full mt-4 border-collapse bg-card border border-border rounded-card">
@@ -175,7 +111,7 @@
                             </tr>
                         </thead>
                         <tbody>
-                            @foreach($skillData as $insight)
+                            @foreach($insights['skill']->take(10) as $insight)
                                 <tr class="border-b border-border last:border-b-0">
                                     <td class="p-3 text-sm text-foreground">{{ $insight->label }}</td>
                                     <td class="p-3 text-sm text-foreground text-right">{{ number_format(min(100, max(0, (float) $insight->value)), 0) }}%</td>
@@ -187,4 +123,152 @@
             @endif
         </section>
     </div>
+
+    <!-- ApexCharts CDN and Initialization Scripts -->
+    <script src="https://cdn.jsdelivr.net/npm/apexcharts"></script>
+    <script>
+    document.addEventListener('DOMContentLoaded', function () {
+        // 1. Salary Chart
+        const salaryData = @json($insights['salary']->take(10));
+        if (salaryData.length > 0) {
+            const options = {
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false },
+                    background: 'transparent'
+                },
+                theme: {
+                    mode: 'light'
+                },
+                series: [{
+                    name: 'Average Salary (INR)',
+                    data: salaryData.map(item => Number(item.value))
+                }],
+                plotOptions: {
+                    bar: {
+                        horizontal: true,
+                        borderRadius: 6,
+                        barHeight: '60%',
+                        distributed: true
+                    }
+                },
+                colors: ['#4f46e5', '#6366f1', '#818cf8', '#a5b4fc', '#c7d2fe', '#06b6d4', '#0891b2', '#0e7490'],
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return '₹' + val.toLocaleString('en-IN');
+                    },
+                    style: {
+                        colors: ['#fff'],
+                        fontWeight: 600
+                    }
+                },
+                xaxis: {
+                    categories: salaryData.map(item => item.label),
+                    labels: {
+                        formatter: function (val) {
+                            if (val >= 100000) {
+                                return '₹' + (val / 100000) + 'L';
+                            }
+                            return '₹' + (val / 1000) + 'k';
+                        }
+                    }
+                },
+                grid: {
+                    borderColor: 'var(--border, #f3f4f6)'
+                },
+                legend: { show: false }
+            };
+            new ApexCharts(document.querySelector("#salary-chart"), options).render();
+        }
+
+        // 2. Hiring Trends Chart
+        const trendData = @json($insights['trend']->take(12));
+        if (trendData.length > 0) {
+            const options = {
+                chart: {
+                    type: 'area',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false },
+                    background: 'transparent'
+                },
+                series: [{
+                    name: 'Job Postings',
+                    data: trendData.map(item => Number(item.value))
+                }],
+                stroke: {
+                    curve: 'smooth',
+                    width: 3,
+                    colors: ['#4f46e5']
+                },
+                fill: {
+                    type: 'gradient',
+                    gradient: {
+                        shadeIntensity: 1,
+                        opacityFrom: 0.45,
+                        opacityTo: 0.05,
+                        stops: [0, 100]
+                    }
+                },
+                xaxis: {
+                    categories: trendData.map(item => item.label)
+                },
+                colors: ['#4f46e5'],
+                grid: {
+                    borderColor: 'var(--border, #f3f4f6)'
+                }
+            };
+            new ApexCharts(document.querySelector("#trends-chart"), options).render();
+        }
+
+        // 3. Skills Chart
+        const skillData = @json($insights['skill']->take(10));
+        if (skillData.length > 0) {
+            const options = {
+                chart: {
+                    type: 'bar',
+                    height: 350,
+                    fontFamily: 'Inter, sans-serif',
+                    toolbar: { show: false },
+                    background: 'transparent'
+                },
+                series: [{
+                    name: 'Demand Percentage',
+                    data: skillData.map(item => Number(item.value))
+                }],
+                plotOptions: {
+                    bar: {
+                        columnWidth: '50%',
+                        borderRadius: 6
+                    }
+                },
+                colors: ['#06b6d4'],
+                dataLabels: {
+                    enabled: true,
+                    formatter: function (val) {
+                        return val + '%';
+                    }
+                },
+                xaxis: {
+                    categories: skillData.map(item => item.label)
+                },
+                yaxis: {
+                    max: 100,
+                    labels: {
+                        formatter: function (val) {
+                            return val + '%';
+                        }
+                    }
+                },
+                grid: {
+                    borderColor: 'var(--border, #f3f4f6)'
+                }
+            };
+            new ApexCharts(document.querySelector("#skills-chart"), options).render();
+        }
+    });
+    </script>
 @endsection

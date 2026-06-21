@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', $company->name)
+
 @section('content')
     <x-home.navigation-bar />
 
@@ -119,7 +121,7 @@
                                     <p class="text-xs text-muted mt-1">{{ $job->location }} &middot; {{ $job->job_type }} &middot; {{ $job->location_type }}</p>
                                 </div>
                                 <span class="text-xs font-medium text-foreground whitespace-nowrap">
-                                    ${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}
+                                    {{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}
                                 </span>
                             </div>
                             @if($job->skills && count($job->skills) > 0)

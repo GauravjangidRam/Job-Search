@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Browse Job Openings')
+
 @section('content')
     <x-home.navigation-bar />
 
@@ -163,23 +165,48 @@
                         {{-- Bookmark Button for Authenticated Seekers --}}
                         @auth
                             @if(auth()->user()->isSeeker())
-                                <form
-                                    method="POST"
-                                    action="{{ route('bookmarks.toggle', $job->hashed_id) }}"
+                                <div
+                                    x-data="{
+                                        bookmarked: {{ auth()->user()->bookmarks()->where('job_listing_id', $job->id)->exists() ? 'true' : 'false' }},
+                                        loading: false,
+                                        async toggle() {
+                                            if (this.loading) return;
+                                            this.loading = true;
+                                            try {
+                                                let response = await fetch('{{ route('bookmarks.toggle', $job->hashed_id) }}', {
+                                                    method: 'POST',
+                                                    headers: {
+                                                        'Content-Type': 'application/json',
+                                                        'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                        'Accept': 'application/json'
+                                                    }
+                                                });
+                                                if (response.ok) {
+                                                    let data = await response.json();
+                                                    this.bookmarked = data.bookmarked;
+                                                }
+                                            } catch (e) {
+                                                console.error('Bookmark error:', e);
+                                            } finally {
+                                                this.loading = false;
+                                            }
+                                        }
+                                    }"
                                     class="absolute top-4 right-4 z-10"
                                 >
-                                    @csrf
                                     <button
-                                        type="submit"
-                                        class="p-1.5 rounded-full text-muted hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
+                                        type="button"
+                                        @click="toggle()"
+                                        :class="bookmarked ? 'text-primary bg-primary/10' : 'text-muted'"
+                                        class="p-1.5 rounded-full hover:text-primary hover:bg-primary/10 transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
                                         title="Toggle bookmark"
                                         aria-label="Toggle bookmark for {{ $job->title }}"
                                     >
-                                        <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <svg class="w-5 h-5" :fill="bookmarked ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                                             <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
                                         </svg>
                                     </button>
-                                </form>
+                                </div>
                             @endif
                         @endauth
 
@@ -210,11 +237,13 @@
                                 {{ $job->location }}
                             </div>
 
-                            <div class="flex items-center text-sm font-medium text-foreground mb-4">
-                                <svg class="w-4 h-4 mr-1 text-muted" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
-                                    <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M12 8c-1.657 0-3 .895-3 2s1.343 2 3 2 3 .895 3 2-1.343 2-3 2m0-8c1.11 0 2.08.402 2.599 1M12 8V7m0 1v8m0 0v1m0-1c-1.11 0-2.08-.402-2.599-1"/>
-                                </svg>
-                                ${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}
+                             <div class="flex items-center text-sm font-medium text-foreground mb-4">
+                                @if(($job->currency ?? 'INR') === 'USD')
+                                    <i data-lucide="dollar-sign" class="w-4 h-4 mr-1 text-muted flex-shrink-0"></i>
+                                @else
+                                    <i data-lucide="indian-rupee" class="w-4 h-4 mr-1 text-muted flex-shrink-0"></i>
+                                @endif
+                                {{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}
                             </div>
 
                             <div class="flex items-center justify-between pt-4 border-t border-border">

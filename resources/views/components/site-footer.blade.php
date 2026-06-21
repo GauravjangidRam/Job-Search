@@ -34,13 +34,13 @@
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">Connect</h3>
                 <div class="flex items-center gap-3 mb-4">
-                    <a href="#" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+                    <a href="{{ config('services.social.twitter') }}" target="_blank" rel="noopener noreferrer" aria-label="Twitter" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
                         <i data-lucide="twitter" class="w-4 h-4"></i>
                     </a>
-                    <a href="#" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+                    <a href="{{ config('services.social.linkedin') }}" target="_blank" rel="noopener noreferrer" aria-label="LinkedIn" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
                         <i data-lucide="linkedin" class="w-4 h-4"></i>
                     </a> 
-                    <a href="#" aria-label="GitHub" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
+                    <a href="{{ config('services.social.github') }}" target="_blank" rel="noopener noreferrer" aria-label="GitHub" class="w-8 h-8 rounded-lg bg-secondary flex items-center justify-center text-muted hover:text-primary hover:bg-primary/10 transition-colors">
                         <i data-lucide="github" class="w-4 h-4"></i>
                     </a>
                 </div>

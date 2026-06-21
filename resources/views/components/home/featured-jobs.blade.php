@@ -53,7 +53,7 @@
                     </div>
                     {{-- Salary --}}
                     <p class="text-sm font-semibold text-foreground mb-3">
-                        ${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}
+                        {{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}
                     </p>
                     {{-- Footer --}}
                     <div class="mt-auto flex items-center justify-between pt-3 border-t border-border">

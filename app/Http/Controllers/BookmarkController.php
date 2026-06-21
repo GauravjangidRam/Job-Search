@@ -17,7 +17,7 @@ class BookmarkController extends Controller
      * removed (un-bookmarked); otherwise a new bookmark is created. Redirects back
      * with a flash message indicating the resulting state.
      */
-    public function toggle(string $hash): RedirectResponse
+    public function toggle(string $hash): \Illuminate\Http\RedirectResponse|\Illuminate\Http\JsonResponse
     {
         $job = JobListing::findByHash($hash);
         abort_if(!$job, 404);
@@ -32,6 +32,13 @@ class BookmarkController extends Controller
         if ($bookmark !== null) {
             $bookmark->delete();
 
+            if (request()->expectsJson()) {
+                return response()->json([
+                    'bookmarked' => false,
+                    'message' => 'Bookmark removed.'
+                ]);
+            }
+
             return back()->with('status', 'Bookmark removed.');
         }
 
@@ -39,6 +46,13 @@ class BookmarkController extends Controller
             'user_id' => $userId,
             'job_listing_id' => $job->id,
         ]);
+
+        if (request()->expectsJson()) {
+            return response()->json([
+                'bookmarked' => true,
+                'message' => 'Job bookmarked.'
+            ]);
+        }
 
         return back()->with('status', 'Job bookmarked.');
     }

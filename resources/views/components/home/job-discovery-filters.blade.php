@@ -54,7 +54,7 @@
         <div>
             <h3 class="text-sm font-semibold text-foreground mb-3">Salary Range</h3>
             <div class="flex flex-wrap gap-2">
-                <template x-for="option in ['$0–$50k', '$50k–$100k', '$100k–$150k', '$150k+']" :key="option">
+                <template x-for="option in ['₹0–₹50k', '₹50k–₹100k', '₹100k–₹150k', '₹150k+']" :key="option">
                     <button
                         type="button"
                         @click="toggleFilter('salary', option)"
@@ -145,7 +145,7 @@
                         </div>
                     </div>
                     <div class="mt-3 space-y-1">
-                        <p class="text-sm font-medium text-foreground" x-text="'$' + Number(job.salary_min).toLocaleString() + ' - $' + Number(job.salary_max).toLocaleString()"></p>
+                        <p class="text-sm font-medium text-foreground" x-text="(job.currency === 'USD' ? '$' : '₹') + Number(job.salary_min).toLocaleString() + ' - ' + (job.currency === 'USD' ? '$' : '₹') + Number(job.salary_max).toLocaleString()"></p>
                         <p class="text-xs text-muted" x-text="job.location"></p>
                     </div>
                     <div class="mt-3 flex flex-wrap gap-1">

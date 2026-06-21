@@ -53,11 +53,15 @@
                         {{-- Salary Range --}}
                         <div class="flex items-center gap-3">
                             <div class="p-2 bg-secondary rounded-md">
-                                <i data-lucide="dollar-sign" class="w-5 h-5 text-primary"></i>
+                                @if(($job->currency ?? 'INR') === 'USD')
+                                    <i data-lucide="dollar-sign" class="w-5 h-5 text-primary"></i>
+                                @else
+                                    <i data-lucide="indian-rupee" class="w-5 h-5 text-primary"></i>
+                                @endif
                             </div>
                             <div>
                                 <p class="text-sm text-muted">Salary</p>
-                                <p class="font-medium text-foreground">${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}</p>
+                                <p class="font-medium text-foreground">{{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}</p>
                             </div>
                         </div>
 
@@ -113,12 +117,55 @@
                     </div>
                 @endif
 
-                {{-- Apply Now Button --}}
-                <div class="p-6 md:p-8">
+                {{-- Apply Now & Save Buttons --}}
+                <div class="p-6 md:p-8 flex flex-wrap items-center gap-4">
                     <a href="{{ route('jobs.apply', $job->hashed_id) }}" class="inline-flex items-center px-6 py-3 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         <i data-lucide="send" class="w-5 h-5 mr-2"></i>
                         Apply Now
                     </a>
+
+                    @auth
+                        @if(auth()->user()->isSeeker())
+                            <div x-data="{
+                                bookmarked: {{ auth()->user()->bookmarks()->where('job_listing_id', $job->id)->exists() ? 'true' : 'false' }},
+                                loading: false,
+                                async toggle() {
+                                    if (this.loading) return;
+                                    this.loading = true;
+                                    try {
+                                        let response = await fetch('{{ route('bookmarks.toggle', $job->hashed_id) }}', {
+                                            method: 'POST',
+                                            headers: {
+                                                'Content-Type': 'application/json',
+                                                'X-CSRF-TOKEN': '{{ csrf_token() }}',
+                                                'Accept': 'application/json'
+                                            }
+                                        });
+                                        if (response.ok) {
+                                            let data = await response.json();
+                                            this.bookmarked = data.bookmarked;
+                                        }
+                                    } catch (e) {
+                                        console.error('Bookmark error:', e);
+                                    } finally {
+                                        this.loading = false;
+                                    }
+                                }
+                            }">
+                                <button
+                                    type="button"
+                                    @click="toggle()"
+                                    :class="bookmarked ? 'bg-primary/10 text-primary border-primary/20' : 'border-border text-muted hover:text-foreground'"
+                                    class="inline-flex items-center px-6 py-3 border font-medium rounded-[var(--radius-card)] transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2"
+                                >
+                                    <svg class="w-5 h-5 mr-2" :fill="bookmarked ? 'currentColor' : 'none'" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
+                                        <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M5 5a2 2 0 012-2h10a2 2 0 012 2v16l-7-3.5L5 21V5z"/>
+                                    </svg>
+                                    <span x-text="bookmarked ? 'Saved' : 'Save Job'">Save Job</span>
+                                </button>
+                            </div>
+                        @endif
+                    @endauth
                 </div>
             </div>
         </div>
