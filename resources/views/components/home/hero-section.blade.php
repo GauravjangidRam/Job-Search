@@ -106,7 +106,7 @@
                 </div>
 
                 <div class="flex items-center justify-between">
-                    <span class="text-foreground font-semibold">${{ number_format($heroJob->salary_min) }} - ${{ number_format($heroJob->salary_max) }}</span>
+                    <span class="text-foreground font-semibold">{{ $heroJob->currency_symbol }}{{ number_format($heroJob->salary_min) }} - {{ $heroJob->currency_symbol }}{{ number_format($heroJob->salary_max) }}</span>
                     @if($applicationCount > 0)
                         <span class="text-xs text-muted">{{ $applicationCount }} {{ Str::plural('applicant', $applicationCount) }}</span>
                     @endif

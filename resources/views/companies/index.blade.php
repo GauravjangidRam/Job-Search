@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Browse Companies')
+
 @section('content')
     <x-home.navigation-bar />
 

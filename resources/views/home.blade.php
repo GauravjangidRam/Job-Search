@@ -1,5 +1,7 @@
 @extends('layouts.app')
 
+@section('title', 'Discover Your Next Career Move')
+
 @section('content')
     <x-home.navigation-bar />
 
@@ -28,9 +30,11 @@
             <x-home.career-insights :careerInsights="$careerInsights" />
         </section>
 
+        @if($testimonials->count() > 0)
         <section aria-label="Testimonials" class="py-20 px-6 md:px-8">
             <x-home.testimonials :testimonials="$testimonials" />
         </section>
+        @endif
 
         <section aria-label="Call to Action" class="py-20 px-6 md:px-8">
             <x-home.call-to-action />

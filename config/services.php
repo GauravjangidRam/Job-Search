@@ -39,4 +39,10 @@ return [
         'client_secret' => env('GOOGLE_CLIENT_SECRET'),
         'redirect' => env('GOOGLE_REDIRECT_URI', '/auth/google/callback'),
     ],
+
+    'social' => [
+        'twitter' => env('SOCIAL_TWITTER_URL', 'https://twitter.com/jobhub'),
+        'linkedin' => env('SOCIAL_LINKEDIN_URL', 'https://linkedin.com/company/jobhub'),
+        'github' => env('SOCIAL_GITHUB_URL', 'https://github.com/jobhub'),
+    ],
 ];

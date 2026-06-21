@@ -1,12 +1,13 @@
 @extends('layouts.app')
 
+@section('title', $company->name)
+
 @section('content')
     <x-home.navigation-bar />
 
     <div class="max-w-[1100px] mx-auto pt-16 px-6 md:px-8 py-12">
         {{-- Back Link --}}
         <a href="{{ route('companies.index') }}" class="text-sm text-primary hover:underline mb-6 inline-block">&larr; Back to companies</a>
-
         {{-- Company Header Card --}}
         <section class="bg-card border border-border rounded-xl shadow-sm overflow-hidden mb-8">
             <div class="h-28 bg-gradient-to-r from-primary/10 via-primary/5 to-transparent"></div>
@@ -60,7 +61,6 @@
                             @endif
                         </div>
                     </div>
-
                     @if($company->website_url)
                         <a
                             href="{{ $company->website_url }}"
@@ -119,7 +119,7 @@
                                     <p class="text-xs text-muted mt-1">{{ $job->location }} &middot; {{ $job->job_type }} &middot; {{ $job->location_type }}</p>
                                 </div>
                                 <span class="text-xs font-medium text-foreground whitespace-nowrap">
-                                    ${{ number_format($job->salary_min) }} - ${{ number_format($job->salary_max) }}
+                                    {{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}
                                 </span>
                             </div>
                             @if($job->skills && count($job->skills) > 0)

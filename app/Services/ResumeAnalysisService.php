@@ -37,7 +37,7 @@ class ResumeAnalysisService
             'resume_path' => $resumePath,
             'analysis' => $this->buildReport($resumePath, $originalName ?? basename($resumePath)),
             'provider' => 'local-ai-report',
-        ]);
+        ]); 
     }
 
     private function buildReport(string $resumePath, string $displayName): array
@@ -88,7 +88,6 @@ class ResumeAnalysisService
                 if (!empty($external['strengths'])) {
                     $report['strengths'] = $external['strengths'];
                 }
-
                 if (!empty($external['missing_keywords'])) {
                     $report['missing_keywords'] = $external['missing_keywords'];
                 }
@@ -127,7 +126,6 @@ class ResumeAnalysisService
         if (in_array($extension, ['pdf', 'docx'], true)) {
             $score += 10;
         }
-
         if ($size !== null && $size > 0 && $size <= 2 * 1024 * 1024) {
             $score += 8;
         }

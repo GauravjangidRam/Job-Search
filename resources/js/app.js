@@ -104,19 +104,28 @@ Alpine.data('jobFilters', (jobs = []) => ({
 
         return this.jobs.filter(job => {
             // AND logic across categories: job must match at least one option in each active category
-            if (this.filters.jobType.length > 0 && !this.filters.jobType.includes(job.job_type)) {
-                return false;
+            if (this.filters.jobType.length > 0) {
+                const jobTypeNormalized = (job.job_type || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                const matchesJobType = this.filters.jobType.some(type => {
+                    return type.toLowerCase().replace(/[^a-z0-9]/g, '') === jobTypeNormalized;
+                });
+                if (!matchesJobType) return false;
             }
-            if (this.filters.location.length > 0 && !this.filters.location.includes(job.location_type)) {
-                return false;
+            if (this.filters.location.length > 0) {
+                const locationTypeNormalized = (job.location_type || '').toLowerCase().replace(/[^a-z0-9]/g, '');
+                const matchesLocation = this.filters.location.some(type => {
+                    return type.toLowerCase().replace(/[^a-z0-9]/g, '') === locationTypeNormalized;
+                });
+                if (!matchesLocation) return false;
             }
             if (this.filters.salary.length > 0) {
                 const salaryMin = job.salary_min || 0;
                 const matchesSalary = this.filters.salary.some(range => {
-                    if (range === '$0–$50k') return salaryMin < 50000;
-                    if (range === '$50k–$100k') return salaryMin >= 50000 && salaryMin < 100000;
-                    if (range === '$100k–$150k') return salaryMin >= 100000 && salaryMin < 150000;
-                    if (range === '$150k+') return salaryMin >= 150000;
+                    const cleanRange = range.replace('$', '').replace('₹', '').replace('–', '-').replace(/\s/g, '').toLowerCase();
+                    if (cleanRange === '0-50k' || cleanRange === '0-50000') return salaryMin < 50000;
+                    if (cleanRange === '50k-100k' || cleanRange === '50000-100000') return salaryMin >= 50000 && salaryMin < 100000;
+                    if (cleanRange === '100k-150k' || cleanRange === '100000-150000') return salaryMin >= 100000 && salaryMin < 150000;
+                    if (cleanRange === '150k+' || cleanRange === '150000+') return salaryMin >= 150000;
                     return false;
                 });
                 if (!matchesSalary) return false;

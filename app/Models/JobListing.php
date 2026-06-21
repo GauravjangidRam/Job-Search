@@ -18,6 +18,7 @@ class JobListing extends Model
         'location',
         'salary_min',
         'salary_max',
+        'currency',
         'job_type',
         'location_type',
         'description',
@@ -36,6 +37,14 @@ class JobListing extends Model
         'salary_min' => 'integer',
         'salary_max' => 'integer',
     ];
+
+    /**
+     * Get the currency symbol.
+     */
+    public function getCurrencySymbolAttribute(): string
+    {
+        return $this->currency === 'USD' ? '$' : '₹';
+    }
 
     /**
      * Get the company that owns the job listing.
