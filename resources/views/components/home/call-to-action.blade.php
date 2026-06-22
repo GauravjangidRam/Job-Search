@@ -7,7 +7,7 @@
     </h2>
     <p class="text-white/90 text-lg max-w-2xl mx-auto mb-8">
         Join thousands of professionals who have found their dream jobs through our platform. Start your journey today.
-    </p>
+    </p> 
     <div class="flex flex-col sm:flex-row items-center justify-center gap-4">
         @if($isGuest)
             <a href="{{ route('register') }}" class="inline-flex items-center gap-2 bg-white text-primary font-semibold px-8 py-3 rounded-lg hover:bg-white/90 transition-colors focus:outline-2 focus:outline-offset-2 focus:outline-white">
