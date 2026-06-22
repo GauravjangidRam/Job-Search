@@ -7,7 +7,6 @@
         ['route' => 'employer.company.edit', 'label' => 'Company Profile', 'icon' => 'building-2'],
     ];
 @endphp
-
 <aside class="w-full lg:w-64 flex-shrink-0">
     <nav class="bg-card border border-border rounded-xl shadow-sm p-4 sticky top-24" aria-label="Employer navigation">
         <div class="mb-4 px-3">
