@@ -55,6 +55,14 @@ class User extends Authenticatable
     }
 
     /**
+     * Get the job alerts for the user.
+     */
+    public function jobAlerts(): HasMany
+    {
+        return $this->hasMany(JobAlert::class);
+    }
+
+    /**
      * Get the company the user belongs to (as an employer).
      */
     public function company(): BelongsTo

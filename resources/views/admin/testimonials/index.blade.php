@@ -31,7 +31,6 @@
                     {{ session('success') }}
                 </div>
             @endif
-
             {{-- Testimonials Table --}}
             @if($testimonials->count() > 0)
                 <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm overflow-hidden">
