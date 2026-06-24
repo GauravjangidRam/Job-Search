@@ -2,7 +2,6 @@
 
 @section('content')
     <x-home.navigation-bar />
-
     <div class="max-w-[1200px] mx-auto pt-16">
         <div class="py-12 px-6 md:px-8">
             {{-- Header --}}
@@ -26,7 +25,6 @@
                     </a>
                 </div>
             </div>
-
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
