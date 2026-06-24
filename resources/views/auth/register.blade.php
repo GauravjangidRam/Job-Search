@@ -2,11 +2,9 @@
 
 @section('content')
     <x-home.navigation-bar />
-
     <div class="max-w-[420px] mx-auto pt-28 pb-16 px-5">
         <h1 class="text-3xl font-bold text-foreground">Create account</h1>
         <p class="text-muted mt-2 mb-8">Join thousands of professionals finding their next role.</p>
-
         @if($errors->any())
             <div class="mb-4">
                 @foreach($errors->all() as $error)
