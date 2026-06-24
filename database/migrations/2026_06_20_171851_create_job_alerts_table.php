@@ -13,6 +13,10 @@ return new class extends Migration
     {
         Schema::create('job_alerts', function (Blueprint $table) {
             $table->id();
+            $table->foreignId('user_id')->constrained('users')->cascadeOnDelete();
+            $table->string('keywords')->nullable();
+            $table->string('location')->nullable();
+            $table->string('job_type')->nullable();
             $table->timestamps();
         });
     }

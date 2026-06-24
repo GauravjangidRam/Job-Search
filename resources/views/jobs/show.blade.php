@@ -1,5 +1,57 @@
 @extends('layouts.app')
 
+@section('title', $job->title . ' at ' . $job->company_name)
+
+@section('meta')
+    <meta name="description" content="{{ \Illuminate\Support\Str::limit(strip_tags($job->description), 150) }}">
+    
+    <!-- OpenGraph Tags -->
+    <meta property="og:title" content="{{ $job->title }} at {{ $job->company_name }}">
+    <meta property="og:description" content="{{ \Illuminate\Support\Str::limit(strip_tags($job->description), 150) }}">
+    <meta property="og:type" content="website">
+    <meta property="og:url" content="{{ url()->current() }}">
+    @if($job->company_logo_url)
+        <meta property="og:image" content="{{ $job->company_logo_url }}">
+    @endif
+
+    <!-- Structured Data (JSON-LD) -->
+    <script type="application/ld+json">
+    {
+      "@context": "https://schema.org/",
+      "@type": "JobPosting",
+      "title": "{{ $job->title }}",
+      "description": "{!! addslashes(e(strip_tags($job->description))) !!}",
+      "datePosted": "{{ $job->created_at->toIso8601String() }}",
+      "validThrough": "{{ $job->created_at->addDays(60)->toIso8601String() }}",
+      "employmentType": "{{ str_replace('-', '_', strtoupper($job->job_type)) }}",
+      "hiringOrganization": {
+        "@type": "Organization",
+        "name": "{{ $job->company_name }}"
+        @if($job->company_logo_url)
+        ,"logo": "{{ $job->company_logo_url }}"
+        @endif
+      },
+      "jobLocation": {
+        "@type": "Place",
+        "address": {
+          "@type": "PostalAddress",
+          "addressLocality": "{{ $job->location }}"
+        }
+      },
+      "baseSalary": {
+        "@type": "MonetaryAmount",
+        "currency": "{{ $job->currency ?? 'INR' }}",
+        "value": {
+          "@type": "QuantitativeValue",
+          "minValue": {{ $job->salary_min }},
+          "maxValue": {{ $job->salary_max }},
+          "unitText": "YEAR"
+        }
+      }
+    }
+    </script>
+@endsection
+
 @section('content')
     <x-home.navigation-bar />
 

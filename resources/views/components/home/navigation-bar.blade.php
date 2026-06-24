@@ -60,6 +60,10 @@
                             Admin
                         </a>
                     @else
+                        <a href="{{ route('alerts.index') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
+                            <i data-lucide="bell" class="w-4 h-4"></i>
+                            Job Alerts
+                        </a>
                         <a href="{{ route('profile.show') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
                             <i data-lucide="user" class="w-4 h-4"></i>
                             Profile
@@ -133,6 +137,9 @@
                             Admin Panel
                         </a>
                     @else
+                        <a href="{{ route('alerts.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">
+                            Job Alerts
+                        </a>
                         <a href="{{ route('profile.show') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">
                             My Profile
                         </a>

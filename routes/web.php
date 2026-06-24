@@ -17,7 +17,7 @@ Route::get('/', [HomeController::class, 'index'])->name('home');
 
 // Job routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');
-Route::get('/jobs/{hash}', [JobController::class, 'show'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.show');
+Route::get('/jobs/{hash}/{slug?}', [JobController::class, 'show'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.show');
 
 // Guest routes (register & login)
 Route::middleware('guest')->group(function () {
@@ -66,6 +66,11 @@ Route::middleware(['auth', 'role:seeker'])->group(function () {
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');
     Route::get('/bookmarks', [BookmarkController::class, 'index'])->name('bookmarks.index');
+
+    // Job Alerts
+    Route::get('/alerts', [\App\Http\Controllers\JobAlertController::class, 'index'])->name('alerts.index');
+    Route::post('/alerts', [\App\Http\Controllers\JobAlertController::class, 'store'])->name('alerts.store');
+    Route::delete('/alerts/{alert}', [\App\Http\Controllers\JobAlertController::class, 'destroy'])->name('alerts.destroy');
 });
 
 // Employer routes (auth + role:employer)
