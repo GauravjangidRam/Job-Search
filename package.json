@@ -6,6 +6,7 @@
         "dev": "vite"
     },
     "dependencies": {
+        "@supabase/server": "^1.2.0",
         "alpinejs": "^3.14.0"
     },
     "devDependencies": {

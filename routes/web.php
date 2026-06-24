@@ -14,6 +14,7 @@ use App\Http\Controllers\ResumeController;
 use Illuminate\Support\Facades\Route;
 
 Route::get('/', [HomeController::class, 'index'])->name('home');
+Route::get('/sitemap.xml', [\App\Http\Controllers\SitemapController::class, 'index'])->name('sitemap');
 
 // Job routes
 Route::get('/jobs', [JobController::class, 'index'])->name('jobs.index');

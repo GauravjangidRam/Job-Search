@@ -125,7 +125,7 @@
         {{-- Filtered Job Cards --}}
         <div x-show="filteredJobs.length > 0" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-6">
             <template x-for="job in filteredJobs" :key="job.id">
-                <div class="bg-card border border-border rounded-card p-5 hover:shadow-md transition-shadow duration-200">
+                <a :href="job.url" class="block bg-card border border-border rounded-card p-5 hover:shadow-md transition-shadow duration-200">
                     <div class="flex items-start gap-3">
                         <img
                             :src="job.company_logo_url || ''"
@@ -153,7 +153,7 @@
                             <span class="text-xs bg-secondary text-muted px-2 py-0.5 rounded-full" x-text="skill"></span>
                         </template>
                     </div>
-                </div>
+                </a>
             </template>
         </div>
     </div>

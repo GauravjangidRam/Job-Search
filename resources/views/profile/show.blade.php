@@ -225,7 +225,7 @@
                                         @endif
                                         @if($listing)
                                             <div class="pt-2">
-                                                <a href="{{ route('jobs.show', $listing->id) }}" class="text-xs text-primary hover:underline font-medium">
+                                                <a href="{{ $listing->url }}" class="text-xs text-primary hover:underline font-medium">
                                                     View job listing &rarr;
                                                 </a>
                                             </div>
@@ -284,7 +284,7 @@
                                         {{ $bookmark->created_at?->format('M d, Y') }}
                                     </p>
                                     @if($bookmarkedListing)
-                                        <a href="{{ route('jobs.show', $bookmarkedListing->id) }}" class="text-xs text-primary hover:underline font-medium whitespace-nowrap">
+                                        <a href="{{ $bookmarkedListing->url }}" class="text-xs text-primary hover:underline font-medium whitespace-nowrap">
                                             View &rarr;
                                         </a>
                                     @endif

@@ -113,7 +113,7 @@
                 </div>
                 <div class="mt-4 pt-4 border-t border-border flex items-center justify-between">
                     <span class="text-xs text-muted">Posted {{ $heroJob->created_at->diffForHumans() }}</span>
-                    <a href="{{ route('jobs.show', $heroJob->hashed_id) }}" class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-light transition-colors">
+                    <a href="{{ $heroJob->url }}" class="px-4 py-2 text-sm font-medium bg-primary text-white rounded-lg hover:bg-primary-light transition-colors">
                         View Job
                     </a>
                 </div>

@@ -6,7 +6,7 @@
         <div class="py-12 px-6 md:px-8">
             {{-- Job context header --}}
             <div class="mb-8">
-                <a href="{{ route('jobs.show', $job) }}" class="text-sm text-primary hover:underline">&larr; Back to job details</a>
+                <a href="{{ $job->url }}" class="text-sm text-primary hover:underline">&larr; Back to job details</a>
                 <h1 class="text-2xl md:text-3xl font-bold text-foreground mt-3 mb-1">Apply for {{ $job->title }}</h1>
                 <p class="text-muted">{{ $job->company_name }}@if(!empty($job->location)) &middot; {{ $job->location }}@endif</p>
             </div>
@@ -162,7 +162,7 @@
                         {{-- Actions --}}
                         <div class="flex items-center justify-end gap-3">
                             <a
-                                href="{{ route('jobs.show', $job) }}"
+                                href="{{ $job->url }}"
                                 class="px-6 py-3 border border-border text-foreground font-semibold rounded-lg hover:bg-secondary focus:outline-2 focus:outline-offset-2 focus:outline-primary transition-colors"
                             >
                                 Cancel

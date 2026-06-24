@@ -112,7 +112,7 @@
                     </div>
 
                     @forelse($jobListings as $job)
-                        <a href="{{ route('jobs.show', $job->hashed_id) }}" class="block border border-border rounded-lg p-4 mb-3 last:mb-0 hover:border-primary/30 hover:bg-secondary/30 transition-all">
+                        <a href="{{ $job->url }}" class="block border border-border rounded-lg p-4 mb-3 last:mb-0 hover:border-primary/30 hover:bg-secondary/30 transition-all">
                             <div class="flex items-start justify-between gap-3">
                                 <div class="min-w-0">
                                     <h3 class="text-sm font-semibold text-foreground">{{ $job->title }}</h3>

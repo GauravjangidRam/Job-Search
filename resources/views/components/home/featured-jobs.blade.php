@@ -61,7 +61,7 @@
                             {{ $job->created_at->diffForHumans() }}
                         </span>
                         <a
-                            href="{{ route('jobs.show', $job->hashed_id) }}"
+                            href="{{ $job->url }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-light transition-colors"
                             aria-label="View {{ $job->title }}"
                         >

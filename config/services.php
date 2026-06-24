@@ -45,4 +45,11 @@ return [
         'linkedin' => env('SOCIAL_LINKEDIN_URL', 'https://linkedin.com/company/jobhub'),
         'github' => env('SOCIAL_GITHUB_URL', 'https://github.com/jobhub'),
     ],
+
+    'supabase' => [
+        'url' => env('SUPABASE_URL'),
+        'publishable_key' => env('SUPABASE_PUBLISHABLE_KEY'),
+        'secret_key' => env('SUPABASE_SECRET_KEY'),
+        'jwks_url' => env('SUPABASE_JWKS_URL'),
+    ],
 ];

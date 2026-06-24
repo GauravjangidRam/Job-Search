@@ -39,6 +39,16 @@ class JobListing extends Model
     ];
 
     /**
+     * The accessors to append to the model's array form.
+     *
+     * @var array
+     */
+    protected $appends = [
+        'url',
+        'hashed_id',
+    ];
+
+    /**
      * Get the currency symbol.
      */
     public function getCurrencySymbolAttribute(): string
@@ -82,6 +92,14 @@ class JobListing extends Model
     {
         $hashids = new Hashids(config('app.key'), 8);
         return $hashids->encode($this->id);
+    }
+
+    public function getUrlAttribute(): string
+    {
+        return route('jobs.show', [
+            'hash' => $this->hashed_id,
+            'slug' => \Illuminate\Support\Str::slug($this->title),
+        ]);
     }
 
     public static function findByHash(string $hash): ?self

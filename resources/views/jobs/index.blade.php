@@ -210,7 +210,7 @@
                             @endif
                         @endauth
 
-                        <a href="/jobs/{{$job->hashed_id}}" class="block">
+                        <a href="{{ $job->url }}" class="block">
                             <div class="flex items-start justify-between mb-3 pr-8">
                                 <h2 class="text-lg font-semibold text-foreground group-hover:text-primary transition-colors line-clamp-2">
                                     {{ $job->title }}
