@@ -4,4 +4,4 @@
     <p class="text-gray-500 text-center text-lg">
         {{ $message }}
     </p> 
-</div>
+</div> 
