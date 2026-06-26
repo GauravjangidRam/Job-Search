@@ -13,7 +13,6 @@
                     {{ session('success') }}
                 </div>
             @endif
-
             {{-- Validation Error Summary --}}
             @if($errors->any())
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800" role="alert">
@@ -25,7 +24,6 @@
                     </ul>
                 </div>
             @endif
-
             <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm overflow-hidden">
                 <form
                     method="POST"
