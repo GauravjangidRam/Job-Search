@@ -9,7 +9,7 @@
                 <div>
                     <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-2">Edit Career Insight</h1>
                     <p class="text-muted">Update the career insight details.</p>
-                </div> 
+                </div>
                 <a
                     href="{{ route('admin.insights.index') }}"
                     class="inline-flex items-center justify-center px-5 py-2.5 border border-border text-foreground font-semibold rounded-lg hover:bg-secondary focus:outline-2 focus:outline-offset-2 focus:outline-primary transition-colors"
@@ -31,7 +31,7 @@
                             name="type"
                             required
                             class="w-full px-4 py-2.5 border border-border rounded-lg bg-background text-foreground focus:outline-2 focus:outline-primary focus:border-primary transition-colors"
-                        >
+                        > 
                             <option value="salary" {{ old('type', $insight->type) === 'salary' ? 'selected' : '' }}>Salary</option>
                             <option value="trend" {{ old('type', $insight->type) === 'trend' ? 'selected' : '' }}>Trend</option>
                             <option value="skill" {{ old('type', $insight->type) === 'skill' ? 'selected' : '' }}>Skill</option>
