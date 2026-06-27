@@ -22,7 +22,7 @@ class ApplicationStatusUpdatedNotification extends Notification
         $this->application = $application;
     }
 
-    /**
+    /** 
      * Get the notification's delivery channels.
      *
      * @return array<int, string>

@@ -32,7 +32,7 @@ class ApplicationReceivedNotification extends Notification
         return ['database'];
     }
 
-    /**
+    /** 
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>

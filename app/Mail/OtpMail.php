@@ -10,7 +10,7 @@ use Illuminate\Queue\SerializesModels;
 
 class OtpMail extends Mailable
 {
-    use Queueable, SerializesModels;
+    use Queueable, SerializesModels; 
 
     /**
      * Create a new message instance.
