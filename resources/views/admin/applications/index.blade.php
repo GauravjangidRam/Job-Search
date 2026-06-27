@@ -18,14 +18,12 @@
                     Back to Dashboard
                 </a>
             </div>
-
             {{-- Flash Messages --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
                     {{ session('success') }}
                 </div>
             @endif
-
             {{-- Applications Table --}}
             @if($applications->count() > 0)
                 <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm overflow-hidden">
