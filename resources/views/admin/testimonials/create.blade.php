@@ -122,7 +122,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Is Featured --}}
                     <div class="flex items-center gap-3">
                         <input
@@ -138,13 +137,12 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Submit --}}
                     <div class="flex items-center gap-4 pt-4">
                         <button
                             type="submit"
                             class="inline-flex items-center justify-center px-6 py-2.5 bg-primary text-white font-semibold rounded-lg hover:bg-primary-light focus:outline-2 focus:outline-offset-2 focus:outline-primary transition-colors"
-                        >
+                        > 
                             Create Testimonial
                         </button>
                         <a
