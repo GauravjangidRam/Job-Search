@@ -15,7 +15,6 @@ class Testimonial extends Model
         'rating',
         'is_featured',
     ];
-
     /**
      * Get the attributes that should be cast.
      *

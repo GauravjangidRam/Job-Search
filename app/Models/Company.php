@@ -50,7 +50,7 @@ class Company extends Model
     {
         return $this->hasMany(JobListing::class);
     }
-
+ 
     /**
      * Get the employer users that belong to the company.
      */

@@ -30,7 +30,7 @@ class ApplicationReceivedNotification extends Notification
     public function via(object $notifiable): array
     {
         return ['database'];
-    }
+    } 
 
     /** 
      * Get the array representation of the notification.
