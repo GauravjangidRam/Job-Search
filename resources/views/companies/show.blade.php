@@ -4,7 +4,6 @@
 
 @section('content')
     <x-home.navigation-bar />
-
     <div class="max-w-[1100px] mx-auto pt-16 px-6 md:px-8 py-12">
         {{-- Back Link --}}
         <a href="{{ route('companies.index') }}" class="text-sm text-primary hover:underline mb-6 inline-block">&larr; Back to companies</a>
@@ -31,7 +30,6 @@
                     @else
                         <div class="w-20 h-20 rounded-xl bg-primary text-white flex items-center justify-center text-xl font-bold border-4 border-card shadow-sm" aria-hidden="true">{{ $initials }}</div>
                     @endif
-
                     <div class="flex-1">
                         <h1 class="text-2xl md:text-3xl font-bold text-foreground">{{ $company->name }}</h1>
                         <div class="flex flex-wrap items-center gap-3 mt-2 text-sm text-muted">
@@ -70,7 +68,7 @@
                         >
                             <i data-lucide="external-link" class="w-4 h-4"></i>
                             Website
-                        </a>
+                        </a> 
                     @endif
                 </div>
             </div>
