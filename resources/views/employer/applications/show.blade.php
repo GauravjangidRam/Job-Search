@@ -13,7 +13,6 @@
         ];
         $badgeClass = $statusStyles[$status] ?? 'bg-blue-100 text-blue-800';
     @endphp
-
     <div class="max-w-[900px] mx-auto pt-16">
         <div class="py-12 px-6 md:px-8">
             {{-- Back link --}}
@@ -31,7 +30,6 @@
                     {{ $status }}
                 </span>
             </div>
-
             {{-- Success Message --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
@@ -50,7 +48,6 @@
                     </ul>
                 </div>
             @endif
-
             {{-- Applicant Details --}}
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8 mb-8">
                 <h2 class="text-lg font-semibold text-foreground mb-4">Applicant Details</h2>
