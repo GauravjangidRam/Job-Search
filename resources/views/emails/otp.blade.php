@@ -53,12 +53,10 @@
                                         <h1 style="margin: 0 0 12px; font-size: 26px; font-weight: 700; color: #111827; text-align: center; letter-spacing: -0.5px;">
                                             Verify Your Email
                                         </h1>
-
                                         <p style="margin: 0 0 32px; font-size: 15px; color: #6b7280; line-height: 1.6; text-align: center;">
                                             Use the code below to verify your Job Hub account.<br>
                                             This code expires in <strong style="color: #ea580c;">10 minutes</strong>.
                                         </p>
-
                                         {{-- OTP Box --}}
                                         <table role="presentation" cellspacing="0" cellpadding="0" style="margin: 0 auto 32px;">
                                             <tr>
@@ -68,7 +66,6 @@
                                                 </td>
                                             </tr>
                                         </table>
-
                                         {{-- Security Warning --}}
                                         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 0 0 32px;">
                                             <tr>
