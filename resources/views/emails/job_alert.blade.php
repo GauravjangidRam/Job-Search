@@ -10,7 +10,7 @@ We found new job openings matching your alerts preference on **Job Hub**:
 **Salary:** {{ $job->currency_symbol }}{{ number_format($job->salary_min) }} - {{ $job->currency_symbol }}{{ number_format($job->salary_max) }}
 
 ---
-@endforeach
+@endforeach 
 
 @component('mail::button', ['url' => url('/jobs')])
 View All Jobs
