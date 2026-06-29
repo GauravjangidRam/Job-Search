@@ -14,7 +14,7 @@
             <p class="mt-2 text-gray-600">The job listing you're looking for doesn't exist or may have been removed.</p>
             <a href="/jobs" class="mt-6 inline-block px-6 py-3 bg-indigo-600 text-white font-medium rounded-lg hover:bg-indigo-700 transition-colors">
                 Browse All Jobs
-            </a>
+            </a> 
         </div>
     </div>
 </body>
