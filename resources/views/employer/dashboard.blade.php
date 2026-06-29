@@ -8,7 +8,6 @@
             <div class="flex flex-col lg:flex-row gap-8">
                 {{-- Sidebar --}}
                 <x-employer.sidebar />
-
                 {{-- Main Content --}}
                 <div class="flex-1 min-w-0">
                     {{-- Header --}}
@@ -25,7 +24,6 @@
                             Post a Job
                         </a>
                     </div>
-
                     {{-- Statistics Cards --}}
                     <div class="grid grid-cols-2 md:grid-cols-4 gap-4 mb-8">
                         <div class="bg-card border border-border rounded-xl shadow-sm p-5">
