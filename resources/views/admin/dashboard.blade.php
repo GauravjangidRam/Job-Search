@@ -67,7 +67,6 @@
                                 @endforeach
                             </div>
                         </section>
-
                         {{-- Applications by Status --}}
                         <section class="bg-card border border-border rounded-xl p-6">
                             <h2 class="text-sm font-semibold text-foreground mb-4">Applications by Status</h2>
@@ -80,7 +79,7 @@
                                 @endforeach
                             </div>
                         </section>
-                    </div>
+                    </div> 
                 </div>
             </div>
         </div>
