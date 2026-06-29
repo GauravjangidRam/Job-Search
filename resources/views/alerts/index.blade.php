@@ -83,7 +83,6 @@
                         </form>
                     </div>
                 </div>
-
                 {{-- Right Side: Active Alerts --}}
                 <div class="lg:col-span-2">
                     <div class="bg-card border border-border rounded-xl p-6 shadow-sm">
@@ -94,7 +93,6 @@
                             </span>
                             <span class="text-xs text-muted bg-secondary px-2.5 py-1 rounded-full font-semibold">{{ $alerts->count() }} active</span>
                         </h2>
-
                         @forelse($alerts as $alert)
                             <div class="flex items-center justify-between gap-4 p-4 border border-border rounded-lg mb-3 last:mb-0 hover:border-primary/20 transition-colors">
                                 <div class="space-y-1.5 min-w-0">
@@ -112,7 +110,6 @@
                                                 {{ $alert->location }}
                                             </span>
                                         @endif
-
                                         @if($alert->job_type)
                                             <span class="inline-flex items-center gap-1 px-2.5 py-0.5 rounded-full text-xs font-semibold bg-purple-100 text-purple-800">
                                                 <i data-lucide="briefcase" class="w-3 h-3"></i>
@@ -124,7 +121,6 @@
                                         Subscribed on {{ $alert->created_at->format('M d, Y') }}
                                     </p>
                                 </div>
-
                                 <form method="POST" action="{{ route('alerts.destroy', $alert->id) }}" class="flex-shrink-0">
                                     @csrf
                                     @method('DELETE')
