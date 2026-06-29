@@ -49,7 +49,7 @@
                         Filter
                     </button>
                 </form>
-            </div>
+            </div> 
             {{-- Job Listings Table --}}
             @if($listings->count() > 0)
                 <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm overflow-hidden">
@@ -80,7 +80,7 @@
                                             <span class="inline-flex items-center px-2.5 py-0.5 rounded-full text-xs font-medium capitalize {{ $statusBadgeStyles[$listing->status] ?? 'bg-gray-100 text-gray-800' }}">
                                                 {{ $listing->status }}
                                             </span>
-                                        </td>
+                                        </td> 
                                         <td class="px-6 py-4 text-sm text-muted">{{ $listing->created_at->format('M j, Y') }}</td>
                                         <td class="px-6 py-4">
                                             <div class="flex items-center gap-2">
