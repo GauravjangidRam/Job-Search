@@ -23,7 +23,6 @@ class ResumeControllerTest extends TestCase
         $response = $this->post('/resume/analyze', [
             'resume' => UploadedFile::fake()->create('resume.pdf', 128, 'application/pdf'),
         ]);
-
         $response->assertRedirect(route('login'));
     }
 
@@ -32,7 +31,6 @@ class ResumeControllerTest extends TestCase
         $user = User::factory()->create(['role' => 'seeker']);
 
         $response = $this->actingAs($user)->get('/resume');
-
         $response->assertStatus(200);
         $response->assertViewIs('resume.index');
         $response->assertSee('AI Resume Analysis');
@@ -45,10 +43,8 @@ class ResumeControllerTest extends TestCase
     public function test_authenticated_user_can_upload_resume_and_get_report(): void
     {
         Storage::fake('local');
-
         $user = User::factory()->create(['role' => 'seeker']);
         $resume = UploadedFile::fake()->create('resume.pdf', 256, 'application/pdf');
-
         $response = $this->actingAs($user)->post('/resume/analyze', [
             'resume' => $resume,
         ]);
@@ -57,7 +53,6 @@ class ResumeControllerTest extends TestCase
         $response->assertSessionHas('success', 'Resume analyzed successfully. Your report is ready.');
 
         $analysis = ResumeAnalysis::query()->firstOrFail();
-
         $this->assertSame($user->id, $analysis->user_id);
         $this->assertSame('local-ai-report', $analysis->provider);
         $this->assertNull($analysis->job_application_id);
