@@ -80,7 +80,6 @@ class LoginRedirectTest extends TestCase
                 'email' => 'flow@example.com',
                 'password' => 'password123',
             ]);
-
         $loginResponse->assertRedirect('/verify-otp');
         $this->assertEquals($user->id, session('otp_user_id'));
         $this->assertEquals(url($intended), session('url.intended'));
@@ -107,7 +106,6 @@ class LoginRedirectTest extends TestCase
     public function test_verified_user_login_redirects_to_intended_url(): void
     {
         $intended = '/bookmarks';
-
         User::factory()->create([
             'email' => 'verified@example.com',
             'password' => Hash::make('password123'),
@@ -136,7 +134,6 @@ class LoginRedirectTest extends TestCase
 
         $response = $this->withSession(['otp_user_id' => $user->id])
             ->post('/verify-otp', ['otp' => $otp]);
-
         $response->assertRedirect('/jobs');
         $this->assertAuthenticated();
     }
