@@ -16,7 +16,6 @@
                 </form>
             @endif
         </div>
-
         <div class="space-y-4">
             @forelse($notifications as $notification)
                 <div class="relative bg-card border {{ $notification->read_at ? 'border-border/50' : 'border-primary/30 shadow-sm' }} rounded-[var(--radius-card)] p-6 transition-colors group">
@@ -65,7 +64,7 @@
                             </form>
                         @endif
                     </div>
-                </div>
+                </div> 
             @empty
                 <div class="bg-card border border-border rounded-[var(--radius-card)] p-12 text-center">
                     <div class="w-16 h-16 mx-auto bg-secondary rounded-full flex items-center justify-center text-muted mb-4">
@@ -76,7 +75,6 @@
                 </div>
             @endforelse
         </div>
-
         @if($notifications->hasPages())
             <div class="mt-8">
                 {{ $notifications->links() }}
