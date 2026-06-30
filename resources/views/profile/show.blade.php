@@ -5,7 +5,6 @@
 
     <div class="max-w-[1100px] mx-auto pt-16">
         <div class="py-12 px-6 md:px-8">
-
             {{-- Success Message --}}
             @if(session('success'))
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
@@ -299,7 +298,6 @@
                     </section>
                 </div>
             </div>
-
         </div>
     </div>
 @endsection
