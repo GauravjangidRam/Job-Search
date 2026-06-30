@@ -119,7 +119,7 @@ class CompanyControllerTest extends TestCase
         ]);
 
         $response->assertSessionHasErrors('website_url');
-    }
+    } 
 
     public function test_update_rejects_employee_count_below_one(): void
     {

@@ -203,7 +203,7 @@ class ApplicationStatusTimestampTest extends TestCase
         }
     }
 
-    /**
+    /** 
      * Example: a concrete status update records a timestamp close to "now" and
      * advances the recorded timestamp when the status changes again.
      *
