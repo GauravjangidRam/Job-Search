@@ -32,12 +32,11 @@ class CompanyControllerTest extends TestCase
             Company::create(['name' => "Company {$i}", 'slug' => "company-{$i}"]);
         }
         $response = $this->get('/companies');
-
         $response->assertStatus(200);
         $companies = $response->viewData('companies');
         $this->assertCount(12, $companies);
         $this->assertEquals(2, $companies->lastPage());
-    }
+    } 
 
     public function test_show_returns_company_with_job_listings(): void
     {
@@ -57,7 +56,6 @@ class CompanyControllerTest extends TestCase
         ]);
         $olderJob->created_at = now()->subDays(5);
         $olderJob->save();
-
         $newerJob = JobListing::create([
             'title' => 'Newer Job',
             'company_name' => 'Test Company',
@@ -89,7 +87,6 @@ class CompanyControllerTest extends TestCase
     public function test_show_returns_404_for_nonexistent_slug(): void
     {
         $response = $this->get('/companies/nonexistent-company');
-
         $response->assertStatus(404);
     }
 }
