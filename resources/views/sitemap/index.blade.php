@@ -24,7 +24,7 @@
             <lastmod>{{ $job->updated_at->tz('UTC')->toAtomString() }}</lastmod>
             <changefreq>daily</changefreq>
             <priority>0.8</priority>
-        </url>
+        </url> 
     @endforeach
 
     @foreach($companies as $company)
