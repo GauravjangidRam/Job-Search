@@ -56,7 +56,6 @@ class CompanyUpdateRequestTest extends TestCase
             'logo_url' => null,
             'employee_count' => null,
         ]);
-
         $this->assertTrue($validator->passes());
     }
 
@@ -66,7 +65,6 @@ class CompanyUpdateRequestTest extends TestCase
             'name' => 'Acme Corp',
             'website_url' => 'not-a-url',
         ]);
-
         $this->assertTrue($validator->fails());
         $this->assertArrayHasKey('website_url', $validator->errors()->toArray());
     }
@@ -92,7 +90,6 @@ class CompanyUpdateRequestTest extends TestCase
         ]);
         $this->assertTrue($invalid->fails());
         $this->assertArrayHasKey('logo', $invalid->errors()->toArray());
-
         $valid = $this->validate([
             'name' => 'Acme Corp',
             'logo' => UploadedFile::fake()->image('logo.png', 64, 64),
