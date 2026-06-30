@@ -49,7 +49,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Email (disabled / not editable) --}}
                     <div class="mb-6">
                         <label for="email" class="block text-sm font-medium mb-1">Email</label>
@@ -64,7 +63,6 @@
                         >
                         <p class="mt-1 text-xs text-muted">Your email address cannot be changed.</p>
                     </div>
-
                     {{-- Phone --}}
                     <div class="mb-6">
                         <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
