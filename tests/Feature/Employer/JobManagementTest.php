@@ -35,7 +35,7 @@ class JobManagementTest extends TestCase
     /**
      * Number of randomized iterations per property (design requires >= 100).
      */
-    private const ITERATIONS = 120;
+    private const ITERATIONS = 120; 
 
     protected function setUp(): void
     {
@@ -54,7 +54,7 @@ class JobManagementTest extends TestCase
 
         // Routes registered after the app boots are not in the name lookup yet.
         $this->app['router']->getRoutes()->refreshNameLookups();
-    }
+    } 
 
     /**
      * Create a company plus an employer User linked to it via company_id.
