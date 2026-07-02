@@ -33,7 +33,7 @@ class ProfileControllerTest extends TestCase
 {
     use RefreshDatabase;
 
-    /**
+    /** 
      * Number of randomized iterations for the property (design requires >= 100).
      */
     private const ITERATIONS = 120;
