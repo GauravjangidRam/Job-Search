@@ -45,9 +45,8 @@ class ProfileControllerTest extends TestCase
         Route::middleware('web')->group(function () {
             Route::put('/profile', [ProfileController::class, 'update'])
                 ->name('profile.update');
-            Route::get('/profile', [ProfileController::class, 'show'])
-                ->name('profile.show');
-        });
+            Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
+        }); 
 
         // Routes registered after the app boots are not in the name lookup yet.
         $this->app['router']->getRoutes()->refreshNameLookups();
