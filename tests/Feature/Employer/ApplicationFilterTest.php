@@ -8,7 +8,7 @@ use App\Models\JobListing;
 use App\Models\User;
 use Illuminate\Foundation\Testing\RefreshDatabase;
 use Tests\TestCase;
-
+ 
 /**
  * Feature: full-platform-features, Property 18: Application filter correctness
  *
@@ -24,7 +24,7 @@ use Tests\TestCase;
 class ApplicationFilterTest extends TestCase
 {
     use RefreshDatabase;
-
+ 
     /**
      * Valid application statuses.
      */

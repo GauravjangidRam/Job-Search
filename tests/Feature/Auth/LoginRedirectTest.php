@@ -150,7 +150,6 @@ class LoginRedirectTest extends TestCase
     {
         // Seed for reproducibility so any counterexample is repeatable.
         mt_srand(20250105);
-
         $bases = [
             'profile',
             'bookmarks',
@@ -168,7 +167,6 @@ class LoginRedirectTest extends TestCase
         ];
 
         $cases = [];
-
         for ($i = 0; $i < 100; $i++) {
             $base = $bases[$i % count($bases)];
             $path = '/' . $base;
