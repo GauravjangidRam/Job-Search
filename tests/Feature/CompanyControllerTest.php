@@ -86,7 +86,8 @@ class CompanyControllerTest extends TestCase
 
     public function test_show_returns_404_for_nonexistent_slug(): void
     {
-        $response = $this->get('/companies/nonexistent-company');
+        $response = $this->get('/companies/nonexistent-company'); 
         $response->assertStatus(404);
+        
     }
 }
