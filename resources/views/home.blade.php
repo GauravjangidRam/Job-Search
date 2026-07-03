@@ -35,9 +35,8 @@
             <x-home.testimonials :testimonials="$testimonials" />
         </section>
         @endif
-
         <section aria-label="Call to Action" class="py-20 px-6 md:px-8">
             <x-home.call-to-action />
         </section>
     </div>
-@endsection
+@endsection 
