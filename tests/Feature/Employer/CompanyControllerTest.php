@@ -163,7 +163,6 @@ class CompanyControllerTest extends TestCase
             'name' => 'Acme Corp',
             'logo' => UploadedFile::fake()->create('logo.pdf', 100, 'application/pdf'),
         ]);
-
         $response->assertSessionHasErrors('logo');
     }
-}
+} 
