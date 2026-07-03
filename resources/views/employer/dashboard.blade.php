@@ -62,8 +62,7 @@
                             <p class="text-2xl font-bold text-foreground">{{ $applicationsByStatus['shortlisted'] ?? 0 }}</p>
                             <p class="text-xs text-muted mt-1">Shortlisted</p>
                         </div>
-                    </div>
-
+                    </div> 
                     {{-- Company Quick Info --}}
                     @php $company = auth()->user()->company; @endphp
                     @if($company)
