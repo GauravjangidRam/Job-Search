@@ -14,8 +14,8 @@ We found new job openings matching your alerts preference on **Job Hub**:
 
 @component('mail::button', ['url' => url('/jobs')])
 View All Jobs
-@endcomponent
+@endcomponent 
 
 Thanks,<br>
 {{ config('app.name') }} Team
-@endcomponent
+@endcomponent 

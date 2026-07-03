@@ -35,7 +35,6 @@
                                     <td style="background-color: #ea580c; height: 6px; font-size: 0; line-height: 0;">&nbsp;</td>
                                 </tr>
                             </table> 
-
                             {{-- Body --}}
                             <table role="presentation" width="100%" cellspacing="0" cellpadding="0">
                                 <tr>
@@ -76,14 +75,12 @@
                                                 </td>
                                             </tr>
                                         </table>
-
                                         {{-- Divider --}}
                                         <table role="presentation" width="100%" cellspacing="0" cellpadding="0" style="margin: 0 0 24px;">
                                             <tr>
                                                 <td style="border-top: 1px solid #f3f4f6; font-size: 0; line-height: 0;">&nbsp;</td>
                                             </tr>
                                         </table>
-
                                         <p style="margin: 0; font-size: 13px; color: #9ca3af; text-align: center; line-height: 1.6;">
                                             If you didn't request this code, you can safely ignore this email.<br>
                                             Your account remains secure.
