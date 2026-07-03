@@ -45,7 +45,6 @@
                                     class="w-full px-3 py-2 border border-border rounded-md bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary focus:border-primary text-sm"
                                 >
                             </div>
-
                             <div>
                                 <label for="location" class="block text-sm font-medium text-foreground mb-1">Location</label>
                                 <input
@@ -72,7 +71,6 @@
                                     <option value="Internship">Internship</option>
                                 </select>
                             </div>
-
                             <button
                                 type="submit"
                                 class="w-full inline-flex items-center justify-center px-4 py-2.5 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors focus:outline-none focus:ring-2 focus:ring-primary"
@@ -134,7 +132,7 @@
                                     </button>
                                 </form>
                             </div>
-                        @empty
+                        @empty 
                             <div class="text-center py-12">
                                 <i data-lucide="bell-off" class="w-12 h-12 text-muted mx-auto mb-3"></i>
                                 <p class="text-foreground font-medium mb-1">No active job alerts</p>
@@ -146,4 +144,4 @@
             </div>
         </div>
     </div>
-@endsection 
+@endsection
