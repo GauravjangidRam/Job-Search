@@ -18,12 +18,10 @@
                     Back to Testimonials
                 </a>
             </div>
-
             {{-- Form --}}
             <div class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8">
                 <form method="POST" action="{{ route('admin.testimonials.store') }}" class="space-y-6">
                     @csrf
-
                     {{-- Name --}}
                     <div>
                         <label for="name" class="block text-sm font-medium text-foreground mb-1">Name</label>
@@ -40,7 +38,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Role --}}
                     <div>
                         <label for="role" class="block text-sm font-medium text-foreground mb-1">Role</label>
@@ -73,7 +70,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Avatar URL --}}
                     <div>
                         <label for="avatar_url" class="block text-sm font-medium text-foreground mb-1">Avatar URL</label>
@@ -104,7 +100,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Rating --}}
                     <div>
                         <label for="rating" class="block text-sm font-medium text-foreground mb-1">Rating</label>
@@ -136,7 +131,7 @@
                         @error('is_featured')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> 
                     {{-- Submit --}}
                     <div class="flex items-center gap-4 pt-4">
                         <button
