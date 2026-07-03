@@ -109,7 +109,6 @@
                             >
                         </div>
                     @endif
-
                     {{-- Avatar Upload --}}
                     <div class="mb-6">
                         <label for="avatar" class="block text-sm font-medium mb-1">Avatar</label>
@@ -125,7 +124,6 @@
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
                     </div>
-
                     {{-- Actions --}}
                     <div class="flex items-center justify-end gap-3">
                         <a
@@ -145,4 +143,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
