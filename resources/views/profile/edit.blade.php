@@ -62,7 +62,7 @@
                             class="w-full px-4 py-2 border border-border rounded-md bg-secondary text-muted cursor-not-allowed"
                         >
                         <p class="mt-1 text-xs text-muted">Your email address cannot be changed.</p>
-                    </div>
+                    </div> 
                     {{-- Phone --}}
                     <div class="mb-6">
                         <label for="phone" class="block text-sm font-medium mb-1">Phone</label>
@@ -77,7 +77,7 @@
                         @error('phone')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> 
 
                     {{-- Bio --}}
                     <div class="mb-6">
@@ -92,7 +92,7 @@
                         @error('bio')
                             <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                         @enderror
-                    </div>
+                    </div> 
 
                     {{-- Current Avatar Preview --}}
                     @php
@@ -107,7 +107,7 @@
                                 alt="{{ $user->name }}'s avatar"
                                 class="h-16 w-16 object-cover rounded-full border border-border bg-background"
                             >
-                        </div>
+                        </div> 
                     @endif
                     {{-- Avatar Upload --}}
                     <div class="mb-6">
