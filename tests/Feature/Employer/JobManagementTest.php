@@ -87,7 +87,6 @@ class JobManagementTest extends TestCase
     {
         $salaryMin = $faker->numberBetween(0, 200000);
         $salaryMax = $salaryMin + $faker->numberBetween(0, 100000);
-
         // skills: usually a list of strings, occasionally omitted (nullable).
         $skills = $faker->boolean(80)
             ? $faker->randomElements(
@@ -106,7 +105,7 @@ class JobManagementTest extends TestCase
             'location_type' => $faker->randomElement(['Remote', 'On-site', 'Hybrid']),
             'skills' => $skills,
         ];
-    }
+    } 
 
     /**
      * Property 15: New job listing defaults to draft.
@@ -133,7 +132,6 @@ class JobManagementTest extends TestCase
             // A validation failure would skip creation entirely; surface it.
             $response->assertSessionHasNoErrors();
             $response->assertRedirect(route('employer.jobs.index'));
-
             // Load the newly created listing (the one not present before).
             $listing = JobListing::where('company_id', $company->id)
                 ->whereNotIn('id', $existingIds)
@@ -151,7 +149,7 @@ class JobManagementTest extends TestCase
                 $listing->company_id,
                 sprintf("Iteration %d: a newly created listing's company_id must match the employer's company.", $i)
             );
-        }
+        } 
     }
 
     /**
