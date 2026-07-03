@@ -50,11 +50,9 @@ class RedirectIfAuthenticatedTest extends TestCase
     {
         $middleware = new RedirectIfAuthenticated();
         $request = Request::create('/login', 'GET');
-
         $called = false;
         $response = $middleware->handle($request, function () use (&$called) {
             $called = true;
-
             return response('ok');
         });
 
