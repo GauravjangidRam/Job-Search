@@ -88,7 +88,6 @@
                                 ['label' => 'Keywords found', 'value' => $report['keyword_count'] ?? 0],
                             ];
                         @endphp
-
                         <div class="flex flex-col sm:flex-row sm:items-start sm:justify-between gap-4 mb-6">
                             <div>
                                 <div class="flex flex-wrap items-center gap-2">
@@ -111,8 +110,7 @@
                                     <p class="text-xs font-semibold text-muted">{{ $stat['label'] }}</p>
                                 </div>
                             @endforeach
-                        </div>
-
+                        </div> 
                         <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 mb-6">
                             @foreach($checks as $check)
                                 <div class="rounded-lg border border-border p-4">
