@@ -20,7 +20,6 @@ return new class extends Migration
             $table->text('additional_info')->nullable();
             $table->string('status')->default('applied');
             $table->timestamp('status_updated_at')->nullable();
-
             $table->index('status');
         });
     }
@@ -42,6 +41,6 @@ return new class extends Migration
                 'status',
                 'status_updated_at',
             ]);
-        });
-    }
+        }); 
+    } 
 };
