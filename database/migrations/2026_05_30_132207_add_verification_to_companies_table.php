@@ -14,7 +14,7 @@ return new class extends Migration
             $table->text('rejection_reason')->nullable()->after('verified_at');
 
             $table->index('verification_status');
-        });
+        }); 
     }
 
     public function down(): void
