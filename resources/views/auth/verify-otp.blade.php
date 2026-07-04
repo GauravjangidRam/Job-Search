@@ -44,7 +44,7 @@
             <div class="mt-6 text-center">
                 <p class="text-sm text-muted mb-2">Didn't receive the code?</p>
                 <form method="POST" action="{{ url('/resend-otp') }}">
-                    @csrf
+                    @csrf 
                     <button
                         type="submit"
                         class="text-sm font-medium text-primary hover:text-primary-light underline focus:outline-none focus:ring-2 focus:ring-primary/20 rounded transition-colors"
@@ -56,4 +56,4 @@
         </div>
     </div>
 </div>
-@endsection
+@endsection 
