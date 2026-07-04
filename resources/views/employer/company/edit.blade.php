@@ -8,12 +8,10 @@
             <div class="flex flex-col lg:flex-row gap-8">
                 {{-- Sidebar --}}
                 <x-employer.sidebar />
-
                 {{-- Main Content --}}
                 <div class="flex-1 min-w-0">
                     <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-2">Company Profile</h1>
                     <p class="text-muted mb-8">Manage how your company appears to job seekers.</p>
-
                     {{-- Success Message --}}
                     @if(session('success'))
                         <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
