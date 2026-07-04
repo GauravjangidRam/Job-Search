@@ -47,7 +47,7 @@
                         @endforeach
                     </ul>
                 </div>
-            @endif
+            @endif 
             {{-- Applicant Details --}}
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8 mb-8">
                 <h2 class="text-lg font-semibold text-foreground mb-4">Applicant Details</h2>
@@ -75,7 +75,6 @@
                         <dd class="text-foreground">{{ $application->created_at?->format('M j, Y') }}</dd>
                     </div>
                 </dl>
-
                 @if(!empty($application->resume_path))
                     <div class="mt-6 pt-6 border-t border-border">
                         <a
@@ -103,7 +102,7 @@
 
                     </div>
                 @endif
-            </section>
+            </section> 
 
             {{-- Cover Letter --}}
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8 mb-8">
