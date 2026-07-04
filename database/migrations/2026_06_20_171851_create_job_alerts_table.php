@@ -18,7 +18,7 @@ return new class extends Migration
             $table->string('location')->nullable();
             $table->string('job_type')->nullable();
             $table->timestamps();
-        });
+        }); 
     }
 
     /**
