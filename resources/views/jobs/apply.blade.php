@@ -15,13 +15,13 @@
                 <div class="mb-6 p-4 bg-green-50 border border-green-200 rounded-lg text-green-800 font-medium" role="alert">
                     {{ session('success') }}
                 </div>
-            @endif
+            @endif 
             {{-- Flash: error --}}
             @if(session('error'))
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800 font-medium" role="alert">
                     {{ session('error') }}
                 </div>
-            @endif
+            @endif 
             {{-- Validation Error Summary --}}
             @if($errors->any())
                 <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800" role="alert">
@@ -63,7 +63,6 @@
                         class="p-6 md:p-8"
                     >
                         @csrf
-
                         {{-- Applicant Name --}}
                         <div class="mb-6">
                             <label for="applicant_name" class="block text-sm font-medium mb-1">Full Name <span class="text-red-600">*</span></label>
