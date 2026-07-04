@@ -11,7 +11,7 @@
                     <p class="text-red-600 text-sm">{{ $error }}</p>
                 @endforeach
             </div>
-        @endif
+        @endif 
         <form method="POST" action="/employer/register" class="space-y-5" x-data="{ loading: false }" @submit="loading = true">
             @csrf
             <p class="text-xs font-semibold uppercase tracking-wider text-muted">About you</p>
@@ -53,4 +53,4 @@
         <p class="mt-8 text-sm text-muted">Already registered? <a href="{{ route('login') }}" class="text-primary font-medium hover:underline">Sign in</a></p>
         <p class="mt-2 text-xs text-muted">Looking for a job? <a href="{{ route('register') }}" class="text-primary hover:underline">Sign up as job seeker</a></p>
     </div>
-@endsection
+@endsection 
