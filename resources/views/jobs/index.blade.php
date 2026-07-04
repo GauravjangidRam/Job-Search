@@ -3,7 +3,7 @@
 @section('title', 'Browse Job Openings')
 
 @section('content')
-    <x-home.navigation-bar />
+    <x-home.navigation-bar /> 
 
     <div class="max-w-[1400px] mx-auto pt-16 px-6 md:px-8 py-12">
         {{-- Page Header --}}
@@ -21,7 +21,7 @@
                     class="inline-flex items-center gap-2 text-sm font-medium text-foreground hover:text-primary transition-colors focus:outline-none focus:ring-2 focus:ring-primary rounded-card px-3 py-1.5"
                     :aria-expanded="showFilters.toString()"
                     aria-controls="filter-panel"
-                >
+                > 
                     <svg class="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M3 4a1 1 0 011-1h16a1 1 0 011 1v2.586a1 1 0 01-.293.707l-6.414 6.414a1 1 0 00-.293.707V17l-4 4v-6.586a1 1 0 00-.293-.707L3.293 7.293A1 1 0 013 6.586V4z"/>
                     </svg>
@@ -29,7 +29,7 @@
                     <svg class="w-4 h-4 transition-transform" :class="showFilters ? 'rotate-180' : ''" fill="none" stroke="currentColor" viewBox="0 0 24 24" aria-hidden="true">
                         <path stroke-linecap="round" stroke-linejoin="round" stroke-width="2" d="M19 9l-7 7-7-7"/>
                     </svg>
-                </button>
+                </button> 
                 @if(($filters['job_type'] ?? '') !== '' || ($filters['location_type'] ?? '') !== '' || ($filters['salary_min'] ?? '') !== '' || ($filters['salary_max'] ?? '') !== '' || ($filters['search'] ?? '') !== '' || ($filters['company_name'] ?? '') !== '')
                     <a
                         href="{{ route('jobs.index') }}"
