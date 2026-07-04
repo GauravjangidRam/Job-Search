@@ -76,7 +76,7 @@
                                         <span class="text-sm text-foreground capitalize">{{ $status }}</span>
                                         <span class="text-sm font-semibold text-foreground">{{ $count }}</span>
                                     </div>
-                                @endforeach
+                                @endforeach 
                             </div>
                         </section>
                     </div> 
@@ -84,4 +84,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
