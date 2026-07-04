@@ -11,7 +11,7 @@ return new class extends Migration
         Schema::table('users', function (Blueprint $table) {
             $table->string('google_id')->nullable()->unique()->after('email');
             $table->string('avatar_url')->nullable()->after('avatar_path');
-        });
+        }); 
     }
 
     public function down(): void
