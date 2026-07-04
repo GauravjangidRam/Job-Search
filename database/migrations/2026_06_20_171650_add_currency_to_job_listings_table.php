@@ -13,7 +13,7 @@ return new class extends Migration
     {
         Schema::table('job_listings', function (Blueprint $table) {
             $table->string('currency', 10)->default('INR')->after('salary_max');
-        });
+        }); 
     }
 
     /**
@@ -23,6 +23,6 @@ return new class extends Migration
     {
         Schema::table('job_listings', function (Blueprint $table) {
             $table->dropColumn('currency');
-        });
+        }); 
     }
 };
