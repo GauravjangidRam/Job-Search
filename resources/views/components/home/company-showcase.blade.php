@@ -20,7 +20,7 @@
                         ->take(2)
                         ->implode('');
                     $jobCount = $company->jobListings()->where('status', 'active')->count();
-                @endphp
+                @endphp 
                 <a href="{{ route('companies.show', $company->slug) }}" class="block bg-card border border-border rounded-xl p-5 hover:border-primary/30 hover:shadow-md transition-all duration-200 group">
                     <div class="flex items-center gap-4 mb-3">
                         @if($company->logo_url)
@@ -38,7 +38,7 @@
                             <h3 class="text-sm font-semibold text-foreground truncate group-hover:text-primary transition-colors">{{ $company->name }}</h3>
                             <p class="text-xs text-muted">{{ $company->industry ?? 'Technology' }}</p>
                         </div>
-                    </div>
+                    </div> 
                     @if($company->description)
                         <p class="text-xs text-muted line-clamp-2 mb-3">{{ Str::limit($company->description, 100) }}</p>
                     @endif
@@ -56,7 +56,7 @@
                                     {{ $jobCount }} {{ Str::plural('job', $jobCount) }}
                                 </span>
                             @endif
-                        </div>
+                        </div> 
                         @if($company->is_hiring)
                             <span class="inline-flex items-center px-2 py-0.5 rounded-full text-xs font-medium bg-emerald-100 text-emerald-700">
                                 Hiring
@@ -65,7 +65,7 @@
                     </div>
                 </a>
             @endforeach
-        </div>
+        </div> 
         <div class="mt-6 text-center sm:hidden">
             <a href="{{ route('companies.index') }}" class="text-sm text-primary hover:underline font-medium">
                 View all companies &rarr;
