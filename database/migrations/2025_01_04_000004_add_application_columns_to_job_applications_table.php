@@ -41,6 +41,6 @@ return new class extends Migration
                 'status',
                 'status_updated_at',
             ]);
-        }); 
-    } 
+        });
+    }
 };
