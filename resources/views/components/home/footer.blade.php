@@ -9,7 +9,7 @@
             <div>
                 <h3 class="text-sm font-semibold text-foreground uppercase tracking-wider mb-4">
                     {{ $column->heading }}
-                </h3>
+                </h3>  
                 <ul class="space-y-3">
                     @foreach ($column->links as $link)
                         <li>
@@ -20,7 +20,7 @@
                     @endforeach
                 </ul>
             </div>
-        @endforeach
+        @endforeach 
 
         {{-- Social Media & Brand Column --}}
         <div>
