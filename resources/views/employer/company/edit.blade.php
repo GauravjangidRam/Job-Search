@@ -7,7 +7,7 @@
         <div class="py-12 px-6 md:px-8">
             <div class="flex flex-col lg:flex-row gap-8">
                 {{-- Sidebar --}}
-                <x-employer.sidebar />
+                <x-employer.sidebar /> 
                 {{-- Main Content --}}
                 <div class="flex-1 min-w-0">
                     <h1 class="text-2xl md:text-3xl font-bold text-foreground mb-2">Company Profile</h1>
@@ -18,7 +18,6 @@
                             {{ session('success') }}
                         </div>
                     @endif
-
                     {{-- Validation Error Summary --}}
                     @if($errors->any())
                         <div class="mb-6 p-4 bg-red-50 border border-red-200 rounded-lg text-red-800" role="alert">
@@ -30,7 +29,6 @@
                             </ul>
                         </div>
                     @endif
-
                     {{-- Preview Link --}}
                     @if($company->slug)
                         <div class="mb-6 p-4 bg-secondary/50 border border-border rounded-lg flex items-center justify-between">
