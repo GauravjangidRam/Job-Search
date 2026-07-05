@@ -12,7 +12,7 @@
                 <a href="{{ route('companies.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Companies</a>
                 <a href="{{ route('insights.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Career Insights</a>
                 <a href="{{ route('resume.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Resume</a>
-            </div>
+            </div>  
 
             <!-- Right Side Elements (hidden below 768px) -->
             <div class="hidden md:flex items-center space-x-4">
@@ -25,7 +25,7 @@
                             <input x-ref="input" x-model="query" @keydown.enter.prevent="submit()" type="text" placeholder="Search jobs or companies" class="w-full px-3 py-2 border rounded bg-transparent focus:outline-none" />
                             <button type="button" @click="submit()" class="px-3 py-2 bg-primary text-white rounded">Go</button>
                         </div>
-                    </div>
+                    </div> 
                 </div>
                 @auth
                     <a href="{{ route('notifications.index') }}" aria-label="Notifications" class="relative p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
@@ -42,7 +42,7 @@
                     </a>
                     <a href="/login" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
                         Login
-                    </a>
+                    </a> 
                     <a href="/register" class="inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         Register
                     </a>
