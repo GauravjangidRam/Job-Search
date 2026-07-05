@@ -13,9 +13,9 @@
             </div>
         @endif 
         <form method="POST" action="/employer/register" class="space-y-5" x-data="{ loading: false }" @submit="loading = true">
-            @csrf
+            @csrf 
             <p class="text-xs font-semibold uppercase tracking-wider text-muted">About you</p>
-            <div>
+            <div> 
                 <label for="name" class="text-sm text-foreground">Your name</label>
                 <input type="text" id="name" name="name" value="{{ old('name') }}" required class="mt-1 block w-full border-0 border-b-2 border-border bg-transparent py-2 text-foreground placeholder:text-muted focus:border-primary focus:ring-0 text-sm" placeholder="Jane Smith" :readonly="loading">
             </div>
