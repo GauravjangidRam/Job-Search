@@ -10,7 +10,7 @@
                     <li><a href="{{ route('insights.index') }}" class="text-sm text-muted hover:text-primary transition-colors">Career Insights</a></li>
                     <li><a href="{{ route('resume.index') }}" class="text-sm text-muted hover:text-primary transition-colors">Resume Tips</a></li>
                 </ul>
-            </div> 
+            </div>
             {{-- For Employers --}}
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">For Employers</h3>
@@ -20,7 +20,6 @@
                     <li><a href="{{ route('login') }}" class="text-sm text-muted hover:text-primary transition-colors">Employer Login</a></li>
                 </ul>
             </div>
-
             {{-- Resources --}} 
             <div>
                 <h3 class="text-sm font-semibold text-foreground mb-4">Resources</h3>
