@@ -52,7 +52,7 @@
                                         </option>
                                     @endforeach
                                 </select>
-                            </div>
+                            </div> 
                             <div class="flex items-center gap-2">
                                 <button type="submit" class="px-4 py-2 bg-primary text-white text-sm font-medium rounded-lg hover:bg-primary-light transition-colors">
                                     Filter
@@ -65,7 +65,6 @@
                             </div>
                         </div>
                     </form>
-
                     @php
                         $statusStyles = [
                             'applied'     => 'bg-gray-100 text-gray-700',
