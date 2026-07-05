@@ -10,7 +10,6 @@
             Our intelligent matching system analyzes your resume and connects you with the most relevant opportunities based on your skills and experience.
         </p>
     </div>
-
     {{-- Two-Column Layout --}}
     <div class="md:grid md:grid-cols-2 gap-12">
         {{-- Left Column: Features List --}}
@@ -28,7 +27,7 @@
                     </div>
                 @endforeach
             </div>
-        </div>
+        </div> 
 
         {{-- Right Column: Resume Analysis Card --}}
         <div class="bg-card border border-border rounded-lg p-6">
