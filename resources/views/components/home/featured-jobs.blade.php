@@ -19,7 +19,7 @@
                         ->map(fn($word) => mb_substr($word, 0, 1))
                         ->take(2)
                         ->implode('');
-                @endphp
+                @endphp 
                 <article class="bg-card border border-border rounded-xl p-5 flex flex-col hover:border-primary/30 hover:shadow-md transition-all duration-200 group">
                     {{-- Company Info --}}
                     <div class="flex items-start gap-3 mb-4">
@@ -41,7 +41,7 @@
                             <p class="text-xs text-muted">{{ $job->company_name }} &middot; {{ $job->location }}</p>
                         </div>
                     </div> 
-                    {{-- Tags --}} 
+                    {{-- Tags --}}
                     <div class="flex flex-wrap gap-1.5 mb-3">
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->job_type }}</span>
                         <span class="px-2 py-0.5 text-xs bg-secondary text-muted rounded-full">{{ $job->location_type }}</span>
@@ -59,7 +59,7 @@
                     <div class="mt-auto flex items-center justify-between pt-3 border-t border-border">
                         <span class="text-xs text-muted">
                             {{ $job->created_at->diffForHumans() }}
-                        </span>
+                        </span> 
                         <a
                             href="{{ $job->url }}"
                             class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary text-white text-xs font-medium rounded-lg hover:bg-primary-light transition-colors"
