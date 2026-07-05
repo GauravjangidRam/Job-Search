@@ -62,7 +62,7 @@
                             <p class="text-2xl font-bold text-foreground">{{ $applicationsByStatus['shortlisted'] ?? 0 }}</p>
                             <p class="text-xs text-muted mt-1">Shortlisted</p>
                         </div>
-                    </div> 
+                    </div>
                     {{-- Company Quick Info --}}
                     @php $company = auth()->user()->company; @endphp
                     @if($company)
@@ -87,7 +87,6 @@
                             </div>
                         </div>
                     @endif
-
                     <div class="grid grid-cols-1 xl:grid-cols-2 gap-6">
                         {{-- Applications by Status --}}
                         <section class="bg-card border border-border rounded-xl shadow-sm p-6">
