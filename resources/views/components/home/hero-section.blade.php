@@ -104,12 +104,11 @@
                         @endforeach
                     @endif
                 </div>
-
                 <div class="flex items-center justify-between">
                     <span class="text-foreground font-semibold">{{ $heroJob->currency_symbol }}{{ number_format($heroJob->salary_min) }} - {{ $heroJob->currency_symbol }}{{ number_format($heroJob->salary_max) }}</span>
                     @if($applicationCount > 0)
                         <span class="text-xs text-muted">{{ $applicationCount }} {{ Str::plural('applicant', $applicationCount) }}</span>
-                    @endif
+                    @endif 
                 </div>
                 <div class="mt-4 pt-4 border-t border-border flex items-center justify-between">
                     <span class="text-xs text-muted">Posted {{ $heroJob->created_at->diffForHumans() }}</span>
@@ -117,7 +116,7 @@
                         View Job
                     </a>
                 </div>
-            </div>
+            </div> 
         @else
             <div class="bg-card border border-border rounded-xl p-8 text-center shadow-lg">
                 <i data-lucide="briefcase" class="w-12 h-12 text-muted mx-auto mb-3"></i>
