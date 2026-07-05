@@ -9,7 +9,6 @@
 <section aria-labelledby="career-insights-heading">
     <h2 id="career-insights-heading" class="text-2xl font-bold text-foreground mb-2">Career Insights</h2>
     <p class="text-muted mb-8">Data-driven insights to guide your career decisions</p>
-
     {{-- Charts Section --}}
     <div id="career-insights-charts" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {{-- Salary Comparison Bar Chart --}}
@@ -17,7 +16,7 @@
             <h3 class="text-lg font-semibold text-foreground mb-4">Salary Comparison</h3>
             @if($salaryData->isEmpty())
                 <x-empty-state message="No salary data available" />
-            @else
+            @else 
                 <div class="relative">
                     <canvas
                         id="salaryChart"
@@ -35,7 +34,7 @@
                                     <span class="font-medium text-foreground">${{ number_format((int) $item->value) }}</span>
                                 </li>
                             @endforeach
-                        </ul>
+                        </ul> 
                     </div>
                 </div>
             @endif
