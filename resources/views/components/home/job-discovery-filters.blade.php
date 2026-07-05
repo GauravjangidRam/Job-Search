@@ -13,10 +13,10 @@
     </div>
     {{-- Filter Categories --}}
     <div class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {{-- Job Type --}}
+        {{-- Job Type --}} 
         <div>
             <h3 class="text-sm font-semibold text-foreground mb-3">Job Type</h3>
-            <div class="flex flex-wrap gap-2">
+            <div class="flex flex-wrap gap-2"> 
                 <template x-for="option in ['Full-time', 'Part-time', 'Contract', 'Freelance', 'Internship']" :key="option">
                     <button
                         type="button"
@@ -29,7 +29,7 @@
                         x-text="option"
                     ></button>
                 </template>
-            </div>
+            </div> 
         </div>
         {{-- Location --}}
         <div>
