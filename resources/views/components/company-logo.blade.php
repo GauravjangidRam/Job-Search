@@ -16,7 +16,7 @@
     // Build the UI Avatars placeholder URL
     $placeholderUrl = 'https://ui-avatars.com/api/?name=' . urlencode($initials) . '&background=' . $colorHex . '&color=fff&size=' . $size;
 @endphp
- 
+  
 @if($logo_url)
     <img
         src="{{ $logo_url }}"
@@ -36,4 +36,4 @@
         class="object-contain"
         {{ $attributes }}
     >
-@endif
+@endif 
