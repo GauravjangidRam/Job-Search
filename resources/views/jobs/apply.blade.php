@@ -141,7 +141,7 @@
                             @error('cover_letter')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> 
 
                         {{-- Additional Information --}}
                         <div class="mb-6">
@@ -156,7 +156,7 @@
                             @error('additional_info')
                                 <p class="mt-1 text-sm text-red-600">{{ $message }}</p>
                             @enderror
-                        </div>
+                        </div> 
 
                         {{-- Actions --}}
                         <div class="flex items-center justify-end gap-3">
