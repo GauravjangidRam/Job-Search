@@ -28,7 +28,7 @@ class CompanyApprovedMail extends Mailable
         return new Envelope(
             subject: 'Your Company Has Been Approved',
         );
-    }
+    } 
 
     /**
      * Get the message content definition.
@@ -52,5 +52,5 @@ class CompanyApprovedMail extends Mailable
     public function attachments(): array
     {
         return [];
-    }
+    } 
 }
