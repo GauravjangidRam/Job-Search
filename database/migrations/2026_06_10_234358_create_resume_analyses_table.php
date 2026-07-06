@@ -18,10 +18,9 @@ return new class extends Migration
             $table->json('analysis')->nullable();
             $table->string('provider')->nullable();
             $table->timestamps();
-
             $table->index('job_application_id');
         });
-    }
+    } 
 
     /**
      * Reverse the migrations.
