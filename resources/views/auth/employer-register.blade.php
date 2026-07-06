@@ -5,7 +5,7 @@
     <div class="max-w-[480px] mx-auto pt-28 pb-16 px-5">
         <h1 class="text-3xl font-bold text-foreground">Start hiring</h1>
         <p class="text-muted mt-2 mb-8">Create your employer account and post jobs to find the right talent.</p>
-        @if($errors->any())
+        @if($errors->any()) 
             <div class="mb-4">
                 @foreach($errors->all() as $error)
                     <p class="text-red-600 text-sm">{{ $error }}</p>
@@ -49,8 +49,8 @@
                 </svg>
                 <span x-text="loading ? 'Creating account...' : 'Create employer account'">Create employer account</span>
             </button>
-        </form>
+        </form> 
         <p class="mt-8 text-sm text-muted">Already registered? <a href="{{ route('login') }}" class="text-primary font-medium hover:underline">Sign in</a></p>
         <p class="mt-2 text-xs text-muted">Looking for a job? <a href="{{ route('register') }}" class="text-primary hover:underline">Sign up as job seeker</a></p>
     </div>
-@endsection 
+@endsection
