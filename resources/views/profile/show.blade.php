@@ -244,7 +244,7 @@
                                     Browse jobs
                                 </a>
                             </div>
-                        @endforelse
+                        @endforelse 
                     </section>
 
                     {{-- Saved Jobs Section --}}
@@ -255,7 +255,7 @@
                                 Saved Jobs
                             </h2>
                             <span class="text-xs text-muted bg-secondary px-2 py-1 rounded-full">{{ $bookmarks->count() }} saved</span>
-                        </div>
+                        </div> 
 
                         @forelse($bookmarks as $bookmark)
                             @php
@@ -265,7 +265,7 @@
                                     ?? $bookmarkedListing?->company_name
                                     ?? 'Unknown Company';
                                 $bookmarkLocation = $bookmarkedListing?->location ?? '';
-                            @endphp
+                            @endphp 
 
                             <div class="flex items-center justify-between gap-4 p-3 border border-border rounded-lg mb-2 last:mb-0 hover:border-primary/30 transition-colors">
                                 <div class="flex items-center gap-3 min-w-0">
@@ -300,4 +300,4 @@
             </div>
         </div>
     </div>
-@endsection
+@endsection 
