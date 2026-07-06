@@ -108,7 +108,7 @@
                     {{-- Description --}}
                     @if($company->description)
                         <p class="text-sm text-muted line-clamp-2 mb-4">{{ $company->description }}</p>
-                    @endif
+                    @endif 
 
                     {{-- Meta Info --}}
                     <div class="flex items-center gap-4 text-xs text-muted mb-4">
@@ -150,7 +150,7 @@
                     <p class="text-muted text-sm">Companies will appear here once they register.</p>
                 </div>
             @endforelse
-        </div>
+        </div> 
         {{-- Empty State for Filters --}}
         @if($companies->count() > 0)
             <div
