@@ -5,7 +5,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <title>404 - Page Not Found</title>
     <script src="https://cdn.tailwindcss.com"></script>
-</head> 
+</head>
 <body class="bg-gray-50 font-sans antialiased">
     <div class="min-h-screen flex items-center justify-center px-4">
         <div class="text-center max-w-md">
@@ -18,4 +18,4 @@
         </div>
     </div>
 </body>
-</html> 
+</html>
