@@ -23,7 +23,7 @@
         </a>
         <main id="main-content">
             @yield('content')
-        </main>
+        </main> 
 
         <x-site-footer />
 
@@ -33,4 +33,4 @@
             });
         </script>
     </body>
-</html>
+</html> 
