@@ -3,10 +3,13 @@
 namespace App\Http\Controllers\Admin;
 
 use App\Http\Controllers\Controller;
+use App\Mail\CompanyApprovedMail;
+use App\Mail\CompanyRejectedMail;
 use App\Models\Company;
 use Illuminate\Contracts\View\View;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Mail;
 
 class CompanyController extends Controller
 {
@@ -47,6 +50,10 @@ class CompanyController extends Controller
             'rejection_reason' => null,
         ]);
 
+        $company->employers->each(
+            fn ($employer) => Mail::to($employer->email)->send(new CompanyApprovedMail($company))
+        );
+
         return back()->with('success', "Company \"{$company->name}\" has been approved.");
     }
 
@@ -59,11 +66,17 @@ class CompanyController extends Controller
             'rejection_reason' => 'nullable|string|max:1000',
         ]);
 
+        $reason = $request->input('rejection_reason', 'Company did not meet verification requirements.');
+
         $company->update([
             'verification_status' => 'rejected',
             'verified_at' => null,
-            'rejection_reason' => $request->input('rejection_reason', 'Company did not meet verification requirements.'),
+            'rejection_reason' => $reason,
         ]);
+
+        $company->employers->each(
+            fn ($employer) => Mail::to($employer->email)->send(new CompanyRejectedMail($company, $reason))
+        );
 
         return back()->with('success', "Company \"{$company->name}\" has been rejected.");
     }

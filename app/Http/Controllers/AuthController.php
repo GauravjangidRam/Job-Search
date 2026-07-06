@@ -41,21 +41,24 @@ class AuthController extends Controller
      */
     public function register(RegisterRequest $request): RedirectResponse
     {
+        // A previous registration attempt with this email may exist but never
+        // completed OTP verification (e.g. the user closed the tab). Clear it
+        // so the email can be reused.
+        User::where('email', $request->validated('email'))
+            ->whereNull('email_verified_at')
+            ->delete();
+
         $user = User::create([
             'name' => $request->validated('name'),
             'email' => $request->validated('email'),
             'password' => $request->validated('password'),
         ]);
 
-        // TODO: Uncomment when email service is configured
-        // $otp = $this->otpService->generate($user);
-        // Mail::to($user->email)->send(new OtpMail($otp));
-        // $request->session()->put('otp_user_id', $user->id);
-        // return redirect('/verify-otp');
+        $otp = $this->otpService->generate($user);
+        Mail::to($user->email)->send(new OtpMail($otp));
+        $request->session()->put('otp_user_id', $user->id);
 
-        // Bypass OTP - directly log in the user
-        Auth::login($user);
-        return redirect('/');
+        return redirect('/verify-otp');
     }
 
     /**
@@ -76,6 +79,24 @@ class AuthController extends Controller
     public function employerRegister(EmployerRegisterRequest $request): RedirectResponse
     {
         $user = DB::transaction(function () use ($request) {
+            // A previous registration attempt with this email may exist but
+            // never completed OTP verification. Clear the stale user and its
+            // company so the email can be reused.
+            $staleUser = User::where('email', $request->validated('email'))
+                ->whereNull('email_verified_at')
+                ->first();
+
+            if ($staleUser) {
+                $staleCompanyId = $staleUser->company_id;
+                $staleUser->delete();
+
+                if ($staleCompanyId) {
+                    Company::where('id', $staleCompanyId)
+                        ->whereDoesntHave('employers')
+                        ->delete();
+                }
+            }
+
             $company = Company::create([
                 'name' => $request->validated('company_name'),
                 'industry' => $request->validated('industry'),
@@ -91,15 +112,11 @@ class AuthController extends Controller
             ]);
         });
 
-        // TODO: Uncomment when email service is configured
-        // $otp = $this->otpService->generate($user);
-        // Mail::to($user->email)->send(new OtpMail($otp));
-        // $request->session()->put('otp_user_id', $user->id);
-        // return redirect('/verify-otp');
+        $otp = $this->otpService->generate($user);
+        Mail::to($user->email)->send(new OtpMail($otp));
+        $request->session()->put('otp_user_id', $user->id);
 
-        // Bypass OTP - directly log in the user
-        Auth::login($user);
-        return redirect('/employer/dashboard');
+        return redirect('/verify-otp');
     }
 
     /**
@@ -269,16 +286,14 @@ class AuthController extends Controller
         $request->session()->regenerate();
         $user = Auth::user();
 
-        // TODO: Uncomment when email service is configured
         // If user hasn't verified their email, send them to OTP verification
-        // if (! $user->email_verified_at) {
-        //     Auth::logout();
-        //     $otp = $this->otpService->generate($user);
-        //     Mail::to($user->email)->send(new OtpMail($otp));
-        //     $request->session()->put('otp_user_id', $user->id);
-        //     return redirect('/verify-otp');
-        // }
-
+        if (! $user->email_verified_at) {
+            Auth::logout();
+            $otp = $this->otpService->generate($user);
+            Mail::to($user->email)->send(new OtpMail($otp));
+            $request->session()->put('otp_user_id', $user->id);
+            return redirect('/verify-otp');
+        }
 
         if ($user->isAdmin()) {
             return redirect()->intended('/admin/dashboard');

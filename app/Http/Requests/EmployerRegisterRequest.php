@@ -3,6 +3,7 @@
 namespace App\Http\Requests;
 
 use Illuminate\Foundation\Http\FormRequest;
+use Illuminate\Validation\Rule;
 
 class EmployerRegisterRequest extends FormRequest
 {
@@ -24,7 +25,12 @@ class EmployerRegisterRequest extends FormRequest
         return [
             // User fields
             'name' => ['required', 'string', 'max:255'],
-            'email' => ['required', 'email', 'max:255', 'unique:users'],
+            'email' => [
+                'required',
+                'email',
+                'max:255',
+                Rule::unique('users')->whereNotNull('email_verified_at'),
+            ],
             'password' => ['required', 'string', 'min:8', 'max:72'],
 
             // Company fields
