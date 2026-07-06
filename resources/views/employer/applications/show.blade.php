@@ -108,14 +108,13 @@
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8 mb-8">
                 <h2 class="text-lg font-semibold text-foreground mb-3">Cover Letter</h2>
                 <p class="text-muted whitespace-pre-line">{{ $application->cover_letter ?: 'No cover letter provided.' }}</p>
-            </section>
+            </section> 
 
             {{-- Additional Information --}}
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8 mb-8">
                 <h2 class="text-lg font-semibold text-foreground mb-3">Additional Information</h2>
                 <p class="text-muted whitespace-pre-line">{{ $application->additional_info ?: 'No additional information provided.' }}</p>
             </section>
-
             {{-- Status Update --}}
             <section class="bg-card border border-border rounded-[var(--radius-card)] shadow-sm p-6 md:p-8">
                 <h2 class="text-lg font-semibold text-foreground mb-4">Update Status</h2>
