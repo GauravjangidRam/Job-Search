@@ -31,7 +31,7 @@
         <div class="mb-8">
             <h1 class="text-3xl font-bold text-foreground">Companies</h1>
             <p class="mt-2 text-muted">Browse {{ $companies->total() }} companies hiring on our platform</p>
-        </div>
+        </div> 
 
         {{-- Filters --}}
         <div class="mb-8 flex flex-wrap items-center gap-4">
@@ -151,7 +151,6 @@
                 </div>
             @endforelse
         </div>
-
         {{-- Empty State for Filters --}}
         @if($companies->count() > 0)
             <div
