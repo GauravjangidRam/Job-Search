@@ -19,5 +19,5 @@ class JobData
         public readonly string $locationType,
         public readonly string $salaryRange,
         public readonly string $postedDate,
-    ) {}
-}
+    ) {} 
+} 
