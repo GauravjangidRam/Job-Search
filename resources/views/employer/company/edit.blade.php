@@ -206,7 +206,7 @@
                                     this.perks.splice(index, 1);
                                     if (this.perks.length === 0) { this.perks.push(''); }
                                 }
-                            }">
+                            }"> 
                                 <h2 class="text-lg font-semibold text-foreground mb-4 pb-2 border-b border-border">Perks & Benefits</h2>
                                 <p class="text-xs text-muted mb-3">List the perks and benefits your company offers to employees.</p>
 
@@ -241,7 +241,6 @@
                                     Add Perk
                                 </button>
                             </div>
-
                             {{-- Logo Section --}}
                             <div class="mb-8">
                                 <h2 class="text-lg font-semibold text-foreground mb-4 pb-2 border-b border-border">Company Logo</h2>
