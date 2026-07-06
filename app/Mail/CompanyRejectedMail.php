@@ -42,11 +42,11 @@ class CompanyRejectedMail extends Mailable
                 'companyName' => $this->company->name,
                 'reason' => $this->reason,
                 'companyEditUrl' => url('/employer/company'),
-            ],
+            ], 
         );
     }
 
-    /**
+    /** 
      * Get the attachments for the message.
      *
      * @return array<int, \Illuminate\Mail\Mailables\Attachment>
