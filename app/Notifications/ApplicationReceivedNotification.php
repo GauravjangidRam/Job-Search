@@ -36,7 +36,7 @@ class ApplicationReceivedNotification extends Notification
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
-     */
+     */ 
     public function toArray(object $notifiable): array
     {
         return [
@@ -46,5 +46,5 @@ class ApplicationReceivedNotification extends Notification
             'applicant_name' => $this->application->applicant_name,
             'message' => 'New application received for ' . $this->application->jobListing->title . ' from ' . $this->application->applicant_name,
         ];
-    }
-}
+    } 
+} 

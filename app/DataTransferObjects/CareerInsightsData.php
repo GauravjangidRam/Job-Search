@@ -8,5 +8,5 @@ class CareerInsightsData
         public readonly array $salaryData,
         public readonly array $hiringTrends,
         public readonly array $inDemandSkills,
-    ) {}
-}
+    ) {} 
+} 

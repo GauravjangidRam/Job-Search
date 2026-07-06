@@ -19,7 +19,7 @@ class FileUploadService
     {
         $filename = $this->buildResumeFilename($file, $userId);
         return Storage::disk(self::DISK)->putFileAs(self::RESUME_DIRECTORY, $file, $filename);
-    }
+    } 
 
     public function uploadAvatar(UploadedFile $file, int $userId): string
     {
@@ -28,7 +28,7 @@ class FileUploadService
     }
 
     private function buildResumeFilename(UploadedFile $file, int $userId): string
-    {
+    { 
         $sanitizedOriginalName = $this->sanitizeOriginalName($file);
         return sprintf('%d_%d_%s_%s', $userId, now()->getTimestamp(), Str::random(8), $sanitizedOriginalName);
     }

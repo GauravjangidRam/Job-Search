@@ -42,7 +42,7 @@ class ApplicationReceivedMail extends Mailable
                 'viewApplicationUrl' => url('/employer/applications/'.$this->application->id),
             ],
         );
-    }
+    } 
 
     /**
      * Get the attachments for the message.
@@ -53,4 +53,4 @@ class ApplicationReceivedMail extends Mailable
     {
         return [];
     }
-}
+} 
