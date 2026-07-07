@@ -507,7 +507,6 @@ class ResumeAnalysisService
         $text = html_entity_decode($text, ENT_QUOTES | ENT_XML1, 'UTF-8');
         $text = preg_replace('/[^\P{C}\n\t]+/u', ' ', $text) ?? $text;
         $text = preg_replace('/\s+/', ' ', $text) ?? $text;
-
         return trim($text);
     }
 
@@ -516,7 +515,6 @@ class ResumeAnalysisService
         if ($bytes >= 1024 * 1024) {
             return round($bytes / (1024 * 1024), 1) . ' MB';
         }
-
         return max(1, round($bytes / 1024)) . ' KB';
     }
 }
