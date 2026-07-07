@@ -24,7 +24,6 @@ class EnsureRole
         if (! in_array(Auth::user()->role, $roles, true)) {
             abort(403);
         }
-
         return $next($request);
     }
 }
