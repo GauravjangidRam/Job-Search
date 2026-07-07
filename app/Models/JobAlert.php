@@ -12,7 +12,7 @@ class JobAlert extends Model
         'keywords',
         'location',
         'job_type',
-    ];
+    ]; 
 
     public function user(): BelongsTo
     {
