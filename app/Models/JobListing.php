@@ -36,7 +36,7 @@ class JobListing extends Model
         'skills' => 'array',
         'salary_min' => 'integer',
         'salary_max' => 'integer',
-    ];
+    ]; 
 
     /**
      * The accessors to append to the model's array form.
@@ -70,7 +70,7 @@ class JobListing extends Model
     public function applications(): HasMany
     {
         return $this->hasMany(JobApplication::class);
-    }
+    } 
 
     /**
      * Get the bookmarks for the job listing.
