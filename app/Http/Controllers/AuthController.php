@@ -15,15 +15,39 @@ use Illuminate\Http\RedirectResponse;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Auth;
 use Illuminate\Support\Facades\DB;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Mail;
 use Illuminate\Support\Facades\RateLimiter;
 use Illuminate\View\View;
+use Throwable;
 
 class AuthController extends Controller
 {
     public function __construct(
         private readonly OtpService $otpService,
     ) {}
+
+    /**
+     * Send the OTP email, catching any mailer failure (timeout, connection
+     * refused, provider error) so a flaky mail provider doesn't turn into an
+     * unhandled 500 in the middle of registration/login.
+     */
+    private function sendOtpMail(User $user, string $otp): bool
+    {
+        try {
+            Mail::to($user->email)->send(new OtpMail($otp));
+
+            return true;
+        } catch (Throwable $e) {
+            Log::error('Failed to send OTP email', [
+                'user_id' => $user->id,
+                'email' => $user->email,
+                'error' => $e->getMessage(),
+            ]);
+
+            return false;
+        }
+    }
 
     /**
      * Display the registration form.
@@ -55,8 +79,13 @@ class AuthController extends Controller
         ]);
 
         $otp = $this->otpService->generate($user);
-        Mail::to($user->email)->send(new OtpMail($otp));
         $request->session()->put('otp_user_id', $user->id);
+
+        if (! $this->sendOtpMail($user, $otp)) {
+            return redirect('/verify-otp')->withErrors([
+                'otp' => 'We could not send the verification email right now. Please use "Resend OTP" to try again.',
+            ]);
+        }
 
         return redirect('/verify-otp');
     }
@@ -113,8 +142,13 @@ class AuthController extends Controller
         });
 
         $otp = $this->otpService->generate($user);
-        Mail::to($user->email)->send(new OtpMail($otp));
         $request->session()->put('otp_user_id', $user->id);
+
+        if (! $this->sendOtpMail($user, $otp)) {
+            return redirect('/verify-otp')->withErrors([
+                'otp' => 'We could not send the verification email right now. Please use "Resend OTP" to try again.',
+            ]);
+        }
 
         return redirect('/verify-otp');
     }
@@ -232,7 +266,11 @@ class AuthController extends Controller
         $otp = $this->otpService->generate($user);
 
         // Send the new OTP via email
-        Mail::to($user->email)->send(new OtpMail($otp));
+        if (! $this->sendOtpMail($user, $otp)) {
+            return back()->withErrors([
+                'otp' => 'We could not send the verification email right now. Please try again in a moment.',
+            ]);
+        }
 
         return back()->with('status', 'A new OTP has been sent to your email.');
     }
@@ -290,8 +328,14 @@ class AuthController extends Controller
         if (! $user->email_verified_at) {
             Auth::logout();
             $otp = $this->otpService->generate($user);
-            Mail::to($user->email)->send(new OtpMail($otp));
             $request->session()->put('otp_user_id', $user->id);
+
+            if (! $this->sendOtpMail($user, $otp)) {
+                return redirect('/verify-otp')->withErrors([
+                    'otp' => 'We could not send the verification email right now. Please use "Resend OTP" to try again.',
+                ]);
+            }
+
             return redirect('/verify-otp');
         }
 

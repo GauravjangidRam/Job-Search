@@ -11,7 +11,6 @@ class CareerInsightController extends Controller
     public function index(): View
     {
         $grouped = collect();
-
         // 1. Fetch/Calculate Salary Data
         $salaryInsights = CareerInsight::where('type', 'salary')->orderBy('sort_order', 'asc')->get();
         if ($salaryInsights->isEmpty()) {
@@ -56,7 +55,7 @@ class CareerInsightController extends Controller
                     ['label' => 'Data Scientist', 'value' => '145000'],
                     ['label' => 'UX/UI Designer', 'value' => '105000'],
                     ['label' => 'DevOps Engineer', 'value' => '140000'],
-                ];
+                ]; 
                 foreach ($fallback as $index => $item) {
                     $salaryInsights->push(new CareerInsight([
                         'type' => 'salary',
