@@ -18,7 +18,7 @@ class CloudinaryService
                 'api_secret' => config('cloudinary.api_secret'),
             ],
         ]);
-    } 
+    }
     
     public function upload(UploadedFile $file, string $folder = 'jobhub'): string
     {
@@ -27,10 +27,10 @@ class CloudinaryService
             ['folder' => $folder]
         );
         return $result['secure_url'];
-    }
+    } 
 
     public function delete(string $publicId): void
     {
         $this->cloudinary->uploadApi()->destroy($publicId);
     } 
-}
+} 
