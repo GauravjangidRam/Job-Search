@@ -11,5 +11,5 @@ class CompanyData
         public readonly array $metrics,
         public readonly array $perks,
         public readonly bool $isHiring,
-    ) {}
-}
+    ) {} 
+} 
