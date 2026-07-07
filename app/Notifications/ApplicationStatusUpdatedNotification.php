@@ -30,13 +30,13 @@ class ApplicationStatusUpdatedNotification extends Notification
     public function via(object $notifiable): array
     {
         return ['database'];
-    }
+    } 
 
     /**
      * Get the array representation of the notification.
      *
      * @return array<string, mixed>
-     */
+     */ 
     public function toArray(object $notifiable): array
     {
         return [
@@ -47,4 +47,4 @@ class ApplicationStatusUpdatedNotification extends Notification
             'message' => 'Your application status for ' . $this->application->jobListing->title . ' has been updated to ' . $this->application->status,
         ];
     }
-}
+} 
