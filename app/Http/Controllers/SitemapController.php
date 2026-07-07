@@ -17,7 +17,6 @@ class SitemapController extends Controller
             'jobs' => $jobs,
             'companies' => $companies
         ])->render();
-
         return response($content, 200, [
             'Content-Type' => 'application/xml'
         ]);
