@@ -28,11 +28,10 @@ class GoogleAuthController extends Controller
         } catch (\Exception $e) {
             return redirect()->route('login')
                 ->with('error', 'Google authentication failed. Please try again.');
-        }
+        } 
  
         // Check if user already exists with this Google ID
         $user = User::where('google_id', $googleUser->getId())->first();
-
         if (!$user) {
             // Check if user exists with same email (link accounts)
             $user = User::where('email', $googleUser->getEmail())->first();
