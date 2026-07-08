@@ -64,7 +64,7 @@ class CareerInsightController extends Controller
                         'sort_order' => $index + 1,
                     ]));
                 }
-            } 
+            }
         }
         $grouped['salary'] = $salaryInsights;
 
