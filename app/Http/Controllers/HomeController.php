@@ -16,7 +16,6 @@ class HomeController extends Controller
     {
         $featuredJobs = JobListing::where('status', 'active')->orderBy('created_at', 'desc')->limit(6)->get();
         $heroJob = $featuredJobs->first();
-
         return view('home', [
             'popularSearchTerms' => $this->getPopularSearchTerms(),
             'featuredJobs'       => $featuredJobs,
