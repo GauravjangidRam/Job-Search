@@ -17,12 +17,10 @@ class ProfileController extends Controller
     public function show(): View
     {
         $user = Auth::user();
-
         $applications = $user->applications()
             ->with('jobListing.company')
             ->orderByDesc('created_at')
             ->get();
-
         $bookmarks = $user->bookmarks()
             ->with('jobListing.company')
             ->orderByDesc('created_at')
@@ -43,7 +41,7 @@ class ProfileController extends Controller
         return view('profile.edit', [
             'user' => Auth::user(),
         ]);
-    }
+    } 
 
     /**
      * Validate and persist changes to the authenticated user's profile.
@@ -57,7 +55,6 @@ class ProfileController extends Controller
         $user = Auth::user();
 
         $data = $request->safe()->only(['name', 'phone', 'bio']);
-
         if ($request->hasFile('avatar')) {
             $data['avatar_path'] = $fileUploadService->uploadAvatar(
                 $request->file('avatar'),
