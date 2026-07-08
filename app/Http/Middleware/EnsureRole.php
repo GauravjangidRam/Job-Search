@@ -19,7 +19,7 @@ class EnsureRole
     {
         if (! Auth::check()) {
             abort(403);
-        }
+        } 
 
         if (! in_array(Auth::user()->role, $roles, true)) {
             abort(403);
