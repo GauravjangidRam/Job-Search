@@ -38,7 +38,6 @@ class BookmarkController extends Controller
                     'message' => 'Bookmark removed.'
                 ]);
             }
-
             return back()->with('status', 'Bookmark removed.');
         }
 
