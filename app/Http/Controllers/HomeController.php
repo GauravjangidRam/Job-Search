@@ -32,7 +32,7 @@ class HomeController extends Controller
      * Get platform statistics for the homepage.
      */
     private function getStats(): array
-    {
+    { 
         return [
             'jobs' => JobListing::where('status', 'active')->count(),
             'companies' => Company::count(),
