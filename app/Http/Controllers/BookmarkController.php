@@ -39,7 +39,6 @@ class BookmarkController extends Controller
             }
             return back()->with('status', 'Bookmark removed.');
         }
-
         Bookmark::create([
             'user_id' => $userId,
             'job_listing_id' => $job->id,
