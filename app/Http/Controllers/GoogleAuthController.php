@@ -35,13 +35,12 @@ class GoogleAuthController extends Controller
         if (!$user) {
             // Check if user exists with same email (link accounts)
             $user = User::where('email', $googleUser->getEmail())->first();
-
             if ($user) {
                 // Link existing account with Google
                 $user->update([
                     'google_id' => $googleUser->getId(),
                     'avatar_url' => $googleUser->getAvatar(),
-                ]);
+                ]); 
             } else {
                 // Create new user
                 $user = User::create([
