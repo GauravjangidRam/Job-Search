@@ -43,7 +43,6 @@ class BookmarkController extends Controller
             'user_id' => $userId,
             'job_listing_id' => $job->id,
         ]);
-
         if (request()->expectsJson()) {
             return response()->json([
                 'bookmarked' => true,
