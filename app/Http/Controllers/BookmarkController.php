@@ -31,7 +31,6 @@ class BookmarkController extends Controller
 
         if ($bookmark !== null) {
             $bookmark->delete();
-
             if (request()->expectsJson()) {
                 return response()->json([
                     'bookmarked' => false,
