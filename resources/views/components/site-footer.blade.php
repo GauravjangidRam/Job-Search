@@ -52,4 +52,4 @@
             <p class="text-xs text-muted">&copy; {{ date('Y') }} Job Hub. All rights reserved.</p>
         </div>
     </div>
-</footer> 
+</footer>
