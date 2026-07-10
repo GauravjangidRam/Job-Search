@@ -9,4 +9,4 @@ class FeatureData
         public readonly string $title,
         public readonly string $description,
     ) {}
-} 
+}
