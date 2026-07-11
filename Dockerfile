@@ -19,8 +19,8 @@ ENV APACHE_DOCUMENT_ROOT /var/www/html/public
 RUN sed -ri -e 's!/var/www/html!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/sites-available/*.conf
 RUN sed -ri -e 's!/var/www/!${APACHE_DOCUMENT_ROOT}!g' /etc/apache2/apache2.conf /etc/apache2/conf-available/*.conf
 
-# Configure Apache to listen on Render's PORT
-RUN sed -i 's/80/${PORT:-80}/g' /etc/apache2/sites-available/000-default.conf /etc/apache2/ports.conf
+# Force Apache to listen on port 80
+RUN echo "Listen 80" > /etc/apache2/ports.conf
 
 # Enable AllowOverride
 RUN sed -i '/<Directory \/var\/www\/>/,/<\/Directory>/ s/AllowOverride None/AllowOverride All/' /etc/apache2/apache2.conf
@@ -55,10 +55,9 @@ RUN rm -f bootstrap/cache/config.php
 
 EXPOSE 80
 
-# DO NOT cache config during build - env vars aren't available yet
-# Config cache happens at runtime when env vars from Render are present
-CMD php artisan config:clear && \
-    php artisan migrate --force && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    apache2-foreground
+# Copy start script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Run start script
+CMD ["/usr/local/bin/start.sh"]
