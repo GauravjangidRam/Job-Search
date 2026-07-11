@@ -55,10 +55,9 @@ RUN rm -f bootstrap/cache/config.php
 
 EXPOSE 80
 
-# DO NOT cache config during build - env vars aren't available yet
-# Config cache happens at runtime when env vars from Render are present
-CMD php artisan config:clear && \
-    php artisan migrate --force && \
-    php artisan route:cache && \
-    php artisan view:cache && \
-    apache2-foreground
+# Copy start script
+COPY start.sh /usr/local/bin/start.sh
+RUN chmod +x /usr/local/bin/start.sh
+
+# Run start script
+CMD ["/usr/local/bin/start.sh"]
