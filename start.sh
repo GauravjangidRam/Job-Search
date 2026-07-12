@@ -15,3 +15,4 @@ php artisan view:cache
 
 echo "Starting Apache..."
 exec apache2-foreground
+ 
