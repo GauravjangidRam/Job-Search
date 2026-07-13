@@ -61,3 +61,4 @@ RUN chmod +x /usr/local/bin/start.sh
 
 # Run start script
 CMD ["/usr/local/bin/start.sh"]
+ 
