@@ -84,4 +84,4 @@
             <p class="text-muted text-xs">Job listings will appear here once employers start posting.</p>
         </div>
     @endif
-</section>  
+</section> 
