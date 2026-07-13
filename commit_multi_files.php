@@ -18,4 +18,4 @@ for ($i = 0; $i < 10; $i++) {
     $content = file_get_contents($file);
     file_put_contents($file, substr($content, 0, -1));
     system('git add "' . $file . '" && git commit -m "Update ' . basename($file) . ' (remove space)"');
-}  
+}
