@@ -6,7 +6,6 @@ $files = [
     'resources/views/components/home/career-insights.blade.php',
     'resources/views/components/home/featured-jobs.blade.php'
 ];
-
 for ($i = 0; $i < 10; $i++) {
     $file = $files[$i % count($files)];
     
