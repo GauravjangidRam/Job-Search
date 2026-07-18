@@ -22,7 +22,7 @@ class HomeController extends Controller
             'featuredJobs'       => $featuredJobs,
             'heroJob'            => $heroJob,
             'companies'          => Company::where('verification_status', 'approved')->orderByDesc('is_hiring')->orderBy('name')->limit(6)->get(),
-            'testimonials'       => Testimonial::where('is_featured', true)->orderBy('created_at', 'desc')->limit(6)->get(),
+            'testimonials'       => Testimonial::featured()->latest()->limit(6)->get(),
             'careerInsights'     => CareerInsight::orderBy('sort_order')->get()->groupBy('type'),
             'aiFeatures'         => $this->getAiFeatures(),
             'footerLinks'        => $this->getFooterLinks(),
