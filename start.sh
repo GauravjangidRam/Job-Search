@@ -23,5 +23,11 @@ php artisan migrate --force
 php artisan route:cache
 php artisan view:cache
 
+# The Artisan commands above run as root, whereas Apache serves requests as
+# www-data. Ensure files they created (including laravel.log) stay writable
+# after Apache drops privileges.
+chown -R www-data:www-data storage bootstrap/cache
+chmod -R ug+rwX storage bootstrap/cache
+
 echo "Starting Apache..."
 exec apache2-foreground
