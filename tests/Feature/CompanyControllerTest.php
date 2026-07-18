@@ -13,9 +13,9 @@ class CompanyControllerTest extends TestCase
 
     public function test_index_returns_companies_paginated_and_sorted_alphabetically(): void
     {
-        Company::create(['name' => 'Zebra Corp', 'slug' => 'zebra-corp']);
-        Company::create(['name' => 'Alpha Inc', 'slug' => 'alpha-inc']);
-        Company::create(['name' => 'Mango Ltd', 'slug' => 'mango-ltd']);
+        Company::create(['name' => 'Zebra Corp', 'slug' => 'zebra-corp', 'verification_status' => 'approved']);
+        Company::create(['name' => 'Alpha Inc', 'slug' => 'alpha-inc', 'verification_status' => 'approved']);
+        Company::create(['name' => 'Mango Ltd', 'slug' => 'mango-ltd', 'verification_status' => 'approved']);
         $response = $this->get('/companies');
         $response->assertStatus(200);
         $response->assertViewIs('companies.index');
@@ -29,7 +29,7 @@ class CompanyControllerTest extends TestCase
     public function test_index_paginates_at_12_per_page(): void
     {
         for ($i = 1; $i <= 15; $i++) {
-            Company::create(['name' => "Company {$i}", 'slug' => "company-{$i}"]);
+            Company::create(['name' => "Company {$i}", 'slug' => "company-{$i}", 'verification_status' => 'approved']);
         }
         $response = $this->get('/companies');
         $response->assertStatus(200);
@@ -40,7 +40,7 @@ class CompanyControllerTest extends TestCase
 
     public function test_show_returns_company_with_job_listings(): void
     {
-        $company = Company::create(['name' => 'Test Company', 'slug' => 'test-company']);
+        $company = Company::create(['name' => 'Test Company', 'slug' => 'test-company', 'verification_status' => 'approved']);
 
         $olderJob = JobListing::create([
             'title' => 'Older Job',
@@ -89,5 +89,13 @@ class CompanyControllerTest extends TestCase
         $response = $this->get('/companies/nonexistent-company'); 
         $response->assertStatus(404);
         
+    }
+
+    public function test_unapproved_companies_are_not_publicly_visible(): void
+    {
+        Company::create(['name' => 'Pending Corp', 'slug' => 'pending-corp']);
+
+        $this->get('/companies')->assertDontSee('Pending Corp');
+        $this->get('/companies/pending-corp')->assertNotFound();
     }
 }

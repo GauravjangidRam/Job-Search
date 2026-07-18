@@ -45,9 +45,9 @@ class DuplicateApplicationTest extends TestCase
 
         // These routes are wired globally in task 17.1; register them here so
         // the duplicate-prevention behavior can be exercised in isolation.
-        Route::middleware('web')->post('/jobs/{job}/apply', [JobController::class, 'submitApplication'])
+        Route::middleware('web')->post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])
             ->name('jobs.submitApplication');
-        Route::middleware('web')->get('/jobs/{job}/apply', [JobController::class, 'apply'])
+        Route::middleware('web')->get('/jobs/{hash}/apply', [JobController::class, 'apply'])
             ->name('jobs.apply');
 
         // Routes registered after the app boots are not in the name lookup yet.
@@ -141,7 +141,7 @@ class DuplicateApplicationTest extends TestCase
 
             // First submission: a valid application is created for the pair.
             $firstResponse = $this->actingAs($user)
-                ->post("/jobs/{$listing->id}/apply", $this->validPayload($user));
+                ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($user));
 
             $firstResponse->assertSessionHas('success');
             $this->assertSame(
@@ -155,7 +155,7 @@ class DuplicateApplicationTest extends TestCase
             $extraAttempts = random_int(1, 5);
             for ($attempt = 0; $attempt < $extraAttempts; $attempt++) {
                 $response = $this->actingAs($user)
-                    ->post("/jobs/{$listing->id}/apply", $this->validPayload($user));
+                    ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($user));
 
                 $response->assertSessionHas('error');
 
@@ -187,13 +187,13 @@ class DuplicateApplicationTest extends TestCase
         $listing = $this->createActiveListing($faker);
 
         $this->actingAs($user)
-            ->post("/jobs/{$listing->id}/apply", $this->validPayload($user))
+            ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($user))
             ->assertSessionHas('success');
 
         $response = $this->actingAs($user)
-            ->post("/jobs/{$listing->id}/apply", $this->validPayload($user));
+            ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($user));
 
-        $response->assertRedirect(route('jobs.apply', $listing));
+        $response->assertRedirect(route('jobs.apply', ['hash' => $listing->hashed_id]));
         $response->assertSessionHas('error');
 
         $this->assertSame(1, $this->pairApplicationCount($user->id, $listing->id));
@@ -215,11 +215,11 @@ class DuplicateApplicationTest extends TestCase
         $userB = $this->createSeeker(8002);
 
         $this->actingAs($userA)
-            ->post("/jobs/{$listing->id}/apply", $this->validPayload($userA))
+            ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($userA))
             ->assertSessionHas('success');
 
         $this->actingAs($userB)
-            ->post("/jobs/{$listing->id}/apply", $this->validPayload($userB))
+            ->post("/jobs/{$listing->hashed_id}/apply", $this->validPayload($userB))
             ->assertSessionHas('success');
 
         $this->assertSame(1, $this->pairApplicationCount($userA->id, $listing->id));

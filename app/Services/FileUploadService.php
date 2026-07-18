@@ -18,13 +18,25 @@ class FileUploadService
     public function uploadResume(UploadedFile $file, int $userId): string
     {
         $filename = $this->buildResumeFilename($file, $userId);
-        return Storage::disk(self::DISK)->putFileAs(self::RESUME_DIRECTORY, $file, $filename);
+        $path = Storage::disk(self::DISK)->putFileAs(self::RESUME_DIRECTORY, $file, $filename);
+
+        if ($path === false) {
+            throw new \RuntimeException('Unable to store the uploaded resume.');
+        }
+
+        return $path;
     } 
 
     public function uploadAvatar(UploadedFile $file, int $userId): string
     {
         $filename = $this->buildAvatarFilename($file, $userId);
-        return Storage::disk(self::DISK)->putFileAs(self::AVATAR_DIRECTORY, $file, $filename);
+        $path = Storage::disk(self::DISK)->putFileAs(self::AVATAR_DIRECTORY, $file, $filename);
+
+        if ($path === false) {
+            throw new \RuntimeException('Unable to store the uploaded avatar.');
+        }
+
+        return $path;
     }
 
     private function buildResumeFilename(UploadedFile $file, int $userId): string

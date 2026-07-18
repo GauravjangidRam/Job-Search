@@ -84,11 +84,12 @@ class ApplicationController extends Controller
             'status' => 'required|in:applied,reviewed,shortlisted,rejected',
         ]);
 
+        $statusChanged = $application->status !== $validated['status'];
         $application->status = $validated['status'];
         $application->status_updated_at = now();
         $application->save();
 
-        if ($application->user) {
+        if ($statusChanged && $application->user) {
             $application->user->notify(new \App\Notifications\ApplicationStatusUpdatedNotification($application));
         }
 

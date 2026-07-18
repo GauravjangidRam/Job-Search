@@ -9,6 +9,8 @@ use App\Services\ResumeAnalysisService;
 use App\Models\ResumeAnalysis;
 use Illuminate\Http\RedirectResponse;
 use Illuminate\Support\Facades\Auth;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 
 class ResumeController extends Controller
 {
@@ -40,11 +42,18 @@ class ResumeController extends Controller
         $userId = Auth::id();
         $resumePath = $fileUploadService->uploadResume($request->file('resume'), $userId);
 
-        $resumeAnalysisService->analyzeUserResume(
-            Auth::user(),
-            $resumePath,
-            $request->file('resume')->getClientOriginalName()
-        );
+        try {
+            $resumeAnalysisService->analyzeUserResume(
+                Auth::user(),
+                $resumePath,
+                $request->file('resume')->getClientOriginalName()
+            );
+        } catch (\Throwable $e) {
+            Storage::disk('local')->delete($resumePath);
+            Log::error('Resume analysis upload failed.', ['user_id' => $userId, 'exception' => $e]);
+
+            return back()->withErrors(['resume' => 'We could not analyze that resume. Please try again.']);
+        }
 
         return redirect()->route('resume.index')->with('success', 'Resume analyzed successfully. Your report is ready.');
     }

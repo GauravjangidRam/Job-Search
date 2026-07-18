@@ -50,11 +50,13 @@ class GoogleAuthController extends Controller
                     'avatar_url' => $googleUser->getAvatar(),
                     'password' => bcrypt(Str::random(24)),
                     'role' => 'seeker',
+                    'email_verified_at' => now(),
                 ]);
             } 
         }
 
         Auth::login($user, true);
+        request()->session()->regenerate();
 
         // Redirect based on role
         return match ($user->role) {

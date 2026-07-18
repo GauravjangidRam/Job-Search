@@ -9,6 +9,7 @@ use App\Models\Company;
 use App\Models\JobListing;
 use App\Models\Testimonial;
 use Illuminate\View\View;
+use Illuminate\Support\Facades\Cache;
 
 class HomeController extends Controller
 {
@@ -20,7 +21,7 @@ class HomeController extends Controller
             'popularSearchTerms' => $this->getPopularSearchTerms(),
             'featuredJobs'       => $featuredJobs,
             'heroJob'            => $heroJob,
-            'companies'          => Company::orderByDesc('is_hiring')->orderBy('name')->limit(6)->get(),
+            'companies'          => Company::where('verification_status', 'approved')->orderByDesc('is_hiring')->orderBy('name')->limit(6)->get(),
             'testimonials'       => Testimonial::where('is_featured', true)->orderBy('created_at', 'desc')->limit(6)->get(),
             'careerInsights'     => CareerInsight::orderBy('sort_order')->get()->groupBy('type'),
             'aiFeatures'         => $this->getAiFeatures(),
@@ -33,11 +34,11 @@ class HomeController extends Controller
      */
     private function getStats(): array
     {
-        return [
-            'jobs' => JobListing::where('status', 'active')->count(),
-            'companies' => Company::count(),
+        return Cache::remember('home:stats:v1', now()->addMinutes(5), fn () => [
+            'jobs' => JobListing::active()->count(),
+            'companies' => Company::where('verification_status', 'approved')->count(),
             'applications' => \App\Models\JobApplication::count(),
-        ];
+        ]);
     }
 
     /**
@@ -47,8 +48,9 @@ class HomeController extends Controller
      */
     private function getPopularSearchTerms(): array
     {
+        return Cache::remember('home:popular-search-terms:v1', now()->addMinutes(10), function (): array {
         // Get the most common skills from active job listings
-        $jobs = JobListing::where('status', 'active')->pluck('skills')->filter();
+        $jobs = JobListing::active()->pluck('skills')->filter();
 
         $skillCounts = [];
         foreach ($jobs as $skills) {
@@ -66,6 +68,7 @@ class HomeController extends Controller
             $topSkills = ['Software Engineer', 'Product Designer', 'Data Scientist', 'Frontend Developer', 'Marketing Manager'];
         }
         return $topSkills;
+        });
     }
 
     /**

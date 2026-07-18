@@ -217,6 +217,7 @@ class AuthController extends Controller
 
         // Log the user in
         Auth::login($user);
+        $request->session()->regenerate();
 
         // Clear the session OTP user ID
         $request->session()->forget('otp_user_id');

@@ -38,8 +38,8 @@ class ApplicationTest extends TestCase
 
         // The job apply/submit routes are not registered until task 17.1, so we
         // register them here to exercise the controller through the HTTP layer.
-        Route::middleware('web')->get('/jobs/{job}/apply', [JobController::class, 'apply'])->name('jobs.apply');
-        Route::middleware('web')->post('/jobs/{job}/apply', [JobController::class, 'submitApplication'])->name('jobs.submitApplication');
+        Route::middleware('web')->get('/jobs/{hash}/apply', [JobController::class, 'apply'])->name('jobs.apply');
+        Route::middleware('web')->post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->name('jobs.submitApplication');
 
         $this->app['router']->getRoutes()->refreshNameLookups();
     }
@@ -57,7 +57,7 @@ class ApplicationTest extends TestCase
             $payload = $this->randomValidPayload();
             $resume = UploadedFile::fake()->create('resume.pdf', random_int(1, 5120), 'application/pdf');
 
-            $response = $this->actingAs($seeker)->post("/jobs/{$job->id}/apply", array_merge($payload, [
+            $response = $this->actingAs($seeker)->post("/jobs/{$job->hashed_id}/apply", array_merge($payload, [
                 'resume' => $resume,
             ]));
 
@@ -65,7 +65,7 @@ class ApplicationTest extends TestCase
 
             // A valid submission must succeed (no validation errors) and redirect back to the apply page.
             $response->assertSessionHasNoErrors();
-            $response->assertRedirect(route('jobs.apply', $job));
+            $response->assertRedirect(route('jobs.apply', ['hash' => $job->hashed_id]));
 
             $application = JobApplication::where('user_id', $seeker->id)
                 ->where('job_listing_id', $job->id)
@@ -109,12 +109,12 @@ class ApplicationTest extends TestCase
             'additional_info' => 'Available to start immediately.',
         ];
 
-        $response = $this->actingAs($seeker)->post("/jobs/{$job->id}/apply", array_merge($payload, [
+        $response = $this->actingAs($seeker)->post("/jobs/{$job->hashed_id}/apply", array_merge($payload, [
             'resume' => UploadedFile::fake()->create('resume.pdf', 512, 'application/pdf'),
         ]));
 
         $response->assertSessionHasNoErrors();
-        $response->assertRedirect(route('jobs.apply', $job));
+        $response->assertRedirect(route('jobs.apply', ['hash' => $job->hashed_id]));
 
         $application = JobApplication::where('user_id', $seeker->id)
             ->where('job_listing_id', $job->id)

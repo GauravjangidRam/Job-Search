@@ -23,11 +23,11 @@ Route::get('/jobs/{hash}/{slug?}', [JobController::class, 'show'])->where('hash'
 // Guest routes (register & login)
 Route::middleware('guest')->group(function () {
     Route::get('/register', [AuthController::class, 'showRegister'])->name('register');
-    Route::post('/register', [AuthController::class, 'register']);
+    Route::post('/register', [AuthController::class, 'register'])->middleware('throttle:5,15');
     Route::get('/login', [AuthController::class, 'showLogin'])->name('login');
     Route::post('/login', [AuthController::class, 'login'])->middleware('throttle:5,15');
     Route::get('/employer/register', [AuthController::class, 'showEmployerRegister'])->name('employer.register');
-    Route::post('/employer/register', [AuthController::class, 'employerRegister']);
+    Route::post('/employer/register', [AuthController::class, 'employerRegister'])->middleware('throttle:3,15');
 
     // Google OAuth
     Route::get('/auth/google', [\App\Http\Controllers\GoogleAuthController::class, 'redirect'])->name('auth.google');
@@ -50,10 +50,7 @@ Route::get('/insights', [CareerInsightController::class, 'index'])->name('insigh
 Route::middleware('auth')->group(function () {
     Route::post('/logout', [AuthController::class, 'logout'])->name('logout');
     Route::get('/resume', [ResumeController::class, 'index'])->name('resume.index');
-    Route::post('/resume/analyze', [ResumeController::class, 'analyze'])->name('resume.analyze');
-    Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
-    Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
-    Route::post('/bookmarks/{hash}/toggle', [BookmarkController::class, 'toggle'])->where('hash', '[a-zA-Z0-9]+')->name('bookmarks.toggle');
+    Route::post('/resume/analyze', [ResumeController::class, 'analyze'])->middleware('throttle:10,15')->name('resume.analyze');
     
     // Notifications
     Route::get('/notifications', [NotificationController::class, 'index'])->name('notifications.index');
@@ -63,6 +60,9 @@ Route::middleware('auth')->group(function () {
 
 // Seeker routes (auth + role:seeker)
 Route::middleware(['auth', 'role:seeker'])->group(function () {
+    Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])->where('hash', '[a-zA-Z0-9]+')->name('jobs.apply');
+    Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])->middleware('throttle:10,15')->where('hash', '[a-zA-Z0-9]+')->name('jobs.submitApplication');
+    Route::post('/bookmarks/{hash}/toggle', [BookmarkController::class, 'toggle'])->where('hash', '[a-zA-Z0-9]+')->name('bookmarks.toggle');
     Route::get('/profile', [ProfileController::class, 'show'])->name('profile.show');
     Route::get('/profile/edit', [ProfileController::class, 'edit'])->name('profile.edit');
     Route::put('/profile', [ProfileController::class, 'update'])->name('profile.update');

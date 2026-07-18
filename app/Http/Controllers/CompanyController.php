@@ -13,6 +13,7 @@ class CompanyController extends Controller
     public function index(): View
     {
         $companies = Company::query()
+            ->where('verification_status', 'approved')
             ->orderBy('name', 'asc')
             ->paginate(12);
 
@@ -26,7 +27,9 @@ class CompanyController extends Controller
      */
     public function show(string $slug): View
     {
-        $company = Company::where('slug', $slug)->firstOrFail();
+        $company = Company::where('slug', $slug)
+            ->where('verification_status', 'approved')
+            ->firstOrFail();
 
         $jobListings = $company->jobListings()
             ->where('status', 'active')

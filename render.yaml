@@ -11,16 +11,18 @@ services:
       - key: APP_DEBUG
         value: "false"
       - key: APP_KEY
-        value: "base64:qoNS0FVEdEXP6K+Q6M6B/6sGV4YL8I1xmETZ4WIqpVg="
+        generateValue: true
       - key: APP_URL
         fromService:
           type: web
           name: job-search
           property: host
       - key: DB_CONNECTION
-        value: sqlite
-      - key: DB_DATABASE
-        value: /var/www/html/database/database.sqlite
+        value: pgsql
+      - key: DB_URL
+        fromDatabase:
+          name: job-search-db
+          property: connectionString
       - key: SESSION_DRIVER
         value: file
       - key: CACHE_STORE
@@ -41,3 +43,8 @@ services:
         sync: false
       - key: MAIL_PASSWORD
         sync: false
+databases:
+  - name: job-search-db
+    plan: free
+    databaseName: job_search
+    user: job_search

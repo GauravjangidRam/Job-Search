@@ -49,9 +49,9 @@ class ApplicationStatusDefaultTest extends TestCase
         // register them here so the controller can be exercised end-to-end in
         // isolation, mirroring the other application feature tests.
         Route::middleware('web')->group(function () {
-            Route::get('/jobs/{job}/apply', [JobController::class, 'apply'])
+            Route::get('/jobs/{hash}/apply', [JobController::class, 'apply'])
                 ->name('jobs.apply');
-            Route::post('/jobs/{job}/apply', [JobController::class, 'submitApplication'])
+            Route::post('/jobs/{hash}/apply', [JobController::class, 'submitApplication'])
                 ->name('jobs.submitApplication');
         });
 
@@ -173,11 +173,11 @@ class ApplicationStatusDefaultTest extends TestCase
                 'additional_info' => $faker->boolean() ? $faker->sentence() : null,
             ];
 
-            $response = $this->actingAs($seeker)->post("/jobs/{$job->id}/apply", $payload);
+            $response = $this->actingAs($seeker)->post("/jobs/{$job->hashed_id}/apply", $payload);
 
             // A validation failure would skip creation entirely; surface it.
             $response->assertSessionHasNoErrors();
-            $response->assertRedirect(route('jobs.apply', $job));
+            $response->assertRedirect(route('jobs.apply', ['hash' => $job->hashed_id]));
 
             $application = JobApplication::where('user_id', $seeker->id)
                 ->where('job_listing_id', $job->id)
