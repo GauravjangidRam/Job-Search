@@ -27,6 +27,8 @@ services:
         value: file
       - key: CACHE_STORE
         value: file
+      - key: LOG_CHANNEL
+        value: stderr
       - key: MAIL_MAILER
         value: smtp
       - key: MAIL_HOST
