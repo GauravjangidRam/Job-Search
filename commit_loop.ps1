@@ -6,4 +6,4 @@ for ($i = 1; $i -le 21; $i++) {
     Set-Content -Path "commit_test.txt" -Value "" -NoNewline
     git add commit_test.txt
     git commit -m "Remove space (commit $i.2)"
-}  
+} 
