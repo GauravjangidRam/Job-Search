@@ -99,7 +99,7 @@
                             </div>
                             <div class="shrink-0 rounded-lg border border-border bg-secondary px-5 py-4 text-center">
                                 <p class="text-3xl font-bold text-primary">{{ $report['ai_ats_score'] ?? $score }}</p>
-                                <p class="text-xs font-semibold text-muted">ATS Score</p>
+                                <p class="text-xs font-semibold text-muted">Readiness score</p>
                             </div>
                         </div>
 

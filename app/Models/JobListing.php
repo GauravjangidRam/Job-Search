@@ -106,6 +106,12 @@ class JobListing extends Model
     {
         $hashids = new Hashids(config('app.key'), 8);
         $decoded = $hashids->decode($hash);
-        return isset($decoded[0]) ? self::find($decoded[0]) : null;
+        if (isset($decoded[0])) {
+            return self::find($decoded[0]);
+        }
+        if (is_numeric($hash)) {
+            return self::find((int) $hash);
+        }
+        return null;
     }
 }

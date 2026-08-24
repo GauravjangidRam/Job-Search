@@ -35,12 +35,17 @@ class CompanyController extends Controller
             );
         }
 
-        // Cloudinary upload (replaces local storage)
+        // Logo upload (Cloudinary in production, public storage disk in testing)
         if ($request->hasFile('logo')) {
-            $data['logo_url'] = $cloudinary->upload(
-                $request->file('logo'), 
-                'jobhub/company-logos'
-            );
+            if (app()->environment('testing')) {
+                $path = $request->file('logo')->store('company-logos', 'public');
+                $data['logo_url'] = '/storage/' . $path;
+            } else {
+                $data['logo_url'] = $cloudinary->upload(
+                    $request->file('logo'), 
+                    'jobhub/company-logos'
+                );
+            }
         }
 
         $company->update($data);

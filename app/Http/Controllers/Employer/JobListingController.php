@@ -65,7 +65,7 @@ class JobListingController extends Controller
 
         $data['company_id'] = $user->company_id;
         $data['company_name'] = $user->company?->name;
-        $data['status'] = 'active';
+        $data['status'] = 'draft';
 
         JobListing::create($data);
 
