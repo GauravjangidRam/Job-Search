@@ -7,12 +7,16 @@
 @endphp
 
 <section aria-labelledby="career-insights-heading">
-    <h2 id="career-insights-heading" class="text-2xl font-bold text-foreground mb-2">Career Insights</h2>
-    <p class="text-muted mb-8">Data-driven insights to guide your career decisions</p>
+    <div class="flex flex-col sm:flex-row sm:items-center justify-between mb-8 gap-2">
+        <div>
+            <h2 id="career-insights-heading" class="text-2xl md:text-3xl font-extrabold text-foreground tracking-tight mb-1">Career Insights</h2>
+            <p class="text-muted text-sm">Data-driven insights to guide your career decisions</p>
+        </div>
+    </div>
     {{-- Charts Section --}}
     <div id="career-insights-charts" class="grid grid-cols-1 lg:grid-cols-2 gap-6 mb-8">
         {{-- Salary Comparison Bar Chart --}}
-        <div class="bg-card border border-border rounded-lg p-6">
+        <div class="bg-card border border-border/80 rounded-2xl p-6 shadow-sm">
             <h3 class="text-lg font-semibold text-foreground mb-4">Salary Comparison</h3>
             @if($salaryData->isEmpty())
                 <x-empty-state message="No salary data available" />
@@ -41,7 +45,7 @@
         </div>
 
         {{-- Hiring Trends Line Chart --}}
-        <div class="bg-card border border-border rounded-lg p-6">
+        <div class="bg-card border border-border/80 rounded-2xl p-6 shadow-sm">
             <h3 class="text-lg font-semibold text-foreground mb-4">Hiring Trends</h3>
             @if($hiringTrends->isEmpty())
                 <x-empty-state message="No hiring trend data available" />
@@ -71,7 +75,7 @@
     </div>
 
     {{-- In-Demand Skills --}}
-    <div class="bg-card border border-border rounded-lg p-6">
+    <div class="bg-card border border-border/80 rounded-2xl p-6 md:p-8 shadow-sm">
         <h3 class="text-lg font-semibold text-foreground mb-4">Top In-Demand Skills</h3>
         @if($inDemandSkills->isEmpty())
             <x-empty-state message="No skills data available" />

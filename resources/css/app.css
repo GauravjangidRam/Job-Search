@@ -8,8 +8,8 @@
         'Apple Color Emoji', 'Segoe UI Emoji', 'Segoe UI Symbol', 'Noto Color Emoji';
 
     --color-primary: #ea580c;
-    --color-primary-light: #fb923c;
-    --color-accent: #fed7aa;
+    --color-primary-light: #f97316;
+    --color-accent: #ffedf0;
     --color-accent-dark: #78350f;
     --color-background: #fafaf9;
     --color-foreground: #1c1917;
@@ -18,17 +18,23 @@
     --color-border: #e7e5e4;
     --color-card: #ffffff;
 
-    --radius-card: 0.5rem;
+    --radius-card: 0.75rem;
+    --radius-pill: 9999px;
 }
 
 @media (prefers-color-scheme: dark) {
     :root {
-        --color-background: #1c1917;
-        --color-foreground: #fafaf9;
+        --color-background: #0f172a;
+        --color-foreground: #f8fafc;
         --color-primary: #fb923c;
-        --color-secondary: #44403c;
-        --color-accent: #78350f;
-        --color-border: #44403c;
-        --color-card: #292524;
+        --color-secondary: #1e293b;
+        --color-accent: #331f18;
+        --color-border: #334155;
+        --color-card: #1e293b;
     }
 }
+
+.rounded-card {
+    border-radius: var(--radius-card);
+}
+

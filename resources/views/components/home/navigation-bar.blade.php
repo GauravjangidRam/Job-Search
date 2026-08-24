@@ -1,35 +1,38 @@
-<nav x-data="mobileMenu" aria-label="Main navigation" class="fixed top-0 left-0 right-0 z-50 bg-card border-b border-border shadow-sm">
+<nav x-data="mobileMenu" aria-label="Main navigation" class="fixed top-0 left-0 right-0 z-50 bg-card/85 backdrop-blur-md border-b border-border/70 shadow-sm transition-all">
     <div class="max-w-[1400px] mx-auto px-6 md:px-8">
         <div class="flex items-center justify-between h-16">
             <!-- Logo -->
             <div class="flex-shrink-0">
-                <a href="/" class="text-xl font-bold text-primary focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded" aria-label="Job Hub - Home">Job Hub</a>
+                <a href="/" class="text-xl font-extrabold tracking-tight text-primary focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded-lg transition-transform hover:scale-[1.02] inline-flex items-center gap-1.5" aria-label="Job Hub - Home">
+                    <span class="w-2.5 h-2.5 rounded-full bg-primary inline-block"></span>
+                    Job Hub
+                </a>
             </div>
 
             <!-- Desktop Menu Links (hidden below 768px) -->
             <div class="hidden md:flex items-center space-x-8">
-                <a href="{{ route('jobs.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Jobs</a>
-                <a href="{{ route('companies.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Companies</a>
-                <a href="{{ route('insights.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Career Insights</a>
-                <a href="{{ route('resume.index') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Resume</a>
+                <a href="{{ route('jobs.index') }}" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Jobs</a>
+                <a href="{{ route('companies.index') }}" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Companies</a>
+                <a href="{{ route('insights.index') }}" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Career Insights</a>
+                <a href="{{ route('resume.index') }}" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Resume</a>
             </div>  
 
             <!-- Right Side Elements (hidden below 768px) -->
             <div class="hidden md:flex items-center space-x-4">
                 <div x-data="topSearch" class="relative">
-                    <button type="button" @click="toggle()" aria-label="Search" class="p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                        <i data-lucide="search" class="w-5 h-5"></i>
+                    <button type="button" @click="toggle()" aria-label="Search" class="p-2 text-muted hover:text-primary rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                        <i data-lucide="search" class="w-4 h-4"></i>
                     </button>
-                    <div x-show="open" x-cloak @click.away="close()" class="absolute right-0 mt-2 w-80 bg-card border border-border rounded-md shadow-lg p-2">
+                    <div x-show="open" x-cloak @click.away="close()" class="absolute right-0 mt-2 w-80 bg-card border border-border/80 rounded-xl shadow-lg p-2.5 z-50">
                         <div class="flex items-center gap-2">
-                            <input x-ref="input" x-model="query" @keydown.enter.prevent="submit()" type="text" placeholder="Search jobs or companies" class="w-full px-3 py-2 border rounded bg-transparent focus:outline-none" />
-                            <button type="button" @click="submit()" class="px-3 py-2 bg-primary text-white rounded">Go</button>
+                            <input x-ref="input" x-model="query" @keydown.enter.prevent="submit()" type="text" placeholder="Search jobs or companies" class="w-full px-3 py-2 text-sm border border-border/70 rounded-lg bg-background text-foreground focus:outline-none focus:ring-2 focus:ring-primary/50" />
+                            <button type="button" @click="submit()" class="px-3.5 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light transition-colors">Go</button>
                         </div>
                     </div> 
                 </div>
                 @auth
-                    <a href="{{ route('notifications.index') }}" aria-label="Notifications" class="relative p-2 text-muted hover:text-primary rounded-md transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
-                        <i data-lucide="bell" class="w-5 h-5"></i>
+                    <a href="{{ route('notifications.index') }}" aria-label="Notifications" class="relative p-2 text-muted hover:text-primary rounded-lg transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                        <i data-lucide="bell" class="w-4 h-4"></i>
                         @if(auth()->user()->unreadNotifications->count() > 0)
                             <span class="absolute top-1 right-1.5 block w-2 h-2 bg-red-500 rounded-full ring-2 ring-card"></span>
                         @endif
@@ -37,34 +40,34 @@
                 @endauth
 
                 @guest
-                    <a href="{{ route('employer.register') }}" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
+                    <a href="{{ route('employer.register') }}" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
                         For Employers
                     </a>
-                    <a href="/login" class="text-foreground hover:text-primary font-medium transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
+                    <a href="/login" class="text-foreground/90 hover:text-primary font-medium text-sm transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
                         Login
                     </a> 
-                    <a href="/register" class="inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                    <a href="/register" class="inline-flex items-center px-4 py-2 bg-primary text-white text-sm font-semibold rounded-lg hover:bg-primary-light shadow-sm hover:shadow transition-all duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
                         Register
                     </a>
                 @endguest
 
                 @auth
                     @if(auth()->user()->isEmployer())
-                        <a href="{{ route('employer.dashboard') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-lg hover:bg-primary/20 transition-colors">
+                        <a href="{{ route('employer.dashboard') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-lg hover:bg-primary/20 transition-colors">
                             <i data-lucide="building-2" class="w-4 h-4"></i>
                             Employer Panel
                         </a>
                     @elseif(auth()->user()->isAdmin())
-                        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-lg hover:bg-primary/20 transition-colors">
+                        <a href="{{ route('admin.dashboard') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-primary/10 text-primary text-sm font-medium rounded-lg hover:bg-primary/20 transition-colors">
                             <i data-lucide="shield" class="w-4 h-4"></i>
                             Admin
                         </a>
                     @else
-                        <a href="{{ route('alerts.index') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
+                        <a href="{{ route('alerts.index') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
                             <i data-lucide="bell" class="w-4 h-4"></i>
                             Job Alerts
                         </a>
-                        <a href="{{ route('profile.show') }}" class="inline-flex items-center gap-1 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
+                        <a href="{{ route('profile.show') }}" class="inline-flex items-center gap-1.5 px-3 py-1.5 bg-secondary text-foreground text-sm font-medium rounded-lg hover:bg-secondary/80 transition-colors">
                             <i data-lucide="user" class="w-4 h-4"></i>
                             Profile
                         </a>
@@ -105,24 +108,24 @@
         x-transition:leave-start="opacity-100 translate-y-0"
         x-transition:leave-end="opacity-0 -translate-y-2"
         @keydown.escape.window="open = false"
-        class="md:hidden border-t border-border bg-card"
+        class="md:hidden border-t border-border bg-card shadow-lg"
         role="menu"
         x-cloak
     >
         <div class="px-6 py-4 space-y-3">
-            <a href="{{ route('jobs.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Jobs</a>
-            <a href="{{ route('companies.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Companies</a>
-            <a href="{{ route('insights.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Career Insights</a>
-            <a href="{{ route('resume.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">Resume</a>
-            <div class="pt-3 border-t border-border">
+            <a href="{{ route('jobs.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">Jobs</a>
+            <a href="{{ route('companies.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">Companies</a>
+            <a href="{{ route('insights.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">Career Insights</a>
+            <a href="{{ route('resume.index') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">Resume</a>
+            <div class="pt-3 border-t border-border space-y-2">
                 @guest 
-                    <a href="{{ route('employer.register') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
+                    <a href="{{ route('employer.register') }}" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">
                         For Employers
                     </a>
-                    <a href="/login" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
+                    <a href="/login" role="menuitem" class="block text-foreground hover:text-primary font-medium py-2 transition-colors duration-200">
                         Login
                     </a>
-                    <a href="/register" role="menuitem" class="inline-flex items-center px-4 py-2 bg-primary text-white font-medium rounded-[var(--radius-card)] hover:bg-primary-light transition-colors duration-200 focus:outline-none focus:ring-2 focus:ring-primary focus:ring-offset-2">
+                    <a href="/register" role="menuitem" class="inline-flex items-center justify-center w-full px-4 py-2 bg-primary text-white font-medium rounded-lg hover:bg-primary-light transition-colors">
                         Register
                     </a>
                 @endguest
@@ -149,7 +152,7 @@
                     </span>
                     <form method="POST" action="/logout">
                         @csrf
-                        <button type="submit" role="menuitem" class="text-muted hover:text-primary font-medium py-2 transition-colors duration-200 focus:outline-2 focus:outline-offset-2 focus:outline-primary rounded">
+                        <button type="submit" role="menuitem" class="text-muted hover:text-primary font-medium py-2 transition-colors duration-200">
                             Logout
                         </button>
                     </form>
