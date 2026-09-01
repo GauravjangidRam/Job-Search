@@ -1,4 +1,4 @@
-for ($i = 1; $i -le 21; $i++) {
+for ($i = 1; $i -le 6; $i++) {
     Add-Content -Path "commit_test.txt" -Value " " -NoNewline
     git add commit_test.txt
     git commit -m "Add space (commit $i.1)"
